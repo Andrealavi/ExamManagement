@@ -1,6 +1,6 @@
 package models.exam;
 
-abstract class AbstractExam {
+public abstract class AbstractExam {
     protected String firstName;
     protected String lastName;
     protected String courseName;
@@ -16,7 +16,27 @@ abstract class AbstractExam {
         this.honors = honors;
     }
 
-    abstract Integer getGrade();
+    public String getFirstName() {
+        return firstName;
+    }
 
-    abstract String[] toStringArray();
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public Integer getCredits() {
+        return credits;
+    }
+
+    public String getHonors() {
+        return honors ? "Yes" : "No";
+    }
+
+    public abstract Integer getGrade();
+
+    public abstract String[] toStringArray();
 }
