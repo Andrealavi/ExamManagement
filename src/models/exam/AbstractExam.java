@@ -3,17 +3,23 @@ package models.exam;
 public abstract class AbstractExam {
     protected String firstName;
     protected String lastName;
-    protected String courseName;
+    protected String className;
     protected Integer grade;
     protected Integer credits;
-    protected boolean honors;
+    protected Boolean honor;
 
-    public AbstractExam(String firstName, String lastName, String courseName, Integer credits, boolean honors) {
+    public AbstractExam(String firstName, String lastName, String className, Integer credits) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.courseName = courseName;
+        this.className = className;
         this.credits = credits;
-        this.honors = honors;
+    }
+
+    public AbstractExam(String firstName, String lastName, String className, String credits) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.className = className;
+        this.credits = Integer.parseInt(credits);
     }
 
     public String getFirstName() {
@@ -24,17 +30,15 @@ public abstract class AbstractExam {
         return lastName;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getClassName() {
+        return className;
     }
 
     public Integer getCredits() {
         return credits;
     }
 
-    public String getHonors() {
-        return honors ? "Yes" : "No";
-    }
+    public abstract String getHonor();
 
     public abstract Integer getGrade();
 
