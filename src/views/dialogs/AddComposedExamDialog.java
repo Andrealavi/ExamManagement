@@ -12,7 +12,7 @@ public class AddComposedExamDialog extends JDialog {
         protected JLabel weightLabel;
         protected JCheckBox honoursBox;
 
-        protected JComboBox weightComboBox;
+        protected JComboBox<String> weightComboBox;
 
         protected JButton addPartialButton;
         protected JButton removePartialButton;
