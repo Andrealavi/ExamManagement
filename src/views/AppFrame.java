@@ -49,6 +49,10 @@ public class AppFrame extends JFrame {
         return mainPanel;
     }
 
+    public TopMenu getTopMenu() {
+        return menuBar;
+    }
+
     public void refreshFrame() {
         pack();
     }
