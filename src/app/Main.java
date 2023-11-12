@@ -9,6 +9,7 @@ public class Main {
         Controller c = new Controller(f);
 
         c.setTableModel();
+        c.addEventListeners();
 
         f.pack();
     }
