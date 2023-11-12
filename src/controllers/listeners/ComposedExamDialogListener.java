@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import views.dialogs.*;
 import models.exam.ComposedExam;
+import models.exam.ExamInfoException;
 import models.ExamsTableModel;
 
 public class ComposedExamDialogListener implements ActionListener {
@@ -19,11 +20,23 @@ public class ComposedExamDialogListener implements ActionListener {
         String[] data = d.getFieldsData();
         String[][] partialExamsData = d.getExamsData();
 
-        ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], data[3]);
-        examEntry.setPartialExamsInfo(partialExamsData, d.getExamNumber());
+        try {
+            ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], data[3]);
+            examEntry.setPartialExamsInfo(partialExamsData, d.getExamNumber());
 
-        model.addEntry(examEntry);
+            model.addEntry(examEntry);
 
-        d.dispose();
+            d.dispose();
+        } catch (ExamInfoException err) {
+            ErrorDialog errDialog = new ErrorDialog(d, err.getMessage());
+
+            errDialog.getButton().addActionListener(new ErrorDialogButtonListener(errDialog));
+        } catch (NumberFormatException err) {
+            ErrorDialog errDialog = new ErrorDialog(d,
+                    "Invalid value inserted.\nPlease make sure you have inserted valid number values for grades and credits fields.");
+
+            errDialog.getButton().addActionListener(new ErrorDialogButtonListener(errDialog));
+        }
+
     }
 }
