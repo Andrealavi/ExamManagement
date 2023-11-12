@@ -9,9 +9,15 @@ public class SimpleExam extends AbstractExam {
     }
 
     public SimpleExam(String firstName, String lastName, String className, String grade, String credits,
-            String honor) {
+            String honor) throws ExamInfoException {
         super(firstName, lastName, className, credits);
-        this.grade = Integer.parseInt(grade);
+
+        if (Integer.parseInt(grade) < 18 || Integer.parseInt(grade) > 30) {
+            throw new ExamInfoException("Invalid grade value.\nPlease insert a value between 18 and 30.");
+        } else {
+            this.grade = Integer.parseInt(grade);
+        }
+
         this.honor = Boolean.valueOf(honor);
     }
 

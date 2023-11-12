@@ -19,7 +19,7 @@ public class ComposedExam extends AbstractExam {
         computeGrade();
     }
 
-    public ComposedExam(String firstName, String lastName, String className, String credits) {
+    public ComposedExam(String firstName, String lastName, String className, String credits) throws ExamInfoException {
         super(firstName, lastName, className, credits);
     }
 
@@ -41,7 +41,7 @@ public class ComposedExam extends AbstractExam {
         return grade;
     }
 
-    public void setPartialExamsInfo(String[][] partialExams, Integer examNumbers) {
+    public void setPartialExamsInfo(String[][] partialExams, Integer examNumbers) throws ExamInfoException {
         grades = new ArrayList<Integer>();
         weights = new ArrayList<Float>();
         honors = new ArrayList<Boolean>();
@@ -50,6 +50,22 @@ public class ComposedExam extends AbstractExam {
             grades.add(Integer.parseInt(partialExams[i][0]));
             weights.add(Float.parseFloat(partialExams[i][1]));
             honors.add(Boolean.parseBoolean(partialExams[i][2]));
+        }
+
+        Float sum = 0.0f;
+        for (Float weight : weights) {
+            sum += weight;
+        }
+
+        for (Integer grade : grades) {
+            if (grade < 18 || grade > 30) {
+                throw new ExamInfoException(
+                        "Invalid value in partial exams grades.\nMake sure all grades are between 18 and 30");
+            }
+        }
+
+        if (!sum.equals(1.0f)) {
+            throw new ExamInfoException("Invalid value in partial exams weights.\nPlease be sure they add up to 100%");
         }
 
         computeGrade();

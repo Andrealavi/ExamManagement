@@ -15,11 +15,16 @@ public abstract class AbstractExam {
         this.credits = credits;
     }
 
-    public AbstractExam(String firstName, String lastName, String className, String credits) {
+    public AbstractExam(String firstName, String lastName, String className, String credits) throws ExamInfoException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.className = className;
-        this.credits = Integer.parseInt(credits);
+
+        if (Integer.parseInt(credits) <= 0 || Integer.parseInt(credits) > 18) {
+            throw new ExamInfoException("Invalid credits value.\nPlease insert a value between 0 and 18.");
+        } else {
+            this.credits = Integer.parseInt(credits);
+        }
     }
 
     public String getFirstName() {
