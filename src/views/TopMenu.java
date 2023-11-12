@@ -1,9 +1,8 @@
 package views;
 
 import javax.swing.*;
-import java.awt.*;
 
-class TopMenu extends JMenuBar {
+public class TopMenu extends JMenuBar {
     private JMenu fileMenu;
     private JMenu examMenu;
 
@@ -42,6 +41,10 @@ class TopMenu extends JMenuBar {
     public JMenuItem[] getFileMenuItems() {
         JMenuItem[] fileItems = { fileMenu.getItem(0), fileMenu.getItem(1), fileMenu.getItem(2) };
         return fileItems;
+    }
+
+    public JMenu getAddExamMenu() {
+        return (JMenu) examMenu.getItem(0);
     }
 
     public JMenuItem[] getExamMenuItems() {
