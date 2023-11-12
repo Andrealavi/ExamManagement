@@ -6,7 +6,7 @@ import java.util.Vector;
 import models.exam.AbstractExam;
 
 public class ExamsTableModel extends AbstractTableModel {
-    private final String[] COLUMN_NAMES = { "First Name", "Last Name", "Course", "Grade", "Honors", "Credits" };
+    private final String[] COLUMN_NAMES = { "First Name", "Last Name", "Class", "Grade", "Credits", "Honors" };
     private Vector<AbstractExam> examEntries;
 
     public ExamsTableModel(Vector<AbstractExam> examEntries) {
@@ -29,6 +29,10 @@ public class ExamsTableModel extends AbstractTableModel {
         return COLUMN_NAMES[col];
     }
 
+    public String[] getColumns() {
+        return COLUMN_NAMES;
+    }
+
     public Object getValueAt(int row, int col) {
         switch (col) {
             case 0:
@@ -38,21 +42,26 @@ public class ExamsTableModel extends AbstractTableModel {
                 return examEntries.get(row).getLastName();
 
             case 2:
-                return examEntries.get(row).getCourseName();
+                return examEntries.get(row).getClassName();
 
             case 3:
                 return examEntries.get(row).getGrade();
 
             case 4:
-                return examEntries.get(row).getHonors();
+                return examEntries.get(row).getCredits();
 
             case 5:
-                return examEntries.get(row).getCredits();
+                return examEntries.get(row).getHonor();
 
             default:
                 break;
         }
 
         return null;
+    }
+
+    public void addEntry(AbstractExam entry) {
+        examEntries.add(entry);
+        fireTableDataChanged();
     }
 }
