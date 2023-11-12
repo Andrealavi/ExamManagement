@@ -1,10 +1,18 @@
 package models.exam;
 
 public class SimpleExam extends AbstractExam {
-    public SimpleExam(String firstName, String lastName, String courseName, Integer grade, Integer credits,
-            boolean honors) {
-        super(firstName, lastName, courseName, credits, honors);
+    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits,
+            boolean honor) {
+        super(firstName, lastName, className, credits);
         this.grade = grade;
+        this.honor = honor;
+    }
+
+    public SimpleExam(String firstName, String lastName, String className, String grade, String credits,
+            String honor) {
+        super(firstName, lastName, className, credits);
+        this.grade = Integer.parseInt(grade);
+        this.honor = Boolean.valueOf(honor);
     }
 
     public Integer getGrade() {
@@ -15,9 +23,13 @@ public class SimpleExam extends AbstractExam {
         this.grade = grade;
     }
 
+    public String getHonor() {
+        return honor ? "Sì" : "No";
+    }
+
     public String[] toStringArray() {
-        String[] stringArray = { firstName, lastName, courseName, grade.toString(), credits.toString(),
-                honors ? "Si" : "No" };
+        String[] stringArray = { firstName, lastName, className, grade.toString(), credits.toString(),
+                honor ? "Si" : "No" };
 
         return stringArray;
     }
