@@ -55,6 +55,7 @@ public class AddSimpleExamDialog extends JDialog {
 
         buttonConstraints.gridx = (N + 1) * 2;
         buttonConstraints.gridy = 1;
+        buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
         add(actionButton, buttonConstraints);
         pack();
