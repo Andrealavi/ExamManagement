@@ -71,6 +71,36 @@ public class ComposedExam extends AbstractExam {
         computeGrade();
     }
 
+    public String[] getPartialExamsGrades() {
+        String[] gradesStringArray = new String[grades.size()];
+
+        for (int i = 0; i < grades.size(); i++) {
+            gradesStringArray[i] = grades.get(i).toString();
+        }
+
+        return gradesStringArray;
+    }
+
+    public String[] getPartialExamsWeights() {
+        String[] weightsStringArray = new String[weights.size()];
+
+        for (int i = 0; i < weights.size(); i++) {
+            weightsStringArray[i] = weights.get(i).toString();
+        }
+
+        return weightsStringArray;
+    }
+
+    public Boolean[] getPartialExamsHonors() {
+        Boolean[] honorsArray = new Boolean[honors.size()];
+
+        for (int i = 0; i < honors.size(); i++) {
+            honorsArray[i] = honors.get(i);
+        }
+
+        return honorsArray;
+    }
+
     public String getHonor() {
         return honor ? "Sì" : "No";
     }
