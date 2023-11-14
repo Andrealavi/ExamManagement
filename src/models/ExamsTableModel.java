@@ -64,4 +64,13 @@ public class ExamsTableModel extends AbstractTableModel {
         examEntries.add(entry);
         fireTableDataChanged();
     }
+
+    public AbstractExam getEntryAtRow(int row) {
+        return examEntries.get(row);
+    }
+
+    public void updateEntryAtRow(AbstractExam entry, int row) {
+        examEntries.set(row, entry);
+        fireTableDataChanged();
+    }
 }
