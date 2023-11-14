@@ -35,7 +35,7 @@ public class SimpleExam extends AbstractExam {
 
     public String[] toStringArray() {
         String[] stringArray = { firstName, lastName, className, grade.toString(), credits.toString(),
-                honor ? "Si" : "No" };
+                getHonor() };
 
         return stringArray;
     }
