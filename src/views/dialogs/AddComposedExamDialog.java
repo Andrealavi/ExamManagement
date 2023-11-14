@@ -75,6 +75,18 @@ public class AddComposedExamDialog extends JDialog {
             return String.valueOf(honoursBox.isSelected());
         }
 
+        public JCheckBox getHonorBox() {
+            return honoursBox;
+        }
+
+        public JComboBox<String> getWeightBox() {
+            return weightComboBox;
+        }
+
+        public JTextField getGradeField() {
+            return gradeTextField;
+        }
+
         public void addToView(JDialog d, int y) {
             GridBagConstraints gradeLabelConstraints = new GridBagConstraints();
             GridBagConstraints gradeTextFieldConstraints = new GridBagConstraints();
