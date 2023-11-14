@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 import controllers.listeners.AddComposedExamListener;
 import controllers.listeners.AddSimpleExamListener;
+import controllers.listeners.DoubleClickOnEntryListener;
 import models.*;
 
 public class Controller {
@@ -43,6 +44,8 @@ public class Controller {
                 JMenuItem addComposedExamItem = menuBar.getAddExamMenu().getItem(1);
                 addComposedExamItem
                         .addActionListener(new AddComposedExamListener(f, tableModel.getColumns(), tableModel));
+
+                tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(f));
 
                 f.pack();
                 break;
