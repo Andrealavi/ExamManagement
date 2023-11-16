@@ -39,4 +39,11 @@ public class SimpleExam extends AbstractExam {
 
         return stringArray;
     }
+
+    public String toOutputString() {
+        String outputString = "simple" + firstName + "," + lastName + "," + className + "," + grade.toString() + ","
+                + credits.toString() + "," + honor.toString();
+
+        return outputString;
+    }
 }

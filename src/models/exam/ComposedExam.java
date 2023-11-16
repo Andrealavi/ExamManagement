@@ -111,4 +111,16 @@ public class ComposedExam extends AbstractExam {
 
         return stringArray;
     }
+
+    public String toOutputString() {
+        StringBuffer outputStringBuffer = new StringBuffer("composed" + firstName + "," + lastName + "," + className
+                + "," + credits.toString() + "," + grades.size() + ",");
+
+        for (int i = 0; i < grades.size(); i++) {
+            outputStringBuffer.append(
+                    grades.get(i).toString() + "," + weights.get(i).toString() + "," + honors.get(i).toString());
+        }
+
+        return outputStringBuffer.toString();
+    }
 }
