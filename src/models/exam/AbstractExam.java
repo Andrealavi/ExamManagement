@@ -48,4 +48,6 @@ public abstract class AbstractExam {
     public abstract Integer getGrade();
 
     public abstract String[] toStringArray();
+
+    public abstract String toOutputString();
 }
