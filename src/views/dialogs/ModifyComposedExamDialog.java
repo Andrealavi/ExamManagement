@@ -21,7 +21,7 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
 
     public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights,
             Boolean[] partialHonors) {
-        for (int i = 0; i < generalInfoFields.length - 2; i++) {
+        for (int i = 0; i < generalInfoFields.length - 1; i++) {
             generalInfoFields[i].setText(generalDataArray[i]);
         }
 
