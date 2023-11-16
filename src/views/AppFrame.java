@@ -9,12 +9,14 @@ public class AppFrame extends JFrame {
     private TopMenu menuBar;
     private JPanel mainPanel;
     private String panelType;
+    private JFileChooser fileChooser;
 
     public AppFrame(String title) {
         setTitle(title);
 
         menuBar = new TopMenu();
         mainPanel = new TablePanel();
+        fileChooser = new JFileChooser("../../documents/");
         panelType = "examTable";
 
         setLayout(new GridBagLayout());
@@ -51,6 +53,10 @@ public class AppFrame extends JFrame {
 
     public TopMenu getTopMenu() {
         return menuBar;
+    }
+
+    public JFileChooser getFileChooser() {
+        return fileChooser;
     }
 
     public void refreshFrame() {
