@@ -1,6 +1,8 @@
 package models;
 
 import javax.swing.table.*;
+
+import java.util.ArrayList;
 import java.util.Vector;
 
 import models.exam.AbstractExam;
@@ -72,5 +74,37 @@ public class ExamsTableModel extends AbstractTableModel {
     public void updateEntryAtRow(AbstractExam entry, int row) {
         examEntries.set(row, entry);
         fireTableDataChanged();
+    }
+
+    public void removeEntryAtRows(ArrayList<Integer> rowsIntervals) {
+        Integer[] previouslyRemoved = new Integer[examEntries.size()];
+
+        for (int i = 0; i < examEntries.size(); i++) {
+            previouslyRemoved[i] = 0;
+        }
+
+        for (int i = 0; i < rowsIntervals.size(); i += 2) {
+            int fromIndex = rowsIntervals.get(i) - previouslyRemoved[rowsIntervals.get(i) - 1] - 1;
+            int toIndex = rowsIntervals.get(i + 1) - previouslyRemoved[rowsIntervals.get(i + 1) - 1];
+
+            examEntries.subList(fromIndex, toIndex).clear();
+
+            int intervalLenght = rowsIntervals.get(i + 1) - rowsIntervals.get(i) + 1;
+
+            for (int j = rowsIntervals.get(i + 1); j < previouslyRemoved.length; j++) {
+                previouslyRemoved[j] += intervalLenght;
+            }
+        }
+
+        fireTableDataChanged();
+    }
+
+    public void setEntries(Vector<AbstractExam> examEntries) {
+        this.examEntries = examEntries;
+        fireTableDataChanged();
+    }
+
+    public Vector<AbstractExam> getEntries() {
+        return examEntries;
     }
 }
