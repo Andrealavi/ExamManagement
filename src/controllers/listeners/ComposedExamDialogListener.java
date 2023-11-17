@@ -10,10 +10,12 @@ import models.ExamsTableModel;
 public class ComposedExamDialogListener implements ActionListener {
     private AddComposedExamDialog d;
     private ExamsTableModel model;
+    private Boolean isSaved;
 
-    public ComposedExamDialogListener(AddComposedExamDialog d, ExamsTableModel model) {
+    public ComposedExamDialogListener(AddComposedExamDialog d, ExamsTableModel model, Boolean isSaved) {
         this.d = d;
         this.model = model;
+        this.isSaved = isSaved;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -25,6 +27,8 @@ public class ComposedExamDialogListener implements ActionListener {
             examEntry.setPartialExamsInfo(partialExamsData, d.getExamNumber());
 
             model.addEntry(examEntry);
+
+            isSaved = false;
 
             d.dispose();
         } catch (ExamInfoException err) {

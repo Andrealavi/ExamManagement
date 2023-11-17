@@ -2,6 +2,7 @@ package controllers.listeners;
 
 import java.awt.event.*;
 import views.dialogs.AddComposedExamDialog;
+import views.dialogs.ModifyComposedExamDialog;
 
 public class AddPartialExamListener implements ActionListener {
     private AddComposedExamDialog d;
@@ -21,6 +22,11 @@ public class AddPartialExamListener implements ActionListener {
         d.getLastPartialExam().getRemoveButton().addActionListener(new RemovePartialExamListener(d));
 
         d.refreshButton();
+
+        if (d.getClass().getSimpleName().equals("ModifyComposedExamDialog")) {
+            ModifyComposedExamDialog dialog = (ModifyComposedExamDialog) d;
+            dialog.refreshModifyButton();
+        }
 
         d.pack();
     }

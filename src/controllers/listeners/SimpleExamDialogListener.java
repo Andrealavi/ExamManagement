@@ -10,19 +10,23 @@ import models.ExamsTableModel;
 public class SimpleExamDialogListener implements ActionListener {
     private AddSimpleExamDialog d;
     private ExamsTableModel model;
+    private Boolean isSaved;
 
-    public SimpleExamDialogListener(AddSimpleExamDialog d, ExamsTableModel model) {
+    public SimpleExamDialogListener(AddSimpleExamDialog d, ExamsTableModel model, Boolean isSaved) {
         this.d = d;
         this.model = model;
+        this.isSaved = isSaved;
     }
 
     public void actionPerformed(ActionEvent e) {
         String[] data = d.getFieldsData();
 
         try {
-            SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4], data[5]);
+            SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4]);
 
             model.addEntry(examEntry);
+
+            isSaved = false;
 
             d.dispose();
         } catch (ExamInfoException err) {
