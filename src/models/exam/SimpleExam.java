@@ -8,17 +8,23 @@ public class SimpleExam extends AbstractExam {
         this.honor = honor;
     }
 
-    public SimpleExam(String firstName, String lastName, String className, String grade, String credits,
-            String honor) throws ExamInfoException {
+    public SimpleExam(String firstName, String lastName, String className, String grade, String credits)
+            throws ExamInfoException {
         super(firstName, lastName, className, credits);
 
-        if (Integer.parseInt(grade) < 18 || Integer.parseInt(grade) > 30) {
+        if (Integer.parseInt(grade) < 18) {
             throw new ExamInfoException("Invalid grade value.\nPlease insert a value between 18 and 30.");
         } else {
-            this.grade = Integer.parseInt(grade);
-        }
 
-        this.honor = Boolean.valueOf(honor);
+            this.grade = Integer.parseInt(grade);
+
+            if (this.grade > 30) {
+                this.grade = 30;
+                this.honor = true;
+            } else {
+                this.honor = false;
+            }
+        }
     }
 
     public Integer getGrade() {
@@ -41,8 +47,9 @@ public class SimpleExam extends AbstractExam {
     }
 
     public String toOutputString() {
-        String outputString = "simple" + firstName + "," + lastName + "," + className + "," + grade.toString() + ","
-                + credits.toString() + "," + honor.toString();
+        String outputString = "simple" + "," + firstName + "," + lastName + "," + className + "," + grade.toString()
+                + ","
+                + credits.toString();
 
         return outputString;
     }
