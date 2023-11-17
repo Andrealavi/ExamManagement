@@ -20,7 +20,5 @@ public class ModifySimpleExamListener implements ActionListener {
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].setEditable(true);
         }
-        
-        d.getCheckBox().setEnabled(true);
     }
 }

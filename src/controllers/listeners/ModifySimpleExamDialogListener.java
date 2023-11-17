@@ -11,20 +11,24 @@ public class ModifySimpleExamDialogListener implements ActionListener {
     private AddSimpleExamDialog d;
     private ExamsTableModel model;
     private int row;
+    private Boolean isSaved;
 
-    public ModifySimpleExamDialogListener(ModifySimpleExamDialog d, ExamsTableModel model, int row) {
+    public ModifySimpleExamDialogListener(ModifySimpleExamDialog d, ExamsTableModel model, int row, Boolean isSaved) {
         this.d = d;
         this.model = model;
         this.row = row;
+        this.isSaved = isSaved;
     }
 
     public void actionPerformed(ActionEvent e) {
         String[] data = d.getFieldsData();
 
         try {
-            SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4], data[5]);
+            SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4]);
 
             model.updateEntryAtRow(examEntry, row);
+
+            isSaved = false;
 
             d.dispose();
         } catch (ExamInfoException err) {

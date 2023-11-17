@@ -24,7 +24,6 @@ public class ModifyComposedExamListener implements ActionListener {
         for (int i = 0; i < partialExams.length; i++) {
             partialExams[i].getGradeField().setEditable(true);
             partialExams[i].getWeightBox().setEnabled(true);
-            partialExams[i].getHonorBox().setEnabled(true);
         }
 
         partialExams[partialExams.length - 1].getAddButton().setEnabled(true);

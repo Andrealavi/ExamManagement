@@ -11,11 +11,14 @@ public class ModifyComposedExamDialogListener implements ActionListener {
     private ModifyComposedExamDialog d;
     private ExamsTableModel model;
     private int row;
+    private Boolean isSaved;
 
-    public ModifyComposedExamDialogListener(ModifyComposedExamDialog d, ExamsTableModel model, int row) {
+    public ModifyComposedExamDialogListener(ModifyComposedExamDialog d, ExamsTableModel model, int row,
+            Boolean isSaved) {
         this.d = d;
         this.model = model;
         this.row = row;
+        this.isSaved = isSaved;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -26,6 +29,8 @@ public class ModifyComposedExamDialogListener implements ActionListener {
             examEntry.setPartialExamsInfo(d.getExamsData(), d.getExamNumber());
 
             model.updateEntryAtRow(examEntry, row);
+
+            isSaved = false;
 
             d.dispose();
         } catch (ExamInfoException err) {
