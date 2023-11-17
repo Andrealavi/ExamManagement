@@ -8,6 +8,7 @@ import views.panels.*;
 public class AppFrame extends JFrame {
     private TopMenu menuBar;
     private JPanel mainPanel;
+    private FilterPanel filterPanel;
     private String panelType;
     private JFileChooser fileChooser;
 
@@ -16,6 +17,7 @@ public class AppFrame extends JFrame {
 
         menuBar = new TopMenu();
         mainPanel = new TablePanel();
+        filterPanel = new FilterPanel();
         fileChooser = new JFileChooser("../../documents/");
         panelType = "examTable";
 
@@ -60,6 +62,28 @@ public class AppFrame extends JFrame {
     }
 
     public void refreshFrame() {
+        pack();
+    }
+
+    public FilterPanel getFilterPanel() {
+        return filterPanel;
+    }
+
+    public void addFilterPanel() {
+        GridBagConstraints filterPanelConstraints = new GridBagConstraints();
+
+        filterPanelConstraints.gridx = 0;
+        filterPanelConstraints.gridy = 2;
+        filterPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
+
+        add(filterPanel, filterPanelConstraints);
+
+        pack();
+    }
+
+    public void removeFilterPanel() {
+        remove(filterPanel);
+
         pack();
     }
 }
