@@ -17,8 +17,6 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
             textFields[i].setEditable(false);
         }
 
-        honorCheckBox.setEnabled(false);
-
         modifyButton = new JButton("Modify");
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
@@ -33,12 +31,6 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
         for (int i = 0; i < textFields.length; i++) {
             textFields[i].setText(stringArray[i]);
         }
-
-        if (stringArray[textFields.length].equals("Sì")) {
-            honorCheckBox.setSelected(true);
-        } else {
-            honorCheckBox.setSelected(false);
-        }
     }
 
     public JButton getModifyButton() {
@@ -47,9 +39,5 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
 
     public JTextField[] getTextFields() {
         return textFields;
-    }
-
-    public JCheckBox getCheckBox() {
-        return honorCheckBox;
     }
 }

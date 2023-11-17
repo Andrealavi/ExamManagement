@@ -7,7 +7,6 @@ public class AddSimpleExamDialog extends JDialog {
     protected JLabel[] labels;
     protected JTextField[] textFields;
     protected JButton actionButton;
-    protected JCheckBox honorCheckBox;
 
     public AddSimpleExamDialog(JFrame f, String[] columnNames) {
         super(f, "Add Simple Exam");
@@ -16,8 +15,6 @@ public class AddSimpleExamDialog extends JDialog {
 
         labels = new JLabel[N];
         textFields = new JTextField[N];
-        honorCheckBox = new JCheckBox("Honor");
-        honorCheckBox.setSelected(false);
 
         actionButton = new JButton("Add Exam");
 
@@ -26,7 +23,6 @@ public class AddSimpleExamDialog extends JDialog {
         GridBagConstraints[] labelsConstraints = new GridBagConstraints[N];
         GridBagConstraints[] textFieldsConstraints = new GridBagConstraints[N];
         GridBagConstraints buttonConstraints = new GridBagConstraints();
-        GridBagConstraints checkBoxConstraints = new GridBagConstraints();
 
         for (int i = 0, x = 0; i < N; i++, x += 2) {
             labels[i] = new JLabel(String.format("%s:", columnNames[i]));
@@ -47,13 +43,7 @@ public class AddSimpleExamDialog extends JDialog {
             add(textFields[i], textFieldsConstraints[i]);
         }
 
-        checkBoxConstraints.gridx = N * 2;
-        checkBoxConstraints.gridy = 0;
-        checkBoxConstraints.insets = new Insets(10, 10, 10, 10);
-
-        add(honorCheckBox, checkBoxConstraints);
-
-        buttonConstraints.gridx = (N + 1) * 2;
+        buttonConstraints.gridx = (N) * 2;
         buttonConstraints.gridy = 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
@@ -72,8 +62,6 @@ public class AddSimpleExamDialog extends JDialog {
         for (int i = 0; i < textFields.length; i++) {
             fieldsData[i] = textFields[i].getText();
         }
-
-        fieldsData[textFields.length] = String.valueOf(honorCheckBox.isSelected());
 
         return fieldsData;
     }

@@ -19,8 +19,7 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         removePartialExam(true);
     }
 
-    public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights,
-            Boolean[] partialHonors) {
+    public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights) {
         for (int i = 0; i < generalInfoFields.length - 1; i++) {
             generalInfoFields[i].setText(generalDataArray[i]);
         }
@@ -62,14 +61,6 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
                 default:
                     break;
             }
-
-            if (partialHonors[i]) {
-                partialExam.getHonorBox().setSelected(true);
-            } else {
-                partialExam.getHonorBox().setSelected(false);
-            }
-
-            partialExam.getHonorBox().setEnabled(false);
 
             refreshModifyButton();
             refreshButton();

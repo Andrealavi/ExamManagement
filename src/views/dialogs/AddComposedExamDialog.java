@@ -10,7 +10,6 @@ public class AddComposedExamDialog extends JDialog {
         protected JLabel gradeLabel;
         protected JTextField gradeTextField;
         protected JLabel weightLabel;
-        protected JCheckBox honoursBox;
 
         protected JComboBox<String> weightComboBox;
 
@@ -24,9 +23,7 @@ public class AddComposedExamDialog extends JDialog {
 
             weightLabel = new JLabel("Exam Weight: ");
             weightComboBox = new JComboBox<String>(weights);
-            weightComboBox.setSelectedItem(2);
-
-            honoursBox = new JCheckBox("Honours");
+            weightComboBox.setSelectedIndex(2);
 
             addPartialButton = new JButton("+");
             addPartialButton.setVisible(false);
@@ -71,14 +68,6 @@ public class AddComposedExamDialog extends JDialog {
             return "";
         }
 
-        public String getHonours() {
-            return String.valueOf(honoursBox.isSelected());
-        }
-
-        public JCheckBox getHonorBox() {
-            return honoursBox;
-        }
-
         public JComboBox<String> getWeightBox() {
             return weightComboBox;
         }
@@ -92,7 +81,6 @@ public class AddComposedExamDialog extends JDialog {
             GridBagConstraints gradeTextFieldConstraints = new GridBagConstraints();
             GridBagConstraints weightLabelConstraints = new GridBagConstraints();
             GridBagConstraints weightBoxConstraints = new GridBagConstraints();
-            GridBagConstraints honoursBoxConstraints = new GridBagConstraints();
             GridBagConstraints addButtonConstraints = new GridBagConstraints();
             GridBagConstraints removeButtonConstraints = new GridBagConstraints();
 
@@ -104,29 +92,24 @@ public class AddComposedExamDialog extends JDialog {
             gradeTextFieldConstraints.gridy = y;
             gradeTextFieldConstraints.insets = new Insets(10, 10, 10, 10);
 
-            honoursBoxConstraints.gridx = 2;
-            honoursBoxConstraints.gridy = y;
-            honoursBoxConstraints.insets = new Insets(10, 10, 10, 10);
-
-            weightLabelConstraints.gridx = 3;
+            weightLabelConstraints.gridx = 2;
             weightLabelConstraints.gridy = y;
             weightLabelConstraints.insets = new Insets(10, 10, 10, 10);
 
-            weightBoxConstraints.gridx = 4;
+            weightBoxConstraints.gridx = 3;
             weightBoxConstraints.gridy = y;
             weightBoxConstraints.insets = new Insets(10, 10, 10, 10);
 
-            addButtonConstraints.gridx = 5;
+            addButtonConstraints.gridx = 4;
             addButtonConstraints.gridy = y;
             addButtonConstraints.insets = new Insets(10, 10, 10, 0);
 
-            removeButtonConstraints.gridx = 6;
+            removeButtonConstraints.gridx = 5;
             removeButtonConstraints.gridy = y;
             removeButtonConstraints.insets = new Insets(10, 0, 10, 10);
 
             d.add(gradeLabel, gradeLabelConstraints);
             d.add(gradeTextField, gradeTextFieldConstraints);
-            d.add(honoursBox, honoursBoxConstraints);
             d.add(weightLabel, weightLabelConstraints);
             d.add(weightComboBox, weightBoxConstraints);
             d.add(addPartialButton, addButtonConstraints);
@@ -140,7 +123,6 @@ public class AddComposedExamDialog extends JDialog {
             d.remove(gradeTextField);
             d.remove(weightLabel);
             d.remove(weightComboBox);
-            d.remove(honoursBox);
             d.remove(addPartialButton);
             d.remove(removePartialButton);
 
@@ -264,12 +246,11 @@ public class AddComposedExamDialog extends JDialog {
     }
 
     public String[][] getExamsData() {
-        String[][] examsData = new String[partialExams.size()][3];
+        String[][] examsData = new String[partialExams.size()][2];
 
         for (int i = 0; i < partialExams.size(); i++) {
             examsData[i][0] = partialExams.get(i).getGrade();
             examsData[i][1] = partialExams.get(i).getWeight();
-            examsData[i][2] = partialExams.get(i).getHonours();
         }
 
         return examsData;
