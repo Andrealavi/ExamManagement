@@ -30,18 +30,17 @@ public class ExamIO {
                 String[] data = line.split(",");
 
                 if (data[0].equals("simple")) {
-                    SimpleExam exam = new SimpleExam(data[1], data[2], data[3], data[4], data[5], data[6]);
+                    SimpleExam exam = new SimpleExam(data[1], data[2], data[3], data[4], data[5]);
 
                     examEntries.add(exam);
                 } else if (data[0].equals("composed")) {
                     ComposedExam exam = new ComposedExam(data[1], data[2], data[3], data[4]);
 
-                    String[][] partialExamsInfo = new String[Integer.parseInt(data[5])][3];
+                    String[][] partialExamsInfo = new String[Integer.parseInt(data[5])][2];
 
-                    for (int i = 6, j = 0; i < (6 + (Integer.parseInt(data[5]) * 3)); i += 3, j++) {
+                    for (int i = 6, j = 0; i < (6 + (Integer.parseInt(data[5]) * 2)); i += 2, j++) {
                         partialExamsInfo[j][0] = data[i];
                         partialExamsInfo[j][1] = data[i + 1];
-                        partialExamsInfo[j][2] = data[i + 2];
                     }
 
                     exam.setPartialExamsInfo(partialExamsInfo, Integer.parseInt(data[5]));
