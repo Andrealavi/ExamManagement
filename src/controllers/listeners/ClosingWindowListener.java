@@ -7,7 +7,6 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import models.exam.*;
-import views.dialogs.ErrorDialog;
 import models.ExamsTableModel;
 
 import java.io.File;
@@ -31,11 +30,8 @@ public class ClosingWindowListener extends WindowAdapter {
                     "This file already exists, do you want to overwrite it?", "Existing file",
                     JOptionPane.YES_NO_CANCEL_OPTION);
 
-            switch (result) {
-                case JOptionPane.YES_OPTION:
-                    return true;
-                default:
-                    break;
+            if (result == JOptionPane.YES_OPTION) {
+                return true;
             }
         } else {
             return true;
@@ -67,8 +63,7 @@ public class ClosingWindowListener extends WindowAdapter {
         try {
             f.save(examEntries);
         } catch (Exception e) {
-            ErrorDialog errorDialog = new ErrorDialog(frame, e.getMessage());
-            errorDialog.getButton().addActionListener(new CloseButtonListener(errorDialog));
+            JOptionPane.showMessageDialog(frame, e.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -83,7 +78,7 @@ public class ClosingWindowListener extends WindowAdapter {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             } else if (result == JOptionPane.NO_OPTION) {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            } else if (result == JOptionPane.CANCEL_OPTION) {
+            } else {
                 frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }
         }

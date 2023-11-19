@@ -3,10 +3,13 @@ package controllers.listeners.modify;
 import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import controllers.listeners.CloseButtonListener;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import controllers.listeners.filter.ClearFilterListener;
+import controllers.listeners.filter.ShowStatsButtonListener;
+import views.AppFrame;
 import views.dialogs.*;
-import models.exam.ComposedExam;
-import models.exam.ExamInfoException;
 import models.exam.*;
 import models.ExamsTableModel;
 
@@ -15,13 +18,15 @@ public class ModifyExamDialogListener implements ActionListener {
     private ExamsTableModel model;
     private int row;
     private AtomicBoolean isSaved;
+    private AtomicBoolean isFiltered;
 
     public ModifyExamDialogListener(AbstractExamDialog dialog, ExamsTableModel model, int row,
-            AtomicBoolean isSaved) {
+            AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.dialog = dialog;
         this.model = model;
         this.row = row;
         this.isSaved = isSaved;
+        this.isFiltered = isFiltered;
     }
 
     private SimpleExam createSimpleEntry() throws ExamInfoException {
@@ -55,17 +60,56 @@ public class ModifyExamDialogListener implements ActionListener {
 
             isSaved.set(false);
 
+            if (isFiltered.get()) {
+                updateFilter();
+            }
+
             dialog.dispose();
         } catch (ExamInfoException err) {
-            ErrorDialog errDialog = new ErrorDialog(dialog, err.getMessage());
-
-            errDialog.getButton().addActionListener(new CloseButtonListener(errDialog));
+            JOptionPane.showMessageDialog(dialog, err.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException err) {
-            ErrorDialog errDialog = new ErrorDialog(dialog,
-                    "Invalid value inserted.\nPlease make sure you have inserted valid number values for grade and credits fields.");
+            JOptionPane.showMessageDialog(dialog,
+                    "Invalid value inserted.\nPlease make sure you have inserted valid number values for grade and credits fields.",
+                    "Error message", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-            errDialog.getButton().addActionListener(new CloseButtonListener(errDialog));
+    private void updateFilter() {
+        AppFrame frame = (AppFrame) dialog.getParent();
+
+        JTable table = frame.getTablePanel().getTable();
+
+        Float gradeSum = 0.0f;
+        Integer creditSum = 0;
+
+        Integer[] gradesFrequencies = new Integer[13];
+
+        for (int i = 0; i < gradesFrequencies.length; i++) {
+            gradesFrequencies[i] = 0;
         }
 
+        for (int i = 0; i < table.getRowSorter().getViewRowCount(); i++) {
+            gradesFrequencies[Integer
+                    .parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString()) - 18]++;
+
+            gradeSum += Float
+                    .parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString())
+                    * Float.parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString());
+
+            creditSum += Integer.parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString());
+        }
+
+        Integer weightedAverage = (int) (gradeSum / creditSum);
+
+        frame.removeFilterPanel();
+
+        frame.addFilterPanel();
+
+        frame.getFilterPanel().getGradeField().setText(weightedAverage.toString());
+
+        frame.getFilterPanel().getClearFilterButton()
+                .addActionListener(new ClearFilterListener(frame, table, isFiltered));
+        frame.getFilterPanel().getShowStatsButton()
+                .addActionListener(new ShowStatsButtonListener(frame, gradesFrequencies));
     }
 }

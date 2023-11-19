@@ -13,7 +13,7 @@ public class SimpleExam extends AbstractExam {
         super(firstName, lastName, className, credits);
 
         if (Integer.parseInt(grade) < 18) {
-            throw new ExamInfoException("Invalid grade value.\nPlease insert a value between 18 and 30.");
+            throw new ExamInfoException("Invalid grade value." + " Please insert a value greater than 18.");
         } else {
 
             this.grade = Integer.parseInt(grade);

@@ -33,6 +33,7 @@ public class Controller {
 
     public void addEventListeners() {
         AtomicBoolean isSaved = new AtomicBoolean(true);
+        AtomicBoolean isFiltered = new AtomicBoolean(false);
 
         TablePanel tablePanel = (TablePanel) frame.getTablePanel();
         ExamsTableModel tableModel = (ExamsTableModel) tablePanel.getTable().getModel();
@@ -51,11 +52,11 @@ public class Controller {
         addComposedExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
 
         JMenuItem removeEntriesItem = menuBar.getExamMenuItems()[1];
-        removeEntriesItem.addActionListener(new RemoveEntryListener(frame, tableModel, isSaved));
+        removeEntriesItem.addActionListener(new RemoveEntryListener(frame, tablePanel.getTable(), isSaved, isFiltered));
         removeEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
 
         JMenuItem filterEntriesItem = menuBar.getExamMenuItems()[2];
-        filterEntriesItem.addActionListener(new FilterExamsListener(frame, tablePanel.getTable()));
+        filterEntriesItem.addActionListener(new FilterExamsListener(frame, tablePanel.getTable(), isFiltered));
         filterEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
 
         JMenuItem[] fileMenu = menuBar.getFileMenuItems();
@@ -66,10 +67,10 @@ public class Controller {
         fileMenu[1].addActionListener(new SaveFileListener(frame, frame.getFileChooser(), tableModel, isSaved));
         fileMenu[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 
-        fileMenu[2].addActionListener(new PrintTableListener(tablePanel.getTable()));
+        fileMenu[2].addActionListener(new PrintTableListener(frame, tablePanel.getTable()));
         fileMenu[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
-        tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(frame, isSaved));
+        tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(frame, isSaved, isFiltered));
 
         frame.addWindowListener(new ClosingWindowListener(frame, frame.getFileChooser(), tableModel, isSaved));
 

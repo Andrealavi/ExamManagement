@@ -11,7 +11,7 @@ public class AutoSaveThread extends Thread {
     }
 
     public void run() {
-        ExamIO file = new ExamIO("../documents/.datalog");
+        ExamIO file = new ExamIO("./documents/.datalog");
 
         while (true) {
             try {

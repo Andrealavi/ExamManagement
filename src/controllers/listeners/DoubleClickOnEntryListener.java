@@ -16,16 +16,18 @@ import views.dialogs.ModifySimpleExamDialog;
 public class DoubleClickOnEntryListener extends MouseAdapter {
     private JFrame frame;
     private AtomicBoolean isSaved;
+    private AtomicBoolean isFiltered;
 
-    public DoubleClickOnEntryListener(JFrame frame, AtomicBoolean isSaved) {
+    public DoubleClickOnEntryListener(JFrame frame, AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.frame = frame;
         this.isSaved = isSaved;
+        this.isFiltered = isFiltered;
     }
 
     public void mousePressed(MouseEvent e) {
         JTable table = (JTable) e.getSource();
         Point p = e.getPoint();
-        int row = table.rowAtPoint(p);
+        int row = table.convertRowIndexToModel(table.rowAtPoint(p));
 
         if (e.getClickCount() == 2) {
             ExamsTableModel model = (ExamsTableModel) table.getModel();
@@ -36,8 +38,8 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
                 dialog = new ModifySimpleExamDialog(frame, model.getColumns());
                 ((ModifySimpleExamDialog) dialog).setEntryFields(entry.toStringArray());
 
-                ((ModifySimpleExamDialog) dialog).getModifyButton().addActionListener(
-                        new ModifyExamListener(dialog, model, row, isSaved));
+                ((ModifySimpleExamDialog) dialog).getModifyButton()
+                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved, isFiltered));
             } else {
                 dialog = new ModifyComposedExamDialog(frame);
                 ((ModifyComposedExamDialog) dialog).setEntryFields(entry.toStringArray(),
@@ -45,7 +47,7 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
                         ((ComposedExam) entry).getPartialExamsWeights());
 
                 ((ModifyComposedExamDialog) dialog).getModifyButton()
-                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved));
+                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved, isFiltered));
             }
 
             dialog.getButton().addActionListener(new CloseButtonListener(dialog));

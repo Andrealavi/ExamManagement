@@ -84,8 +84,8 @@ public class ExamsTableModel extends AbstractTableModel {
         }
 
         for (int i = 0; i < rowsIntervals.size(); i += 2) {
-            int fromIndex = rowsIntervals.get(i) - previouslyRemoved[rowsIntervals.get(i) - 1] - 1;
-            int toIndex = rowsIntervals.get(i + 1) - previouslyRemoved[rowsIntervals.get(i + 1) - 1];
+            int fromIndex = rowsIntervals.get(i) - previouslyRemoved[rowsIntervals.get(i)];
+            int toIndex = rowsIntervals.get(i + 1) - previouslyRemoved[rowsIntervals.get(i + 1)] + 1;
 
             examEntries.subList(fromIndex, toIndex).clear();
 

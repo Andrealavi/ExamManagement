@@ -7,7 +7,7 @@ import views.panels.*;
 
 public class AppFrame extends JFrame {
     private TopMenu menuBar;
-    private JPanel tablePanel;
+    private TablePanel tablePanel;
     private FilterPanel filterPanel;
     private JFileChooser fileChooser;
 
@@ -43,7 +43,7 @@ public class AppFrame extends JFrame {
         this("");
     }
 
-    public JPanel getTablePanel() {
+    public TablePanel getTablePanel() {
         return tablePanel;
     }
 
@@ -72,6 +72,12 @@ public class AppFrame extends JFrame {
     }
 
     public void removeFilterPanel() {
+        filterPanel.getShowStatsButton().removeActionListener(filterPanel.getShowStatsButton().getActionListeners()[0]);
+        filterPanel.getClearFilterButton()
+                .removeActionListener(filterPanel.getClearFilterButton().getActionListeners()[0]);
+
+        // filterPanel.removeAll();
+
         remove(filterPanel);
 
         pack();

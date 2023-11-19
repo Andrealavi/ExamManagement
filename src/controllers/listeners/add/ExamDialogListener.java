@@ -3,10 +3,11 @@ package controllers.listeners.add;
 import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.swing.JOptionPane;
+
 import views.dialogs.*;
 import models.exam.*;
 import models.ExamsTableModel;
-import controllers.listeners.CloseButtonListener;
 
 public class ExamDialogListener implements ActionListener {
     private AbstractExamDialog dialog;
@@ -53,14 +54,11 @@ public class ExamDialogListener implements ActionListener {
 
             dialog.dispose();
         } catch (ExamInfoException err) {
-            ErrorDialog errDialog = new ErrorDialog(dialog, err.getMessage());
-
-            errDialog.getButton().addActionListener(new CloseButtonListener(errDialog));
+            JOptionPane.showMessageDialog(dialog, err.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException err) {
-            ErrorDialog errDialog = new ErrorDialog(dialog,
-                    "Invalid value inserted.\nPlease make sure you have inserted valid number values for grade and credits fields.");
-
-            errDialog.getButton().addActionListener(new CloseButtonListener(errDialog));
+            JOptionPane.showMessageDialog(dialog, "Invalid value inserted.\\n" +
+                    "Please make sure you have inserted valid number values for grade and credits fields.",
+                    "Error message", JOptionPane.ERROR_MESSAGE);
         }
 
     }

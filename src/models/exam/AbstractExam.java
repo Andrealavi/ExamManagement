@@ -21,7 +21,7 @@ public abstract class AbstractExam {
         this.className = className;
 
         if (Integer.parseInt(credits) <= 0 || Integer.parseInt(credits) > 18) {
-            throw new ExamInfoException("Invalid credits value.\nPlease insert a value between 0 and 18.");
+            throw new ExamInfoException("Invalid credits value. Please insert a value between 0 and 18.");
         } else {
             this.credits = Integer.parseInt(credits);
         }

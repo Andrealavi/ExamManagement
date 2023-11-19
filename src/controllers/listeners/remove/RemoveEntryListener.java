@@ -4,25 +4,29 @@ import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
-import models.ExamsTableModel;
 import views.dialogs.RemoveEntryDialog;
 
 public class RemoveEntryListener implements ActionListener {
     private JFrame frame;
-    private ExamsTableModel model;
+    private JTable table;
     private AtomicBoolean isSaved;
+    private AtomicBoolean isFiltered;
 
-    public RemoveEntryListener(JFrame frame, ExamsTableModel model, AtomicBoolean isSaved) {
+    public RemoveEntryListener(JFrame frame, JTable table, AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.frame = frame;
-        this.model = model;
+        this.table = table;
         this.isSaved = isSaved;
+        this.isFiltered = isFiltered;
     }
 
     public void actionPerformed(ActionEvent e) {
         RemoveEntryDialog dialog = new RemoveEntryDialog(frame);
 
-        dialog.getButton().addActionListener(new RemoveEntryDialogListener(dialog, model, isSaved));
+        dialog.getButton().addActionListener(new RemoveEntryDialogListener(dialog, table, isSaved, isFiltered));
+
+        dialog.getInfoButton().addActionListener(new RemoveInfoButtonListener(dialog));
 
         dialog.pack();
 

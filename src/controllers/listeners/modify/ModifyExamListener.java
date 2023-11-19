@@ -18,13 +18,15 @@ public class ModifyExamListener implements ActionListener {
     private ExamsTableModel model;
     private int row;
     private AtomicBoolean isSaved;
+    private AtomicBoolean isFiltered;
 
     public ModifyExamListener(AbstractExamDialog dialog, ExamsTableModel model, int row,
-            AtomicBoolean isSaved) {
+            AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.dialog = dialog;
         this.model = model;
         this.row = row;
         this.isSaved = isSaved;
+        this.isFiltered = isFiltered;
     }
 
     public void enableComposedExamUpdate() {
@@ -51,7 +53,7 @@ public class ModifyExamListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         dialog.getButton().setText("Update");
         dialog.getButton().removeActionListener(dialog.getButton().getActionListeners()[0]);
-        dialog.getButton().addActionListener(new ModifyExamDialogListener(dialog, model, row, isSaved));
+        dialog.getButton().addActionListener(new ModifyExamDialogListener(dialog, model, row, isSaved, isFiltered));
 
         dialog.pack();
 

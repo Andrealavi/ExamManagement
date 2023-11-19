@@ -1,6 +1,7 @@
 package controllers.listeners.filter;
 
 import java.awt.event.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTable;
 
@@ -10,12 +11,14 @@ import views.dialogs.FilterDialog;
 import views.*;
 
 public class FilterDialogListener implements ActionListener {
-    private FilterDialog d;
+    private FilterDialog dialog;
     private JTable table;
+    private AtomicBoolean isFiltered;
 
-    public FilterDialogListener(FilterDialog d, JTable table) {
-        this.d = d;
+    public FilterDialogListener(FilterDialog dialog, JTable table, AtomicBoolean isFiltered) {
+        this.dialog = dialog;
         this.table = table;
+        this.isFiltered = isFiltered;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -23,16 +26,25 @@ public class FilterDialogListener implements ActionListener {
 
         table.setRowSorter(rs);
 
-        rs.createRowFilter(d.getFilterField().getText());
+        rs.createRowFilter(dialog.getFilterField().getText());
 
-        d.dispose();
+        dialog.dispose();
 
-        AppFrame frame = (AppFrame) d.getParent();
+        AppFrame frame = (AppFrame) dialog.getParent();
 
         Float gradeSum = 0.0f;
         Integer creditSum = 0;
 
+        Integer[] gradesFrequencies = new Integer[13];
+
+        for (int i = 0; i < gradesFrequencies.length; i++) {
+            gradesFrequencies[i] = 0;
+        }
+
         for (int i = 0; i < table.getRowSorter().getViewRowCount(); i++) {
+            gradesFrequencies[Integer
+                    .parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString()) - 18]++;
+
             gradeSum += Float
                     .parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString())
                     * Float.parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString());
@@ -46,6 +58,11 @@ public class FilterDialogListener implements ActionListener {
 
         frame.getFilterPanel().getGradeField().setText(weightedAverage.toString());
 
-        frame.getFilterPanel().getClearFilterButton().addActionListener(new ClearFilterListener(frame, table));
+        frame.getFilterPanel().getClearFilterButton()
+                .addActionListener(new ClearFilterListener(frame, table, isFiltered));
+        frame.getFilterPanel().getShowStatsButton()
+                .addActionListener(new ShowStatsButtonListener(frame, gradesFrequencies));
+
+        isFiltered.set(true);
     }
 }

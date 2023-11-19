@@ -9,11 +9,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import controllers.listeners.CloseButtonListener;
 import models.ExamsTableModel;
 import models.exam.AbstractExam;
 import models.exam.ExamIO;
-import views.dialogs.ErrorDialog;
 
 public class SaveFileListener implements ActionListener {
     private JFrame frame;
@@ -25,7 +23,7 @@ public class SaveFileListener implements ActionListener {
         this.frame = frame;
         this.model = model;
         this.fileChooser = fileChooser;
-        fileChooser.setCurrentDirectory(new File("../documents"));
+        fileChooser.setCurrentDirectory(new File("./documents"));
         this.isSaved = isSaved;
     }
 
@@ -70,9 +68,11 @@ public class SaveFileListener implements ActionListener {
 
         try {
             fileIO.save(examEntries);
+        } catch (NullPointerException nullPointerException) {
+            // I don't want to manage this exception, but I don't want to have errors on
+            // terminal
         } catch (Exception error) {
-            ErrorDialog errorDialog = new ErrorDialog(frame, error.getMessage());
-            errorDialog.getButton().addActionListener(new CloseButtonListener(errorDialog));
+            JOptionPane.showMessageDialog(frame, error.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         }
 
         isSaved.set(true);

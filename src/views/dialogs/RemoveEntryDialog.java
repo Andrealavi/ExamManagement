@@ -6,6 +6,7 @@ import java.awt.*;
 public class RemoveEntryDialog extends JDialog {
     private JLabel removeExprLabel;
     private JTextField removeExprField;
+    private JButton infoButton;
     private JButton actionButton;
 
     public RemoveEntryDialog(JFrame f) {
@@ -13,6 +14,7 @@ public class RemoveEntryDialog extends JDialog {
 
         removeExprLabel = new JLabel("Remove Expression:");
         removeExprField = new JTextField(25);
+        infoButton = new JButton("?");
         actionButton = new JButton("Remove");
 
         setLayout(new GridBagLayout());
@@ -20,6 +22,7 @@ public class RemoveEntryDialog extends JDialog {
         GridBagConstraints labelConstraints = new GridBagConstraints();
         GridBagConstraints fieldConstraints = new GridBagConstraints();
         GridBagConstraints buttonConstraints = new GridBagConstraints();
+        GridBagConstraints infoButtonConstraints = new GridBagConstraints();
 
         labelConstraints.gridx = 0;
         labelConstraints.gridy = 0;
@@ -33,6 +36,12 @@ public class RemoveEntryDialog extends JDialog {
 
         add(removeExprField, fieldConstraints);
 
+        infoButtonConstraints.gridx = 2;
+        infoButtonConstraints.gridy = 0;
+        infoButtonConstraints.insets = new Insets(10, 10, 10, 10);
+
+        add(infoButton, infoButtonConstraints);
+
         buttonConstraints.gridx = 1;
         buttonConstraints.gridy = 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
@@ -45,6 +54,10 @@ public class RemoveEntryDialog extends JDialog {
 
     public JButton getButton() {
         return actionButton;
+    }
+
+    public JButton getInfoButton() {
+        return infoButton;
     }
 
     public JTextField getField() {

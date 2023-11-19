@@ -55,15 +55,19 @@ public class ComposedExam extends AbstractExam {
             sum += weight;
         }
 
+        if (sum.equals(0.99f)) {
+            sum = 1.0f;
+        }
+
         for (Integer grade : grades) {
             if (grade < 18) {
                 throw new ExamInfoException(
-                        "Invalid value in partial exams grades.\nMake sure all grades are higher than 18");
+                        "Invalid grade value." + " Please insert a value greater than 18");
             }
         }
 
         if (!sum.equals(1.0f)) {
-            throw new ExamInfoException("Invalid value in partial exams weights.\nPlease be sure they add up to 100%");
+            throw new ExamInfoException("Invalid value in partial exams weights. Please be sure they add up to 100%");
         }
 
         computeGrade();

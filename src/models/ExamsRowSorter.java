@@ -12,7 +12,7 @@ public class ExamsRowSorter extends TableRowSorter<ExamsTableModel> {
         RowFilter<ExamsTableModel, Object> rf = null;
 
         try {
-            rf = RowFilter.regexFilter("(?i)" + filterString, 0, 1, 2);
+            rf = RowFilter.regexFilter("(?i)" + filterString + "$", 0, 1, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;
