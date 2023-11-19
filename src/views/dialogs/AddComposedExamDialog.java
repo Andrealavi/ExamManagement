@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AddComposedExamDialog extends JDialog {
+public class AddComposedExamDialog extends AbstractExamDialog {
     public class PartialExamView {
         protected final String[] weights = { "25%", "33%", "50%", "67%", "75%" };
         protected JLabel gradeLabel;
@@ -17,7 +17,6 @@ public class AddComposedExamDialog extends JDialog {
         protected JButton removePartialButton;
 
         public PartialExamView() {
-
             gradeLabel = new JLabel("Exam Grade: ");
             gradeTextField = new JTextField("Insert grade", 25);
 
@@ -129,9 +128,6 @@ public class AddComposedExamDialog extends JDialog {
         }
     }
 
-    protected JLabel[] generalInfoLabels;
-    protected JTextField[] generalInfoFields;
-    protected JButton actionButton;
     protected ArrayList<PartialExamView> partialExams;
 
     public AddComposedExamDialog(JFrame f) {
@@ -139,8 +135,8 @@ public class AddComposedExamDialog extends JDialog {
 
         final String[] COL_NAMES = { "First name", "Last name", "Class", "Credits" };
 
-        generalInfoLabels = new JLabel[COL_NAMES.length];
-        generalInfoFields = new JTextField[COL_NAMES.length];
+        generalLabels = new JLabel[COL_NAMES.length];
+        generalFields = new JTextField[COL_NAMES.length];
         partialExams = new ArrayList<PartialExamView>();
         actionButton = new JButton("Add");
 
@@ -151,10 +147,10 @@ public class AddComposedExamDialog extends JDialog {
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
         for (int i = 0, x = 0; i < COL_NAMES.length; i++, x += 2) {
-            generalInfoLabels[i] = new JLabel(String.format("%s:", COL_NAMES[i]));
+            generalLabels[i] = new JLabel(String.format("%s:", COL_NAMES[i]));
             infoLabelsConstraints[i] = new GridBagConstraints();
 
-            generalInfoFields[i] = new JTextField(String.format("Insert %s", COL_NAMES[i]), 25);
+            generalFields[i] = new JTextField(String.format("Insert %s", COL_NAMES[i]), 25);
             infoFieldsConstraints[i] = new GridBagConstraints();
 
             infoLabelsConstraints[i].gridx = x;
@@ -165,8 +161,8 @@ public class AddComposedExamDialog extends JDialog {
             infoFieldsConstraints[i].gridy = 0;
             infoFieldsConstraints[i].insets = new Insets(10, 10, 10, 10);
 
-            add(generalInfoLabels[i], infoLabelsConstraints[i]);
-            add(generalInfoFields[i], infoFieldsConstraints[i]);
+            add(generalLabels[i], infoLabelsConstraints[i]);
+            add(generalFields[i], infoFieldsConstraints[i]);
         }
 
         addPartialExam();
@@ -220,10 +216,10 @@ public class AddComposedExamDialog extends JDialog {
     }
 
     public String[] getFieldsData() {
-        String[] generalFieldsData = new String[generalInfoFields.length];
+        String[] generalFieldsData = new String[generalFields.length];
 
-        for (int i = 0; i < generalInfoFields.length; i++) {
-            generalFieldsData[i] = generalInfoFields[i].getText();
+        for (int i = 0; i < generalFields.length; i++) {
+            generalFieldsData[i] = generalFields[i].getText();
         }
 
         return generalFieldsData;
@@ -234,7 +230,7 @@ public class AddComposedExamDialog extends JDialog {
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
-        buttonConstraints.gridx = (generalInfoFields.length) * 2;
+        buttonConstraints.gridx = (generalFields.length) * 2;
         buttonConstraints.gridy = partialExams.size() + 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 

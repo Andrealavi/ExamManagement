@@ -1,57 +1,82 @@
 package controllers;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
 import views.*;
-// import views.dialogs.*;
 import views.panels.*;
 
-import javax.swing.JMenuItem;
-
-import controllers.listeners.AddComposedExamListener;
-import controllers.listeners.AddSimpleExamListener;
-import controllers.listeners.DoubleClickOnEntryListener;
 import models.*;
 
-public class Controller {
-    private AppFrame f;
+import controllers.listeners.*;
+import controllers.listeners.add.AddComposedExamListener;
+import controllers.listeners.add.AddSimpleExamListener;
+import controllers.listeners.filter.FilterExamsListener;
+import controllers.listeners.io.*;
+import controllers.listeners.remove.RemoveEntryListener;
 
-    public Controller(AppFrame f) {
-        this.f = f;
+public class Controller {
+    private AppFrame frame;
+
+    public Controller(AppFrame frame) {
+        this.frame = frame;
     }
 
     public void setTableModel() {
-        switch (f.getPanelType()) {
-            case "examTable":
-                TablePanel tablePanel = (TablePanel) f.getMainPanel();
-                tablePanel.getTable().setModel(new ExamsTableModel());
-                break;
-
-            default:
-                break;
-        }
+        TablePanel tablePanel = (TablePanel) frame.getTablePanel();
+        tablePanel.getTable().setModel(new ExamsTableModel());
     }
 
     public void addEventListeners() {
-        switch (f.getPanelType()) {
-            case "examTable":
-                TablePanel tablePanel = (TablePanel) f.getMainPanel();
-                ExamsTableModel tableModel = (ExamsTableModel) tablePanel.getTable().getModel();
+        AtomicBoolean isSaved = new AtomicBoolean(true);
 
-                TopMenu menuBar = f.getTopMenu();
+        TablePanel tablePanel = (TablePanel) frame.getTablePanel();
+        ExamsTableModel tableModel = (ExamsTableModel) tablePanel.getTable().getModel();
 
-                JMenuItem addSimpleExamItem = menuBar.getAddExamMenu().getItem(0);
-                addSimpleExamItem.addActionListener(new AddSimpleExamListener(f, tableModel.getColumns(), tableModel));
+        TopMenu menuBar = frame.getTopMenu();
 
-                JMenuItem addComposedExamItem = menuBar.getAddExamMenu().getItem(1);
-                addComposedExamItem
-                        .addActionListener(new AddComposedExamListener(f, tableModel.getColumns(), tableModel));
+        JMenuItem addSimpleExamItem = ((JMenu) menuBar.getExamMenuItems()[0]).getItem(0);
+        addSimpleExamItem
+                .addActionListener(new AddSimpleExamListener(frame, tableModel.getColumns(), tableModel, isSaved));
+        addSimpleExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
 
-                tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(f));
+        JMenuItem addComposedExamItem = ((JMenu) menuBar.getExamMenuItems()[0]).getItem(1);
+        addComposedExamItem
+                .addActionListener(
+                        new AddComposedExamListener(frame, tableModel, isSaved));
+        addComposedExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
 
-                f.pack();
-                break;
+        JMenuItem removeEntriesItem = menuBar.getExamMenuItems()[1];
+        removeEntriesItem.addActionListener(new RemoveEntryListener(frame, tableModel, isSaved));
+        removeEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
 
-            default:
-                break;
-        }
+        JMenuItem filterEntriesItem = menuBar.getExamMenuItems()[2];
+        filterEntriesItem.addActionListener(new FilterExamsListener(frame, tablePanel.getTable()));
+        filterEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
+
+        JMenuItem[] fileMenu = menuBar.getFileMenuItems();
+
+        fileMenu[0].addActionListener(new LoadFileListener(frame, frame.getFileChooser(), tableModel, isSaved));
+        fileMenu[0].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.CTRL_MASK));
+
+        fileMenu[1].addActionListener(new SaveFileListener(frame, frame.getFileChooser(), tableModel, isSaved));
+        fileMenu[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+
+        fileMenu[2].addActionListener(new PrintTableListener(tablePanel.getTable()));
+        fileMenu[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+
+        tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(frame, isSaved));
+
+        frame.addWindowListener(new ClosingWindowListener(frame, frame.getFileChooser(), tableModel, isSaved));
+
+        frame.pack();
+
+        AutoSaveThread saveThread = new AutoSaveThread(tableModel);
+
+        saveThread.run();
     }
 }

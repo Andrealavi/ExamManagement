@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import java.awt.GridBagConstraints;
+import java.awt.*;
 
 public class ModifySimpleExamDialog extends AddSimpleExamDialog {
     private JButton modifyButton;
@@ -12,23 +12,25 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
     public ModifySimpleExamDialog(JFrame f, String[] columnNames) {
         super(f, columnNames);
 
-        for (int i = 0; i < textFields.length; i++) {
-            textFields[i].setEditable(false);
+        for (int i = 0; i < generalFields.length; i++) {
+            generalFields[i].setEditable(false);
         }
 
         modifyButton = new JButton("Modify");
+        actionButton.setText("Close");
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
         buttonConstraints.gridx = 0;
         buttonConstraints.gridy = 1;
+        buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
         add(modifyButton, buttonConstraints);
     }
 
     public void setEntryFields(String[] stringArray) {
-        for (int i = 0; i < textFields.length; i++) {
-            textFields[i].setText(stringArray[i]);
+        for (int i = 0; i < generalFields.length; i++) {
+            generalFields[i].setText(stringArray[i]);
         }
     }
 
@@ -36,7 +38,7 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
         return modifyButton;
     }
 
-    public JTextField[] getTextFields() {
-        return textFields;
+    public JTextField[] getGeneralFields() {
+        return generalFields;
     }
 }

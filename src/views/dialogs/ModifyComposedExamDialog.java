@@ -9,22 +9,23 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
     public ModifyComposedExamDialog(JFrame f) {
         super(f);
 
-        for (int i = 0; i < generalInfoFields.length; i++) {
-            generalInfoFields[i].setEditable(false);
+        for (int i = 0; i < generalFields.length; i++) {
+            generalFields[i].setEditable(false);
         }
 
         modifyButton = new JButton("Modify");
+        actionButton.setText("Close");
 
         removePartialExam(true);
         removePartialExam(true);
     }
 
     public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights) {
-        for (int i = 0; i < generalInfoFields.length - 1; i++) {
-            generalInfoFields[i].setText(generalDataArray[i]);
+        for (int i = 0; i < generalFields.length - 1; i++) {
+            generalFields[i].setText(generalDataArray[i]);
         }
 
-        generalInfoFields[3].setText(generalDataArray[4]);
+        generalFields[3].setText(generalDataArray[4]);
 
         for (int i = 0; i < partialGrades.length; i++) {
             addPartialExam();
@@ -97,8 +98,8 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         return modifyButton;
     }
 
-    public JTextField[] getGeneralTextFields() {
-        return generalInfoFields;
+    public JTextField[] getGeneralFields() {
+        return generalFields;
     }
 
     public PartialExamView[] getPartialExams() {

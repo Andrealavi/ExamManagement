@@ -1,6 +1,7 @@
 package controllers;
 
 import models.ExamsTableModel;
+import models.exam.ExamIO;
 
 public class AutoSaveThread extends Thread {
     public ExamsTableModel model;

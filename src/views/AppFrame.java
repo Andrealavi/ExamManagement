@@ -7,19 +7,17 @@ import views.panels.*;
 
 public class AppFrame extends JFrame {
     private TopMenu menuBar;
-    private JPanel mainPanel;
+    private JPanel tablePanel;
     private FilterPanel filterPanel;
-    private String panelType;
     private JFileChooser fileChooser;
 
     public AppFrame(String title) {
         setTitle(title);
 
         menuBar = new TopMenu();
-        mainPanel = new TablePanel();
+        tablePanel = new TablePanel();
         filterPanel = new FilterPanel();
-        fileChooser = new JFileChooser("../../documents/");
-        panelType = "examTable";
+        fileChooser = new JFileChooser();
 
         setLayout(new GridBagLayout());
 
@@ -35,7 +33,7 @@ public class AppFrame extends JFrame {
         panelConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         add(menuBar, menuConstraints);
-        add(mainPanel, panelConstraints);
+        add(tablePanel, panelConstraints);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -45,12 +43,8 @@ public class AppFrame extends JFrame {
         this("");
     }
 
-    public String getPanelType() {
-        return panelType;
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
+    public JPanel getTablePanel() {
+        return tablePanel;
     }
 
     public TopMenu getTopMenu() {
@@ -59,10 +53,6 @@ public class AppFrame extends JFrame {
 
     public JFileChooser getFileChooser() {
         return fileChooser;
-    }
-
-    public void refreshFrame() {
-        pack();
     }
 
     public FilterPanel getFilterPanel() {

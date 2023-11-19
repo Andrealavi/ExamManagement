@@ -5,14 +5,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
-public class ErrorDialogButtonListener implements ActionListener {
-    private JDialog d;
+public class CloseButtonListener implements ActionListener {
+    private JDialog dialog;
 
-    public ErrorDialogButtonListener(JDialog d) {
-        this.d = d;
+    public CloseButtonListener(JDialog dialog) {
+        this.dialog = dialog;
     }
 
     public void actionPerformed(ActionEvent e) {
-        d.dispose();
+        dialog.dispose();
     }
 }

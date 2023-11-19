@@ -10,6 +10,16 @@ public class ErrorDialog extends JDialog {
     public ErrorDialog(JDialog d, String errorMessage) {
         super(d, "Error Message");
 
+        setDialogComponents(errorMessage);
+    }
+
+    public ErrorDialog(JFrame f, String errorMessage) {
+        super(f, "Error Message");
+
+        setDialogComponents(errorMessage);
+    }
+
+    private void setDialogComponents(String errorMessage) {
         errorMessageArea = new JTextArea(errorMessage);
         errorMessageArea.setEditable(false);
 

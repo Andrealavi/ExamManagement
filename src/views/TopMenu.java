@@ -43,16 +43,9 @@ public class TopMenu extends JMenuBar {
         return fileItems;
     }
 
-    public JMenu getAddExamMenu() {
-        return (JMenu) examMenu.getItem(0);
-    }
-
     public JMenuItem[] getExamMenuItems() {
-        JMenu addExamMenu = (JMenu) examMenu.getItem(0);
+        JMenuItem[] examItems = { examMenu.getItem(0), examMenu.getItem(1), examMenu.getItem(2) };
 
-        JMenuItem[] menuItems = { addExamMenu.getItem(0), addExamMenu.getItem(1), addExamMenu.getItem(2),
-                examMenu.getItem(1), examMenu.getItem(2) };
-
-        return menuItems;
+        return examItems;
     }
 }

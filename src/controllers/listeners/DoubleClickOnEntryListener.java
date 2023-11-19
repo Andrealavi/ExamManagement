@@ -2,18 +2,24 @@ package controllers.listeners;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.swing.*;
 
+import controllers.listeners.modify.ModifyExamListener;
 import models.ExamsTableModel;
 import models.exam.*;
+import views.dialogs.AbstractExamDialog;
 import views.dialogs.ModifyComposedExamDialog;
 import views.dialogs.ModifySimpleExamDialog;
 
 public class DoubleClickOnEntryListener extends MouseAdapter {
-    private JFrame f;
+    private JFrame frame;
+    private AtomicBoolean isSaved;
 
-    public DoubleClickOnEntryListener(JFrame f) {
-        this.f = f;
+    public DoubleClickOnEntryListener(JFrame frame, AtomicBoolean isSaved) {
+        this.frame = frame;
+        this.isSaved = isSaved;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -24,30 +30,26 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
         if (e.getClickCount() == 2) {
             ExamsTableModel model = (ExamsTableModel) table.getModel();
             AbstractExam entry = model.getEntryAtRow(row);
+            AbstractExamDialog dialog;
 
             if (entry.getClass().getSimpleName().equals("SimpleExam")) {
-                ModifySimpleExamDialog d = new ModifySimpleExamDialog(f, model.getColumns());
-                d.setEntryFields(entry.toStringArray());
+                dialog = new ModifySimpleExamDialog(frame, model.getColumns());
+                ((ModifySimpleExamDialog) dialog).setEntryFields(entry.toStringArray());
 
-                d.getModifyButton().addActionListener(new ModifySimpleExamListener(d));
-
-                d.getButton().setText("Update");
-                d.getButton().addActionListener(new ModifySimpleExamDialogListener(d, model, row));
-
+                ((ModifySimpleExamDialog) dialog).getModifyButton().addActionListener(
+                        new ModifyExamListener(dialog, model, row, isSaved));
             } else {
-                ComposedExam composed = (ComposedExam) entry;
+                dialog = new ModifyComposedExamDialog(frame);
+                ((ModifyComposedExamDialog) dialog).setEntryFields(entry.toStringArray(),
+                        ((ComposedExam) entry).getPartialExamsGrades(),
+                        ((ComposedExam) entry).getPartialExamsWeights());
 
-                ModifyComposedExamDialog d = new ModifyComposedExamDialog(f);
-                d.setEntryFields(entry.toStringArray(), composed.getPartialExamsGrades(),
-                        composed.getPartialExamsWeights(), composed.getPartialExamsHonors());
-
-                d.getModifyButton().addActionListener(new ModifyComposedExamListener(d));
-
-                d.getButton().setText("Update");
-                d.getButton().addActionListener(new ModifyComposedExamDialogListener(d, model, row));
-
-                d.pack();
+                ((ModifyComposedExamDialog) dialog).getModifyButton()
+                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved));
             }
+
+            dialog.getButton().addActionListener(new CloseButtonListener(dialog));
+            dialog.getRootPane().setDefaultButton(dialog.getButton());
         }
     }
 }
