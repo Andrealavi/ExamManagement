@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers
+ */
 package controllers;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,18 +24,36 @@ import controllers.listeners.filter.FilterExamsListener;
 import controllers.listeners.io.*;
 import controllers.listeners.remove.RemoveEntryListener;
 
+/**
+ * Enables interaction with {@link models} package
+ */
 public class Controller {
+    /**
+     * Application Frame
+     */
     private AppFrame frame;
 
+    /**
+     * Instantiates class attribute with the value passed as argument
+     * 
+     * @param frame Application frame
+     */
     public Controller(AppFrame frame) {
         this.frame = frame;
     }
 
+    /**
+     * Sets the exams table model
+     */
     public void setTableModel() {
         TablePanel tablePanel = (TablePanel) frame.getTablePanel();
         tablePanel.getTable().setModel(new ExamsTableModel());
     }
 
+    /**
+     * Adds all the event listeners to the views components, in particular to the
+     * application menu components.
+     */
     public void addEventListeners() {
         AtomicBoolean isSaved = new AtomicBoolean(true);
         AtomicBoolean isFiltered = new AtomicBoolean(false);
@@ -42,13 +65,14 @@ public class Controller {
 
         JMenuItem addSimpleExamItem = ((JMenu) menuBar.getExamMenuItems()[0]).getItem(0);
         addSimpleExamItem
-                .addActionListener(new AddSimpleExamListener(frame, tableModel.getColumns(), tableModel, isSaved));
+                .addActionListener(
+                        new AddSimpleExamListener(frame, tableModel.getColumns(), tableModel, isSaved, isFiltered));
         addSimpleExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
 
         JMenuItem addComposedExamItem = ((JMenu) menuBar.getExamMenuItems()[0]).getItem(1);
         addComposedExamItem
                 .addActionListener(
-                        new AddComposedExamListener(frame, tableModel, isSaved));
+                        new AddComposedExamListener(frame, tableModel, isSaved, isFiltered));
         addComposedExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
 
         JMenuItem removeEntriesItem = menuBar.getExamMenuItems()[1];
@@ -75,8 +99,13 @@ public class Controller {
         frame.addWindowListener(new ClosingWindowListener(frame, frame.getFileChooser(), tableModel, isSaved));
 
         frame.pack();
+    }
 
-        AutoSaveThread saveThread = new AutoSaveThread(tableModel);
+    /**
+     * Creates and starts {@link controllers.AutoSaveThread}
+     */
+    public void startThread() {
+        AutoSaveThread saveThread = new AutoSaveThread((ExamsTableModel) frame.getTablePanel().getTable().getModel());
 
         saveThread.run();
     }

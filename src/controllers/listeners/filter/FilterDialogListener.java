@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listeners.filter
+ */
 package controllers.listeners.filter;
 
 import java.awt.event.*;
@@ -10,17 +15,53 @@ import models.ExamsTableModel;
 import views.dialogs.FilterDialog;
 import views.*;
 
+/**
+ * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * listener for apply filter button of the {@link views.dialogs.FilterDialog}.
+ * 
+ * @see views.AppFrame
+ * @see models.ExamsTableModel
+ * @see models.ExamsRowSorter
+ * @see java.awt.event.ActionListener
+ */
 public class FilterDialogListener implements ActionListener {
+    /**
+     * Dialog with filter data
+     */
     private FilterDialog dialog;
+
+    /**
+     * Exam table
+     */
     private JTable table;
+
+    /**
+     * Boolean used to check whether the exam entries are filtered or not
+     */
     private AtomicBoolean isFiltered;
 
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param dialog     Dialog with filter data
+     * @param table      Exam table
+     * @param isFiltered Boolean containing filter state of the exam table data
+     */
     public FilterDialogListener(FilterDialog dialog, JTable table, AtomicBoolean isFiltered) {
         this.dialog = dialog;
         this.table = table;
         this.isFiltered = isFiltered;
     }
 
+    /**
+     * Sets the table filter using the string taken from
+     * {@link controllers.listeners.filter.FilterDialogListener#dialog}, adds
+     * {@link views.panels.FilterPanel} to the application frame and action
+     * listeners
+     * to the panel buttons
+     * 
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         ExamsRowSorter rs = new ExamsRowSorter((ExamsTableModel) table.getModel());
 

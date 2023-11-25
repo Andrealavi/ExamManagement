@@ -1,12 +1,11 @@
 /**
  * @author Andrea Lavino (176195)
  * 
- * @package controllers.listeners.remove
+ * @package controllers.listeners.add 
  */
-package controllers.listeners.remove;
+package controllers.listeners.add;
 
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JOptionPane;
@@ -14,39 +13,34 @@ import javax.swing.JTable;
 
 import controllers.listeners.filter.ClearFilterListener;
 import controllers.listeners.filter.ShowStatsButtonListener;
-import models.ExamsTableModel;
 import views.AppFrame;
-import views.dialogs.RemoveEntryDialog;
+import views.dialogs.*;
+import models.exam.*;
+import models.ExamsTableModel;
 
 /**
  * Implements {@link java.awt.event.ActionListener} interface to create an event
- * listener for remove button of {@link views.dialogs.RemoveEntryDialog}.
+ * listener to add a new exam to the exam table.
  * 
- * @see views.AppFrame
+ * @see views.dialogs.AddComposedExamDialog
  * @see models.ExamsTableModel
- * @see models.ExamsRowSorter
  * @see java.awt.event.ActionListener
  */
-public class RemoveEntryDialogListener implements ActionListener {
+public class AddExamDialogListener implements ActionListener {
     /**
-     * Dialog with remove expression
+     * Dialog with exam data
      */
-    private RemoveEntryDialog dialog;
-
-    /**
-     * Exam table
-     */
-    private JTable table;
-
-    /**
-     * Boolean used to check whether the exam entries are saved or not
-     */
-    private AtomicBoolean isSaved;
+    private AbstractExamDialog dialog;
 
     /**
      * Exam table model
      */
     private ExamsTableModel model;
+
+    /**
+     * Boolean used to check whether the exam entries are saved or not
+     */
+    private AtomicBoolean isSaved;
 
     /**
      * Boolean used to check whether the exam entries are filtered or not
@@ -56,75 +50,82 @@ public class RemoveEntryDialogListener implements ActionListener {
     /**
      * Instantiates class attributes using all the function arguments
      * 
-     * @param dialog     Dialog with remove expression
-     * @param table      Exam table
+     * @param dialog     Dialog with exam data
      * @param model      Table model
      * @param isSaved    Boolean containing save state of the exam table data
      * @param isFiltered Boolean containing filter state of the exam table data
      */
-    public RemoveEntryDialogListener(RemoveEntryDialog dialog, JTable table, AtomicBoolean isSaved,
+    public AddExamDialogListener(AbstractExamDialog dialog, ExamsTableModel model, AtomicBoolean isSaved,
             AtomicBoolean isFiltered) {
         this.dialog = dialog;
-        this.table = table;
-        this.model = (ExamsTableModel) table.getModel();
+        this.model = model;
         this.isSaved = isSaved;
         this.isFiltered = isFiltered;
     }
 
     /**
-     * Removes entries in exam table
+     * Creates a {@link models.exam.SimpleExam} entry using data taken from
+     * {@link controllers.listeners.add.AddExamDialogListener#dialog}
+     * 
+     * @return Simple exam entry
+     * @throws ExamInfoException Exception that is thrown if exam data are invalid
+     */
+    private SimpleExam createSimpleExamEntry() throws ExamInfoException {
+        String[] data = dialog.getFieldsData();
+        SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4]);
+
+        return examEntry;
+    }
+
+    /**
+     * Creates a {@link models.exam.ComposedExam} entry using data taken from
+     * {@link controllers.listeners.add.AddExamDialogListener#dialog}
+     * 
+     * @return Composed exam entry
+     * @throws ExamInfoException Exception that is thrown if exam data are invalid
+     */
+    private ComposedExam createComposedExamEntry() throws ExamInfoException {
+        String[] data = dialog.getFieldsData();
+        String[][] partialExamsData = ((AddComposedExamDialog) dialog).getExamsData();
+
+        ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], data[3]);
+        examEntry.setPartialExamsInfo(partialExamsData, ((AddComposedExamDialog) dialog).getExamNumber());
+
+        return examEntry;
+    }
+
+    /**
+     * Creates a new exam entry and adds it to the exam table
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            ArrayList<Integer> entriesIntervals = getEntriesToRemove(dialog.getField().getText());
 
-            model.removeEntryAtRows(entriesIntervals);
+        try {
+            AbstractExam examEntry;
+
+            if (dialog.getClass().getSimpleName().equals("AddSimpleExamDialog")) {
+                examEntry = createSimpleExamEntry();
+            } else {
+                examEntry = createComposedExamEntry();
+            }
+
+            model.addEntry(examEntry);
 
             if (isFiltered.get()) {
                 updateFilter();
             }
 
+            isSaved.set(false);
+
             dialog.dispose();
-        } catch (NumberFormatException formatException) {
-            JOptionPane.showMessageDialog(dialog,
-                    "Your input is not valid.\nPlease make sure you've inserted correct numeric values",
+        } catch (ExamInfoException err) {
+            JOptionPane.showMessageDialog(dialog, err.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException err) {
+            JOptionPane.showMessageDialog(dialog, "Invalid value inserted.\\n" +
+                    "Please make sure you have inserted valid number values for grade and credits fields.",
                     "Error message", JOptionPane.ERROR_MESSAGE);
         }
-    }
 
-    /**
-     * Parses the remove expression into an {@link java.util.ArrayList} containing
-     * the intervals of entries to remove
-     * 
-     * @param removeExpression {@link java.lang.String} containing the intervals to
-     *                         remove
-     * @return List containing indexes of intervals of entry to remove
-     * @throws NumberFormatException Exception that is thrown when is inserted an
-     *                               invalid number value
-     */
-    public ArrayList<Integer> getEntriesToRemove(String removeExpression) throws NumberFormatException {
-        String[] removeIntervals = removeExpression.split(",");
-
-        ArrayList<Integer> removeIndexesIntervals = new ArrayList<Integer>();
-
-        for (int i = 0; i < removeIntervals.length; i++) {
-            removeIntervals[i] = removeIntervals[i].trim();
-
-            String[] removeInterval = removeIntervals[i].split("-");
-
-            if (removeInterval.length == 1) {
-                removeIndexesIntervals.add(table.convertRowIndexToModel(Integer.parseInt(removeInterval[0]) - 1));
-                removeIndexesIntervals.add(table.convertRowIndexToModel(Integer.parseInt(removeInterval[0]) - 1));
-            } else {
-                removeIndexesIntervals.add(table.convertRowIndexToModel(Integer.parseInt(removeInterval[0]) - 1));
-                removeIndexesIntervals.add(table.convertRowIndexToModel(Integer.parseInt(removeInterval[1]) - 1));
-            }
-        }
-
-        isSaved.set(false);
-
-        return removeIndexesIntervals;
     }
 
     /**
@@ -132,6 +133,8 @@ public class RemoveEntryDialogListener implements ActionListener {
      */
     private void updateFilter() {
         AppFrame frame = (AppFrame) dialog.getParent();
+
+        JTable table = frame.getTablePanel().getTable();
 
         Float gradeSum = 0.0f;
         Integer creditSum = 0;

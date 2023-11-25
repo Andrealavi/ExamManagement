@@ -1,12 +1,36 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.dialogs
+ */
 package views.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Implements a dialog for adding simple exams to the exams table. It extends
+ * {@link views.dialogs.AbstractExamDialog} and uses
+ * {@link java.awt.GridBagLayout} for organizing components
+ * 
+ * @see views.dialogs.AbstractExamDialog
+ * @see javax.swing.JDialog
+ * @see java.awt.GridBagLayout
+ * @see java.awt.GridBagConstraints
+ */
 public class AddSimpleExamDialog extends AbstractExamDialog {
 
-    public AddSimpleExamDialog(JFrame f, String[] columnNames) {
-        super(f, "Add Simple Exam");
+    /**
+     * Class constructor. It populates
+     * {@link views.dialogs.AbstractExamDialog#generalLabels} and
+     * {@link views.dialogs.AbstractExamDialog#generalFields} and applies the
+     * layout.
+     * 
+     * @param frame       Dialog parent
+     * @param columnNames Table columns names
+     */
+    public AddSimpleExamDialog(JFrame frame, String[] columnNames) {
+        super(frame, "Add Simple Exam");
 
         final int N = columnNames.length - 1;
 
@@ -49,10 +73,15 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
         setVisible(true);
     }
 
-    public JButton getButton() {
-        return actionButton;
-    }
-
+    /**
+     * Gets the data contained in
+     * {@link views.dialogs.AbstractExamDialog#generalFields} components as a
+     * {@link java.lang.String}
+     * 
+     * @return Data within text fields as an array of strings
+     * 
+     * @see views.dialogs.AbstractExamDialog#getFieldsData method
+     */
     public String[] getFieldsData() {
         String[] fieldsData = new String[generalFields.length + 1];
 

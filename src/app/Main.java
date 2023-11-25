@@ -1,8 +1,16 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package app
+ */
 package app;
 
 import views.AppFrame;
 import controllers.Controller;
 
+/**
+ * Main class that start the application
+ */
 public class Main {
     public static void main(String[] args) {
         AppFrame f = new AppFrame("Exams Manager");
@@ -10,6 +18,7 @@ public class Main {
 
         c.setTableModel();
         c.addEventListeners();
+        c.startThread();
 
         f.pack();
     }

@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listeners.io
+ */
 package controllers.listeners.io;
 
 import java.awt.event.*;
@@ -6,20 +11,55 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import models.ExamIO;
 import models.ExamsTableModel;
 import models.exam.AbstractExam;
-import models.exam.ExamIO;
+import views.AppFrame;
 
+/**
+ * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * listener for Save File button of the application menu. It uses
+ * {@link models.ExamIO} to load exam entries from a file
+ *
+ * @see models.ExamIO
+ * @see models.ExamsRowSorter
+ * @see models.exam.AbstractExam
+ * @see models.ExamsTableModel
+ * @see java.awt.event.ActionListener
+ * 
+ */
 public class SaveFileListener implements ActionListener {
-    private JFrame frame;
+    /**
+     * Application frame
+     */
+    private AppFrame frame;
+
+    /**
+     * Exam table model
+     */
     private ExamsTableModel model;
+
+    /**
+     * File chooser for selecting file
+     */
     private JFileChooser fileChooser;
+
+    /**
+     * Boolean used to check wether the exam entries are saved or not
+     */
     private AtomicBoolean isSaved;
 
-    public SaveFileListener(JFrame frame, JFileChooser fileChooser, ExamsTableModel model, AtomicBoolean isSaved) {
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param frame       Application frame
+     * @param fileChooser File chooser
+     * @param model       Table model
+     * @param isSaved     Boolean containing save state of the exam table data
+     */
+    public SaveFileListener(AppFrame frame, JFileChooser fileChooser, ExamsTableModel model, AtomicBoolean isSaved) {
         this.frame = frame;
         this.model = model;
         this.fileChooser = fileChooser;
@@ -27,6 +67,14 @@ public class SaveFileListener implements ActionListener {
         this.isSaved = isSaved;
     }
 
+    /**
+     * Returns a boolean that indicates whether the user wants to overwrite the
+     * selected file or not
+     * 
+     * @param file File to overwrite
+     * @return A boolean that indicates whether the user wants to overwrite existing
+     *         file or not
+     */
     public Boolean approveOverwrite(File file) {
         if (file.exists()) {
             int result = JOptionPane.showConfirmDialog(fileChooser,
@@ -46,6 +94,7 @@ public class SaveFileListener implements ActionListener {
         return false;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         ExamIO fileIO = null;
 

@@ -1,16 +1,36 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.dialogs
+ */
 package views.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Implements a dialog for removing exams from the exam table. It extends
+ * {@link javax.swing.JDialog} and uses
+ * {@link java.awt.GridBagLayout} for organizing components
+ * 
+ * @see javax.swing.JDialog
+ * @see java.awt.GridBagLayout
+ * @see java.awt.GridBagConstraints
+ */
 public class RemoveEntryDialog extends JDialog {
     private JLabel removeExprLabel;
     private JTextField removeExprField;
     private JButton infoButton;
     private JButton actionButton;
 
-    public RemoveEntryDialog(JFrame f) {
-        super(f, "Remove entry/entries");
+    /**
+     * Instantiates components of the dialog, sets layout and adds components to the
+     * view
+     * 
+     * @param frame Parent frame
+     */
+    public RemoveEntryDialog(JFrame frame) {
+        super(frame, "Remove entry/entries");
 
         removeExprLabel = new JLabel("Remove Expression:");
         removeExprField = new JTextField(25);
@@ -52,14 +72,29 @@ public class RemoveEntryDialog extends JDialog {
         pack();
     }
 
+    /**
+     * Gets dialog action button
+     * 
+     * @return Dialog button
+     */
     public JButton getButton() {
         return actionButton;
     }
 
+    /**
+     * Gets information button
+     * 
+     * @return {@link javax.swing.JButton} for getting info about filter panel
+     */
     public JButton getInfoButton() {
         return infoButton;
     }
 
+    /**
+     * Gets {@link javax.swing.JTextField} that contains the remove expression
+     * 
+     * @return Text field containing remove expression
+     */
     public JTextField getField() {
         return removeExprField;
     }

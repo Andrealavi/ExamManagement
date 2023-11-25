@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.dialogs
+ */
 package views.dialogs;
 
 import java.util.Arrays;
@@ -7,7 +12,21 @@ import javax.swing.JFrame;
 
 import org.knowm.xchart.*;
 
+/**
+ * Implements a dialog for displaying statistics about grade of exams present in
+ * exam table.
+ * 
+ * @see org.knowm.xchart
+ * @see javax.swing.JDialog
+ */
 public class HistogramDialog extends JDialog {
+
+	/**
+	 * Calls the super constructor and creates grades frequency histogram
+	 * 
+	 * @param frame             Parent frame
+	 * @param gradesFrequencies Array of grade frequencies
+	 */
 	public HistogramDialog(JFrame frame, Integer[] gradesFrequencies) {
 		super(frame, "Grades Histogram");
 

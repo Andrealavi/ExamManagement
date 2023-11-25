@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listeners.modify
+ */
 package controllers.listeners.modify;
 
 import java.awt.event.*;
@@ -13,13 +18,54 @@ import views.dialogs.*;
 import models.exam.*;
 import models.ExamsTableModel;
 
+/**
+ * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * listener to modify an exam entry in the exam table.
+ * 
+ * @see views.dialogs.AddComposedExamDialog
+ * @see views.AppFrame
+ * @see models.ExamsTableModel
+ * @see models.SimpleExam
+ * @see models.ComposedExam
+ * @see controllers.listeners.filter.ClearFilterListener
+ * @see controllers.listeners.filter.ShowStatsButtonListener
+ * @see java.awt.event.ActionListener
+ */
 public class ModifyExamDialogListener implements ActionListener {
+    /**
+     * Dialog with exam data
+     */
     private AbstractExamDialog dialog;
+
+    /**
+     * Exam table model
+     */
     private ExamsTableModel model;
+
+    /**
+     * Row index of the entry to modify
+     */
     private int row;
+
+    /**
+     * Boolean used to check whether the exam entries are saved or not
+     */
     private AtomicBoolean isSaved;
+
+    /**
+     * Boolean used to check whether the exam entries are filtered or not
+     */
     private AtomicBoolean isFiltered;
 
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param dialog     Dialog with exam data
+     * @param model      Table model
+     * @param row        Row index
+     * @param isSaved    Boolean containing save state of the exam table data
+     * @param isFiltered Boolean containing filter state of the exam table data
+     */
     public ModifyExamDialogListener(AbstractExamDialog dialog, ExamsTableModel model, int row,
             AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.dialog = dialog;
@@ -29,6 +75,13 @@ public class ModifyExamDialogListener implements ActionListener {
         this.isFiltered = isFiltered;
     }
 
+    /**
+     * Creates a {@link models.exam.SimpleExam} entry using data taken from
+     * {@link controllers.listeners.modify.ModifyExamDialogListener#dialog}
+     * 
+     * @return Simple exam entry
+     * @throws ExamInfoException Exception that is thrown if exam data are invalid
+     */
     private SimpleExam createSimpleEntry() throws ExamInfoException {
         String[] data = dialog.getFieldsData();
         SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4]);
@@ -36,6 +89,13 @@ public class ModifyExamDialogListener implements ActionListener {
         return examEntry;
     }
 
+    /**
+     * Creates a {@link models.exam.ComposedExam} entry using data taken from
+     * {@link controllers.listeners.add.ModifyExamDialogListener#dialog}
+     * 
+     * @return Composed exam entry
+     * @throws ExamInfoException Exception that is thrown if exam data are invalid
+     */
     private ComposedExam createComposedEntry() throws ExamInfoException {
         String[] generalInfo = dialog.getFieldsData();
 
@@ -46,6 +106,10 @@ public class ModifyExamDialogListener implements ActionListener {
         return examEntry;
     }
 
+    /**
+     * Updates the entry in the exam table
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
             AbstractExam examEntry;
@@ -74,6 +138,9 @@ public class ModifyExamDialogListener implements ActionListener {
         }
     }
 
+    /**
+     * Updates the data displayed by the filtered table
+     */
     private void updateFilter() {
         AppFrame frame = (AppFrame) dialog.getParent();
 
@@ -100,6 +167,11 @@ public class ModifyExamDialogListener implements ActionListener {
         }
 
         Integer weightedAverage = (int) (gradeSum / creditSum);
+
+        frame.getFilterPanel().getShowStatsButton()
+                .removeActionListener(frame.getFilterPanel().getShowStatsButton().getActionListeners()[0]);
+        frame.getFilterPanel().getClearFilterButton()
+                .removeActionListener(frame.getFilterPanel().getClearFilterButton().getActionListeners()[0]);
 
         frame.removeFilterPanel();
 

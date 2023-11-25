@@ -1,13 +1,35 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.dialogs
+ */
 package views.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Implements a dialog for modifying composed exams to the exams table. It
+ * extends
+ * {@link views.dialogs.AddComposedExamDialog} and uses
+ * {@link java.awt.GridBagLayout} for organizing components
+ * 
+ * @see views.dialogs.AbstractExamDialog
+ * @see javax.swing.JDialog
+ * @see java.awt.GridBagLayout
+ * @see java.awt.GridBagConstraints
+ */
 public class ModifyComposedExamDialog extends AddComposedExamDialog {
     private JButton modifyButton;
 
-    public ModifyComposedExamDialog(JFrame f) {
-        super(f);
+    /**
+     * Calls super constructor, disables all {@link javax.swing.JTextField} and
+     * removes partial exams
+     * 
+     * @param frame Parent frame
+     */
+    public ModifyComposedExamDialog(JFrame frame) {
+        super(frame);
 
         for (int i = 0; i < generalFields.length; i++) {
             generalFields[i].setEditable(false);
@@ -20,6 +42,13 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         removePartialExam(true);
     }
 
+    /**
+     * Sets entry fields using data passed as arguments
+     * 
+     * @param generalDataArray Data of the general text fields
+     * @param partialGrades    Grades of each partial exam
+     * @param partialWeights   Weights of each partial exam
+     */
     public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights) {
         for (int i = 0; i < generalFields.length - 1; i++) {
             generalFields[i].setText(generalDataArray[i]);
@@ -73,6 +102,9 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         partialExams.getLast().getRemoveButton().setEnabled(false);
     }
 
+    /**
+     * Refreshes modify button position in dialog view
+     */
     public void refreshModifyButton() {
         remove(modifyButton);
 
@@ -85,23 +117,45 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         add(modifyButton, buttonConstraints);
     }
 
+    /**
+     * Removes partial exams from dialog
+     * 
+     * @param clear Boolean to check if the last partial exam view has to be removed
+     */
     public void removePartialExam(boolean clear) {
         if (partialExams.size() > 1 || clear) {
             PartialExamView lastExam = partialExams.getLast();
 
             partialExams.removeLast();
-            lastExam.removeFromView(this);
+            lastExam.removeFromView();
         }
     }
 
+    /**
+     * Gets {@link views.dialogs.ModifyComposedExamDialog#modifyButton}
+     * 
+     * @return Button modify button
+     */
     public JButton getModifyButton() {
         return modifyButton;
     }
 
+    /**
+     * Gets text field components via {@link javax.swing.JTextField} array
+     * 
+     * @return {@link javax.swing.JTextField} array of dialog general fields
+     */
     public JTextField[] getGeneralFields() {
         return generalFields;
     }
 
+    /**
+     * Gets partial exams view as an array of
+     * {@link views.dialogs.AddComposedExamDialog.PartialExamView}
+     * 
+     * @return array of {@link views.dialogs.AddComposedExamDialog.PartialExamView}
+     *         containg partial exams views
+     */
     public PartialExamView[] getPartialExams() {
         PartialExamView[] partialExamsArray = new PartialExamView[partialExams.size()];
 

@@ -1,19 +1,58 @@
-package models.exam;
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package models
+ */
+package models;
 
 import java.io.*;
 import java.util.Vector;
 
+import models.exam.*;
+
+/**
+ * Implements operations for reading/writing exam entries from/to text files.
+ * 
+ * @see models.ExamsTableModel
+ * @see java.io.BufferedReader
+ * @see java.io.BufferedWriter
+ * @see java.io.File
+ */
 public class ExamIO {
+    /**
+     * File from/to read/write exam entries
+     */
     private File file;
 
+    /**
+     * Sets {@link models.ExamIO#file} as a new file with the name passed as
+     * argument
+     * 
+     * @param fileName {@link java.lang.String} containing file name
+     */
     public ExamIO(String fileName) {
         file = new File(fileName);
     }
 
+    /**
+     * Sets {@link models.ExamIO#file} with the file passed as argument
+     * 
+     * @param file File object
+     */
     public ExamIO(File file) {
         this.file = file;
     }
 
+    /**
+     * Loads exam entries read from {@link models.ExamIO#file} to a
+     * {@link java.util.Vector} containing exam entries
+     * 
+     * @return {@link java.util.Vector} containing exam entries
+     * @throws FileNotFoundException Exception thrown when the file doesn't exists
+     * @throws ExamInfoException     Exception thrown when exam data are wrong
+     * @throws IOException           Exception thrown when a problem related I/O
+     *                               goes wrong
+     */
     public Vector<AbstractExam> load() throws FileNotFoundException, ExamInfoException, IOException {
         Vector<AbstractExam> examEntries = new Vector<AbstractExam>();
 
@@ -51,6 +90,15 @@ public class ExamIO {
         return examEntries;
     }
 
+    /**
+     * Saves exam entries from {@link java.util.Vector} to
+     * {@link models.ExamIO#file}
+     * 
+     * @param examEntries Vector containing exam entries data
+     * @throws IOException       Exception thrown when a problem related I/O goes
+     *                           wrong
+     * @throws ExamInfoException Exception thrown when exam data are wrong
+     */
     public void save(Vector<AbstractExam> examEntries) throws IOException, ExamInfoException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 

@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listeners.modify
+ */
 package controllers.listeners.modify;
 
 import java.awt.event.*;
@@ -13,13 +18,51 @@ import views.dialogs.ModifyComposedExamDialog;
 import views.dialogs.ModifySimpleExamDialog;
 import views.dialogs.AddComposedExamDialog.PartialExamView;
 
+/**
+ * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * listener for the modify button in
+ * {@link views.dialogs.ModifySimpleExamDialog} and
+ * {@link views.dialogs.ModifyComposedExamDialog}.
+ * 
+ * @see views.dialogs.AddComposedExamDialog
+ * @see models.ExamsTableModel
+ * @see java.awt.event.ActionListener
+ */
 public class ModifyExamListener implements ActionListener {
-    public AbstractExamDialog dialog;
+    /**
+     * Dialog with exam data
+     */
+    private AbstractExamDialog dialog;
+
+    /**
+     * Exam table model
+     */
     private ExamsTableModel model;
+
+    /**
+     * Row index of the entry to modify
+     */
     private int row;
+
+    /**
+     * Boolean used to check whether the exam entries are saved or not
+     */
     private AtomicBoolean isSaved;
+
+    /**
+     * Boolean used to check whether the exam entries are filtered or not
+     */
     private AtomicBoolean isFiltered;
 
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param dialog     Dialog with exam data
+     * @param model      Table model
+     * @param row        Row index
+     * @param isSaved    Boolean containing save state of the exam table data
+     * @param isFiltered Boolean containing filter state of the exam table data
+     */
     public ModifyExamListener(AbstractExamDialog dialog, ExamsTableModel model, int row,
             AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.dialog = dialog;
@@ -29,6 +72,9 @@ public class ModifyExamListener implements ActionListener {
         this.isFiltered = isFiltered;
     }
 
+    /**
+     * Enables the update mode of {@link views.dialogs.ModifyComposedExamDialog}
+     */
     public void enableComposedExamUpdate() {
         PartialExamView[] partialExams = ((ModifyComposedExamDialog) dialog).getPartialExams();
 
@@ -46,14 +92,16 @@ public class ModifyExamListener implements ActionListener {
                 .addActionListener(new RemovePartialExamListener(((ModifyComposedExamDialog) dialog)));
     }
 
-    public void enableSimpleExamUpdate() {
-
-    }
-
+    /**
+     * Sets dialogs fields as editable and adds the action listeners
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         dialog.getButton().setText("Update");
         dialog.getButton().removeActionListener(dialog.getButton().getActionListeners()[0]);
         dialog.getButton().addActionListener(new ModifyExamDialogListener(dialog, model, row, isSaved, isFiltered));
+
+        dialog.getRootPane().setDefaultButton(dialog.getButton());
 
         dialog.pack();
 

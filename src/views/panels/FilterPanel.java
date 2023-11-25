@@ -1,14 +1,36 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.panels
+ */
 package views.panels;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Implements filter panel.
+ * 
+ * Extends {@link JPanel} in order to create a
+ * custom panel useful to display weighted average of filtered exams and
+ * buttons. It uses {@link java.awt.GridBagLayout} to organize
+ * components.
+ * 
+ * @see java.awt.GridBagLayout
+ * @see java.awt.GridBagConstraints
+ * @see javax.swing.JPanel
+ * @see javax.swing.JFileChooser
+ */
 public class FilterPanel extends JPanel {
     private JLabel gradeLabel;
     private JTextField gradeField;
     private JButton clearFilterButton;
     private JButton showStatsButton;
 
+    /**
+     * Instantiates components of the panel, sets layout and adds components to the
+     * view
+     */
     public FilterPanel() {
         gradeLabel = new JLabel("Weighted Average:");
         gradeField = new JTextField(20);
@@ -48,14 +70,31 @@ public class FilterPanel extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Gets {@link javax.swing.JTextField} containg grades weighted average
+     * 
+     * @return text field containg grade
+     */
     public JTextField getGradeField() {
         return gradeField;
     }
 
+    /**
+     * Gets {@link views.panels.FilterPanel#clearFilterButton} that removes filter
+     * from the table
+     * 
+     * @return clear filter button
+     */
     public JButton getClearFilterButton() {
         return clearFilterButton;
     }
 
+    /**
+     * Gets {@link views.panels.FilterPanel#showStatsButton} that shows the
+     * histogram of grades frequency
+     * 
+     * @return show statistics button
+     */
     public JButton getShowStatsButton() {
         return showStatsButton;
     }

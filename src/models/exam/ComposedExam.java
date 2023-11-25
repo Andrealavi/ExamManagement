@@ -1,15 +1,36 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package models.exam
+ */
 package models.exam;
 
 import java.util.ArrayList;
 
+/**
+ * Implements composed exam entry. Extends the abstract class
+ * {@link models.exam.AbstractExam}
+ * 
+ * @see models.exam.AbstractExam
+ */
 public class ComposedExam extends AbstractExam {
     private ArrayList<Integer> grades;
     private ArrayList<Float> weights;
 
+    /**
+     * Calls super constructor, sets grades and weights and compute the final exam
+     * grade
+     * 
+     * @param firstName student first name
+     * @param lastName  student last name
+     * @param className class name
+     * @param grades    list of partial exams grades
+     * @param weights   list of partial exams weights
+     * @param credits   number of credits of the exam
+     */
     public ComposedExam(String firstName, String lastName, String className, ArrayList<Integer> grades,
             ArrayList<Float> weights,
-            Integer credits,
-            ArrayList<Boolean> honors) {
+            Integer credits) {
         super(firstName, lastName, className, credits);
 
         this.grades = grades;
@@ -18,10 +39,23 @@ public class ComposedExam extends AbstractExam {
         computeGrade();
     }
 
+    /**
+     * Calls super constructor, sets grades and weights and compute the final exam
+     * grade
+     * 
+     * @param firstName student first name
+     * @param lastName  student last name
+     * @param className class name
+     * @param credits   number of credits
+     * @throws ExamInfoException Exception that is trown when exam data are invalid
+     */
     public ComposedExam(String firstName, String lastName, String className, String credits) throws ExamInfoException {
         super(firstName, lastName, className, credits);
     }
 
+    /**
+     * Computes exam final grade
+     */
     private void computeGrade() {
         float sum = 0.0f;
         for (int i = 0; i < grades.size(); i++) {
@@ -37,10 +71,22 @@ public class ComposedExam extends AbstractExam {
         honor = sum > 30;
     }
 
+    /**
+     * Gets exam grade
+     * 
+     * @return {@link java.lang.Integer} containing exam grade
+     */
     public Integer getGrade() {
         return grade;
     }
 
+    /**
+     * Sets partial exams information
+     * 
+     * @param partialExams Partial exams data
+     * @param examNumbers  Number of partial exams
+     * @throws ExamInfoException Exception that is thrown if data are invalid
+     */
     public void setPartialExamsInfo(String[][] partialExams, Integer examNumbers) throws ExamInfoException {
         grades = new ArrayList<Integer>();
         weights = new ArrayList<Float>();
@@ -73,6 +119,11 @@ public class ComposedExam extends AbstractExam {
         computeGrade();
     }
 
+    /**
+     * Gets partial exams grades as a {@link java.lang.String} array
+     * 
+     * @return {@link java.lang.String} array containing partial exams grades
+     */
     public String[] getPartialExamsGrades() {
         String[] gradesStringArray = new String[grades.size()];
 
@@ -83,6 +134,11 @@ public class ComposedExam extends AbstractExam {
         return gradesStringArray;
     }
 
+    /**
+     * Gets partial exams weights as a {@link java.lang.String} array
+     * 
+     * @return {@link java.lang.String} array containing partial exams weights
+     */
     public String[] getPartialExamsWeights() {
         String[] weightsStringArray = new String[weights.size()];
 
@@ -93,10 +149,16 @@ public class ComposedExam extends AbstractExam {
         return weightsStringArray;
     }
 
+    /**
+     * Gets exam honor
+     * 
+     * @return {@link java.lang.String} containing honor value
+     */
     public String getHonor() {
-        return honor ? "Sì" : "No";
+        return honor ? "Yes" : "No";
     }
 
+    @Override
     public String[] toStringArray() {
         String[] stringArray = { firstName, lastName, className, grade.toString(), credits.toString(),
                 getHonor() };
@@ -104,6 +166,7 @@ public class ComposedExam extends AbstractExam {
         return stringArray;
     }
 
+    @Override
     public String toOutputString() {
         StringBuffer outputStringBuffer = new StringBuffer(
                 "composed" + "," + firstName + "," + lastName + "," + className

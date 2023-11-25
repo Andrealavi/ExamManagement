@@ -1,21 +1,45 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package views.dialogs
+ */
 package views.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Implements a dialog for adding composed exams to the exams table. It extends
+ * {@link views.dialogs.AbstractExamDialog} and uses
+ * {@link java.awt.GridBagLayout} for organizing components
+ * 
+ * @see views.dialogs.AbstractExamDialog
+ * @see javax.swing.JDialog
+ * @see java.awt.GridBagLayout
+ * @see java.awt.GridBagConstraints
+ */
 public class AddComposedExamDialog extends AbstractExamDialog {
+
+    /**
+     * Used to display partial exam data
+     */
     public class PartialExamView {
+        /**
+         * Contains the possible weights of a partial exam
+         */
         protected final String[] weights = { "25%", "33%", "50%", "67%", "75%" };
         protected JLabel gradeLabel;
         protected JTextField gradeTextField;
         protected JLabel weightLabel;
-
         protected JComboBox<String> weightComboBox;
 
         protected JButton addPartialButton;
         protected JButton removePartialButton;
 
+        /**
+         * Instantiates class attributes
+         */
         public PartialExamView() {
             gradeLabel = new JLabel("Exam Grade: ");
             gradeTextField = new JTextField("Insert grade", 25);
@@ -31,18 +55,45 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             removePartialButton.setVisible(false);
         }
 
+        /**
+         * Gets
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#addPartialButton}
+         * 
+         * @return Add partial exam button
+         */
         public JButton getAddButton() {
             return addPartialButton;
         }
 
+        /**
+         * Gets
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#removePartialButton}
+         * 
+         * @return Remove partial exam button
+         */
         public JButton getRemoveButton() {
             return removePartialButton;
         }
 
+        /**
+         * Gets text present in
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#gradeTextField}
+         * 
+         * @return Text containted in partial exam grade field
+         */
         public String getGrade() {
             return gradeTextField.getText();
         }
 
+        /**
+         * Gets the weight selected in the
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
+         * and coverts it into a {@link java.lang.String} which could be properly
+         * converted into a
+         * {@link java.lang.Float}
+         * 
+         * @return Weight string in a float parsable format
+         */
         public String getWeight() {
             switch ((String) weightComboBox.getSelectedItem()) {
                 case "25%":
@@ -67,15 +118,33 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             return "";
         }
 
+        /**
+         * Gets
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
+         * 
+         * @return Weights {@link javax.swing.JComboBox}
+         */
         public JComboBox<String> getWeightBox() {
             return weightComboBox;
         }
 
+        /**
+         * Gets
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#gradeTextField}
+         * 
+         * @return Text field for partial exam grade
+         */
         public JTextField getGradeField() {
             return gradeTextField;
         }
 
-        public void addToView(JDialog d, int y) {
+        /**
+         * Adds partial exam to the dialog view
+         * 
+         * @param y coordinate for exam view position in dialog
+         *          {@link java.awt.GridBagLayout}
+         */
+        public void addToView(int y) {
             GridBagConstraints gradeLabelConstraints = new GridBagConstraints();
             GridBagConstraints gradeTextFieldConstraints = new GridBagConstraints();
             GridBagConstraints weightLabelConstraints = new GridBagConstraints();
@@ -107,31 +176,42 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             removeButtonConstraints.gridy = y;
             removeButtonConstraints.insets = new Insets(10, 0, 10, 10);
 
-            d.add(gradeLabel, gradeLabelConstraints);
-            d.add(gradeTextField, gradeTextFieldConstraints);
-            d.add(weightLabel, weightLabelConstraints);
-            d.add(weightComboBox, weightBoxConstraints);
-            d.add(addPartialButton, addButtonConstraints);
-            d.add(removePartialButton, removeButtonConstraints);
+            AddComposedExamDialog.this.add(gradeLabel, gradeLabelConstraints);
+            AddComposedExamDialog.this.add(gradeTextField, gradeTextFieldConstraints);
+            AddComposedExamDialog.this.add(weightLabel, weightLabelConstraints);
+            AddComposedExamDialog.this.add(weightComboBox, weightBoxConstraints);
+            AddComposedExamDialog.this.add(addPartialButton, addButtonConstraints);
+            AddComposedExamDialog.this.add(removePartialButton, removeButtonConstraints);
 
-            d.pack();
+            AddComposedExamDialog.this.pack();
         }
 
-        public void removeFromView(JDialog d) {
-            d.remove(gradeLabel);
-            d.remove(gradeTextField);
-            d.remove(weightLabel);
-            d.remove(weightComboBox);
-            d.remove(addPartialButton);
-            d.remove(removePartialButton);
-
+        /**
+         * Removes partial exam from dialog view
+         */
+        public void removeFromView() {
+            AddComposedExamDialog.this.remove(gradeLabel);
+            AddComposedExamDialog.this.remove(gradeTextField);
+            AddComposedExamDialog.this.remove(weightLabel);
+            AddComposedExamDialog.this.remove(weightComboBox);
+            AddComposedExamDialog.this.remove(addPartialButton);
+            AddComposedExamDialog.this.remove(removePartialButton);
         }
     }
 
+    /**
+     * List containg all partial exams
+     */
     protected ArrayList<PartialExamView> partialExams;
 
-    public AddComposedExamDialog(JFrame f) {
-        super(f, "Add Composed Exam");
+    /**
+     * Instantiates all dialog components and sets the dialog layout. It also
+     * creates and adds two partial exams to the view.
+     * 
+     * @param frame Parent frame
+     */
+    public AddComposedExamDialog(JFrame frame) {
+        super(frame, "Add Composed Exam");
 
         final String[] COL_NAMES = { "First name", "Last name", "Class", "Credits" };
 
@@ -178,6 +258,11 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         setVisible(true);
     }
 
+    /**
+     * Adds a single partial exam to
+     * {@link views.dialogs.AddComposedExamDialog#partialExams} list and adds the
+     * partial exam to the view.
+     */
     public void addPartialExam() {
         if (partialExams.size() > 0) {
             PartialExamView previousPartialExam = partialExams.getLast();
@@ -190,31 +275,52 @@ public class AddComposedExamDialog extends AbstractExamDialog {
 
         partialExams.getLast().getAddButton().setVisible(true);
         partialExams.getLast().getRemoveButton().setVisible(true);
-        partialExams.getLast().addToView(this, partialExams.size());
-
-        pack();
+        partialExams.getLast().addToView(partialExams.size());
     }
 
+    /**
+     * Removes partial exam from
+     * {@link views.dialogs.AddComposedExamDialog#partialExams} list and from dialog
+     * view
+     */
     public void removePartialExam() {
         if (partialExams.size() > 1) {
             PartialExamView lastExam = partialExams.getLast();
 
             partialExams.removeLast();
-            lastExam.removeFromView(this);
+            lastExam.removeFromView();
 
             partialExams.getLast().getAddButton().setVisible(true);
             partialExams.getLast().getRemoveButton().setVisible(true);
         }
     }
 
+    /**
+     * Gets the last partial exam added to
+     * {@link views.dialogs.AddComposedExamDialog#partialExams} list
+     * 
+     * @return partial exam view object
+     */
     public PartialExamView getLastPartialExam() {
         return partialExams.getLast();
     }
 
+    /**
+     * Gets dialog action button
+     * 
+     * @return Button component
+     */
     public JButton getButton() {
         return actionButton;
     }
 
+    /**
+     * Gets the data contained in
+     * {@link views.dialogs.AbstractExamDialog#generalFields} components as a
+     * {@link java.lang.String} array
+     * 
+     * @return Data within text fields as an array of {@link java.lang.String}
+     */
     public String[] getFieldsData() {
         String[] generalFieldsData = new String[generalFields.length];
 
@@ -225,6 +331,10 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         return generalFieldsData;
     }
 
+    /**
+     * Refreshes {@link views.dialogs.AddComposedExamDialog#actionButton} in dialog
+     * view.
+     */
     public void refreshButton() {
         remove(actionButton);
 
@@ -237,10 +347,21 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         add(actionButton, buttonConstraints);
     }
 
+    /**
+     * Gets the number of partial exams
+     * 
+     * @return {@link views.dialogs.AddComposedExamDialog#partialExams} size
+     */
     public Integer getExamNumber() {
         return partialExams.size();
     }
 
+    /**
+     * Gets grades and weights of any partial exams as a matrix of
+     * {@link java.lang.String}
+     * 
+     * @return A matrix of {@link java.lang.String} with data
+     */
     public String[][] getExamsData() {
         String[][] examsData = new String[partialExams.size()][2];
 
