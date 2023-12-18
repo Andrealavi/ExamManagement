@@ -11,6 +11,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import org.knowm.xchart.*;
+import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.Styler.ChartTheme;
+import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Implements a dialog for displaying statistics about grade of exams present in
@@ -32,8 +35,12 @@ public class HistogramDialog extends JDialog {
 
 		final Integer[] gradesRange = { 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30 };
 
-		CategoryChart chart = new CategoryChartBuilder().width(600).height(600).title("Grades Histogram")
+		CategoryChart chart = new CategoryChartBuilder().width(600).height(600).theme(ChartTheme.GGPlot2)
+				.title("Grades Histogram")
 				.xAxisTitle("Grade").yAxisTitle("Frequency").build();
+
+		chart.getStyler().setAvailableSpaceFill(.96);
+		chart.getStyler().setPlotGridVerticalLinesVisible(false);
 
 		chart.addSeries("Grades Frequencies", Arrays.asList(gradesRange), Arrays.asList(gradesFrequencies));
 
