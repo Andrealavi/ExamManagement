@@ -13,34 +13,34 @@ import java.util.ArrayList;
  * 
  * @see models.exam.AbstractExam
  */
-public class ComposedExam extends AbstractExam {
-    private ArrayList<Integer> grades;
+public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
+    private Integer finalGrade;
     private ArrayList<Float> weights;
 
     /**
-     * Calls super constructor, sets grades and weights and compute the final exam
+     * Calls super constructor, sets grade and weights and compute the final exam
      * grade
      * 
      * @param firstName student first name
      * @param lastName  student last name
      * @param className class name
-     * @param grades    list of partial exams grades
+     * @param grade     list of partial exams grade
      * @param weights   list of partial exams weights
      * @param credits   number of credits of the exam
      */
-    public ComposedExam(String firstName, String lastName, String className, ArrayList<Integer> grades,
+    public ComposedExam(String firstName, String lastName, String className, ArrayList<Integer> grade,
             ArrayList<Float> weights,
             Integer credits) {
         super(firstName, lastName, className, credits);
 
-        this.grades = grades;
+        this.grade = grade;
         this.weights = weights;
 
         computeGrade();
     }
 
     /**
-     * Calls super constructor, sets grades and weights and compute the final exam
+     * Calls super constructor, sets grade and weights and compute the final exam
      * grade
      * 
      * @param firstName student first name
@@ -58,26 +58,27 @@ public class ComposedExam extends AbstractExam {
      */
     private void computeGrade() {
         float sum = 0.0f;
-        for (int i = 0; i < grades.size(); i++) {
-            sum += grades.get(i) * weights.get(i);
+        for (int i = 0; i < grade.size(); i++) {
+            sum += grade.get(i) * weights.get(i);
         }
 
         if (sum > 30) {
-            grade = 30;
+            finalGrade = 30;
         } else {
-            grade = (int) sum;
+            finalGrade = (int) sum;
         }
 
         honor = sum > 30;
     }
 
+    @Override
     /**
      * Gets exam grade
      * 
      * @return {@link java.lang.Integer} containing exam grade
      */
     public Integer getGrade() {
-        return grade;
+        return finalGrade;
     }
 
     /**
@@ -88,11 +89,11 @@ public class ComposedExam extends AbstractExam {
      * @throws ExamInfoException Exception that is thrown if data are invalid
      */
     public void setPartialExamsInfo(String[][] partialExams, Integer examNumbers) throws ExamInfoException {
-        grades = new ArrayList<Integer>();
+        grade = new ArrayList<Integer>();
         weights = new ArrayList<Float>();
 
         for (int i = 0; i < examNumbers; i++) {
-            grades.add(Integer.parseInt(partialExams[i][0]));
+            grade.add(Integer.parseInt(partialExams[i][0]));
             weights.add(Float.parseFloat(partialExams[i][1]));
         }
 
@@ -105,7 +106,7 @@ public class ComposedExam extends AbstractExam {
             sum = 1.0f;
         }
 
-        for (Integer grade : grades) {
+        for (Integer grade : grade) {
             if (grade < 18) {
                 throw new ExamInfoException(
                         "Invalid grade value." + " Please insert a value greater than 18");
@@ -120,18 +121,18 @@ public class ComposedExam extends AbstractExam {
     }
 
     /**
-     * Gets partial exams grades as a {@link java.lang.String} array
+     * Gets partial exams grade as a {@link java.lang.String} array
      * 
-     * @return {@link java.lang.String} array containing partial exams grades
+     * @return {@link java.lang.String} array containing partial exams grade
      */
     public String[] getPartialExamsGrades() {
-        String[] gradesStringArray = new String[grades.size()];
+        String[] gradeStringArray = new String[grade.size()];
 
-        for (int i = 0; i < grades.size(); i++) {
-            gradesStringArray[i] = grades.get(i).toString();
+        for (int i = 0; i < grade.size(); i++) {
+            gradeStringArray[i] = grade.get(i).toString();
         }
 
-        return gradesStringArray;
+        return gradeStringArray;
     }
 
     /**
@@ -170,11 +171,11 @@ public class ComposedExam extends AbstractExam {
     public String toOutputString() {
         StringBuffer outputStringBuffer = new StringBuffer(
                 "composed" + "," + firstName + "," + lastName + "," + className
-                        + "," + credits.toString() + "," + grades.size());
+                        + "," + credits.toString() + "," + grade.size());
 
-        for (int i = 0; i < grades.size(); i++) {
+        for (int i = 0; i < grade.size(); i++) {
             outputStringBuffer.append("," +
-                    grades.get(i).toString() + "," + weights.get(i).toString());
+                    grade.get(i).toString() + "," + weights.get(i).toString());
         }
 
         return outputStringBuffer.toString();

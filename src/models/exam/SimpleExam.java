@@ -11,7 +11,7 @@ package models.exam;
  * 
  * @see models.exam.AbstractExam
  */
-public class SimpleExam extends AbstractExam {
+public class SimpleExam extends AbstractExam<Integer> {
     /**
      * Calls super constructor
      * 
