@@ -1,2 +1,5 @@
 Makefile
-./bin
+bin/
+docs/
+documents/
+lib/
