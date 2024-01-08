@@ -121,7 +121,7 @@ public class AddExamDialogListener implements ActionListener {
         } catch (ExamInfoException err) {
             JOptionPane.showMessageDialog(dialog, err.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException err) {
-            JOptionPane.showMessageDialog(dialog, "Invalid value inserted.\\n" +
+            JOptionPane.showMessageDialog(dialog, "Invalid value inserted.\n" +
                     "Please make sure you have inserted valid number values for grade and credits fields.",
                     "Error message", JOptionPane.ERROR_MESSAGE);
         }

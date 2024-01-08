@@ -3,3 +3,4 @@ bin/
 docs/
 documents/
 lib/
+*.jar
