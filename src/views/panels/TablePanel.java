@@ -46,7 +46,10 @@ public class TablePanel extends JPanel {
 
         scrollPaneConstraints.gridx = 0;
         scrollPaneConstraints.gridy = 0;
-        scrollPaneConstraints.fill = GridBagConstraints.HORIZONTAL;
+        scrollPaneConstraints.fill = GridBagConstraints.BOTH;
+
+        scrollPaneConstraints.weightx = 1.0;
+        scrollPaneConstraints.weighty = 1.0;
 
         add(tablePane, scrollPaneConstraints);
         setVisible(true);
