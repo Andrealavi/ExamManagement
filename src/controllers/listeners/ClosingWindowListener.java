@@ -89,17 +89,17 @@ public class ClosingWindowListener extends WindowAdapter {
      * Saves file content into the selected file
      */
     public void saveFile() {
-        ExamIO f = null;
+        File file = null;
 
         if (fileChooser.getSelectedFile() != null) {
-            f = new ExamIO(fileChooser.getSelectedFile());
+            file = fileChooser.getSelectedFile();
 
         } else {
             int returnVal = fileChooser.showSaveDialog(frame);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 if (approveOverwrite(fileChooser.getSelectedFile())) {
-                    f = new ExamIO(fileChooser.getSelectedFile());
+                    file = fileChooser.getSelectedFile();
                 } else {
                     fileChooser.cancelSelection();
                 }
@@ -109,7 +109,7 @@ public class ClosingWindowListener extends WindowAdapter {
         Vector<AbstractExam> examEntries = model.getEntries();
 
         try {
-            f.save(examEntries);
+            ExamIO.save(file, examEntries);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, e.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         }
