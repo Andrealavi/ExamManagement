@@ -56,6 +56,7 @@ public class RemovePartialExamListener implements ActionListener {
         if (dialog.getClass().getSimpleName().equals("ModifyComposedExamDialog")) {
             ModifyComposedExamDialog dialog = (ModifyComposedExamDialog) this.dialog;
             dialog.refreshModifyButton();
+            dialog.refreshRemoveButton();
         }
 
         dialog.pack();
