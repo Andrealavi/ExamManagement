@@ -12,10 +12,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.*;
 
 import controllers.listeners.modify.ModifyExamListener;
+import controllers.listeners.remove.RemoveExamListener;
 import models.ExamsTableModel;
 import models.exam.*;
 import views.dialogs.AbstractExamDialog;
 import views.dialogs.ModifyComposedExamDialog;
+import views.dialogs.ModifyExamDialogInterface;
 import views.dialogs.ModifySimpleExamDialog;
 
 /**
@@ -68,31 +70,33 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         JTable table = (JTable) e.getSource();
         Point p = e.getPoint();
-        int row = table.convertRowIndexToModel(table.rowAtPoint(p));
 
-        if (e.getClickCount() == 2) {
+        if (e.getClickCount() == 2 && table.rowAtPoint(p) != -1) {
+            int row = table.convertRowIndexToModel(table.rowAtPoint(p));
+
             ExamsTableModel model = (ExamsTableModel) table.getModel();
             AbstractExam entry = model.getEntryAtRow(row);
-            AbstractExamDialog dialog;
+            ModifyExamDialogInterface dialog;
 
             if (entry.getClass().getSimpleName().equals("SimpleExam")) {
                 dialog = new ModifySimpleExamDialog(frame, model.getColumns());
-                ((ModifySimpleExamDialog) dialog).setEntryFields(entry.toStringArray());
-
-                ((ModifySimpleExamDialog) dialog).getModifyButton()
-                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved, isFiltered));
             } else {
                 dialog = new ModifyComposedExamDialog(frame);
-                ((ModifyComposedExamDialog) dialog).setEntryFields(entry.toStringArray(),
-                        ((ComposedExam) entry).getPartialExamsGrades(),
-                        ((ComposedExam) entry).getPartialExamsWeights());
-
-                ((ModifyComposedExamDialog) dialog).getModifyButton()
-                        .addActionListener(new ModifyExamListener(dialog, model, row, isSaved, isFiltered));
             }
 
-            dialog.getButton().addActionListener(new CloseButtonListener(dialog));
-            dialog.getRootPane().setDefaultButton(dialog.getButton());
+            dialog.setEntryFields(entry.toStringArray());
+
+            dialog.getModifyButton()
+                    .addActionListener(
+                            new ModifyExamListener(((AbstractExamDialog) dialog), model, row, isSaved, isFiltered));
+
+            dialog.getRemoveButton()
+                    .addActionListener(
+                            new RemoveExamListener((AbstractExamDialog) dialog, table, row, isSaved, isFiltered));
+
+            ((AbstractExamDialog) dialog).getButton()
+                    .addActionListener(new CloseButtonListener(((AbstractExamDialog) dialog)));
+            ((AbstractExamDialog) dialog).getRootPane().setDefaultButton(((AbstractExamDialog) dialog).getButton());
         }
     }
 }
