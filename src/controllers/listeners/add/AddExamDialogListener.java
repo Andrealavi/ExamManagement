@@ -59,10 +59,12 @@ public class AddExamDialogListener extends ExamDialogListener implements ActionL
         try {
             AbstractExam examEntry;
 
+            String[] entryData = super.getDialog().getFieldsData();
+
             if (super.getDialog().getClass().getSimpleName().equals("AddSimpleExamDialog")) {
-                examEntry = createSimpleExamEntry();
+                examEntry = createSimpleExamEntry(entryData);
             } else {
-                examEntry = createComposedExamEntry();
+                examEntry = createComposedExamEntry(entryData);
             }
 
             model.addEntry(examEntry);

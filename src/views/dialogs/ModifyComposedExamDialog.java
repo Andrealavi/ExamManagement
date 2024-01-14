@@ -44,6 +44,15 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
         removePartialExam(true);
     }
 
+    private String convertWeight(String decimalWeight) {
+        Float weight = Float.parseFloat(decimalWeight);
+        weight = weight * 100;
+
+        StringBuffer convertedWeight = new StringBuffer(weight.toString()).append("%");
+
+        return convertedWeight.toString();
+    }
+
     /**
      * Sets entry fields using data passed as arguments
      * 
@@ -70,33 +79,8 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
             partialExam.getGradeField().setText(examData[0]);
             partialExam.getGradeField().setEditable(false);
 
-            JComboBox<String> partialExamComboBox = partialExam.getWeightBox();
-            partialExamComboBox.setEnabled(false);
-
-            switch (examData[1]) {
-                case "0.25":
-                    partialExamComboBox.setSelectedIndex(0);
-                    break;
-
-                case "0.33":
-                    partialExamComboBox.setSelectedIndex(1);
-                    break;
-
-                case "0.5":
-                    partialExamComboBox.setSelectedIndex(2);
-                    break;
-
-                case "0.67":
-                    partialExamComboBox.setSelectedIndex(3);
-                    break;
-
-                case "0.75":
-                    partialExamComboBox.setSelectedIndex(4);
-                    break;
-
-                default:
-                    break;
-            }
+            partialExam.getWeightField().setText(convertWeight(examData[1]));
+            partialExam.getWeightField().setEditable(false);
 
             refreshModifyButton();
             refreshRemoveButton();

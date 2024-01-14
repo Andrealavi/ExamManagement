@@ -35,14 +35,7 @@ public class RemoveAction extends AbstractAction {
         for (int i = 0; i < selectedRows.length; i++) {
             int convertedIndex = table.convertRowIndexToModel(selectedRows[i]);
 
-            System.out.println("indice tabella: " + selectedRows[i]);
-            System.out.println("Indice convertito: " + convertedIndex);
-
             model.removeEntryAtRow(convertedIndex - previouslyRemoved[convertedIndex]);
-
-            System.out.println(convertedIndex);
-
-            System.out.println("Indice realmente eliminato: " + (convertedIndex - previouslyRemoved[convertedIndex]));
 
             for (int j = convertedIndex + 1; j < previouslyRemoved.length; j++) {
                 previouslyRemoved[j] += 1;

@@ -1,5 +1,6 @@
 package controllers.listeners;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import views.dialogs.*;
@@ -47,9 +48,21 @@ public class ExamDialogListener extends GeneralFilterListener {
      * @return Simple exam entry
      * @throws ExamInfoException Exception that is thrown if exam data are invalid
      */
-    protected SimpleExam createSimpleExamEntry() throws ExamInfoException {
-        String[] data = dialog.getFieldsData();
-        SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], data[3], data[4]);
+    protected final SimpleExam createSimpleExamEntry(String[] data) throws ExamInfoException {
+        if (Integer.parseInt(data[3]) < 18) {
+            throw new ExamInfoException("Grade value must be at least 18");
+        } else if (Integer.parseInt(data[4]) <= 0 || Integer.parseInt(data[4]) > 18) {
+            throw new ExamInfoException("Credits value must be between 1 and 18");
+        }
+
+        Integer grade = Integer.parseInt(data[3]);
+
+        if (grade > 30) {
+            grade = 30;
+        }
+
+        SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], grade,
+                Integer.parseInt(data[4]));
 
         return examEntry;
     }
@@ -61,12 +74,41 @@ public class ExamDialogListener extends GeneralFilterListener {
      * @return Composed exam entry
      * @throws ExamInfoException Exception that is thrown if exam data are invalid
      */
-    protected ComposedExam createComposedExamEntry() throws ExamInfoException {
-        String[] data = dialog.getFieldsData();
-        String[][] partialExamsData = ((AddComposedExamDialog) dialog).getExamsData();
+    protected final ComposedExam createComposedExamEntry(String[] data) throws ExamInfoException {
+        ArrayList<Integer> grades = new ArrayList<Integer>();
+        ArrayList<Float> weights = new ArrayList<Float>();
 
-        ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], data[3]);
-        examEntry.setPartialExamsInfo(partialExamsData, ((AddComposedExamDialog) dialog).getExamNumber());
+        String[] partialExamsData = data[4].split(",");
+
+        for (int i = 0; i < partialExamsData.length; i++) {
+            String[] partialExamData = partialExamsData[i].split(" ");
+
+            grades.add(Integer.parseInt(partialExamData[0]));
+            weights.add(Float.parseFloat(partialExamData[1]));
+        }
+
+        Float weightsSum = 0.0f;
+
+        for (float weight : weights) {
+            weightsSum += weight;
+        }
+
+        if (weightsSum.equals(0.99f)) {
+            weightsSum = 1.0f;
+        }
+
+        if (!weightsSum.equals(1.0f)) {
+            throw new ExamInfoException("Weight values must sum up to 100%");
+        }
+
+        for (int grade : grades) {
+            if (grade < 18) {
+                throw new ExamInfoException("All grade values must be at least 18");
+            }
+        }
+
+        ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], grades, weights,
+                Integer.parseInt(data[3]));
 
         return examEntry;
     }

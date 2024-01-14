@@ -25,14 +25,10 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * Used to display partial exam data
      */
     public class PartialExamView {
-        /**
-         * Contains the possible weights of a partial exam
-         */
-        protected final String[] weights = { "25%", "33%", "50%", "67%", "75%" };
         protected JLabel gradeLabel;
         protected JTextField gradeTextField;
         protected JLabel weightLabel;
-        protected JComboBox<String> weightComboBox;
+        protected JTextField weightField;
 
         protected JButton addPartialButton;
         protected JButton removePartialButton;
@@ -45,8 +41,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             gradeTextField = new JTextField("Insert grade", 25);
 
             weightLabel = new JLabel("Exam Weight: ");
-            weightComboBox = new JComboBox<String>(weights);
-            weightComboBox.setSelectedIndex(2);
+            weightField = new JTextField("Insert weight", 10);
 
             addPartialButton = new JButton("+");
             addPartialButton.setVisible(false);
@@ -95,27 +90,12 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * @return Weight string in a float parsable format
          */
         public String getWeight() {
-            switch ((String) weightComboBox.getSelectedItem()) {
-                case "25%":
-                    return "0.25";
+            String percWeight = weightField.getText().replace("%", "");
 
-                case "33%":
-                    return "0.33";
+            Float weight = Float.parseFloat(percWeight);
+            weight = weight / 100;
 
-                case "50%":
-                    return "0.5";
-
-                case "67%":
-                    return "0.67";
-
-                case "75%":
-                    return "0.75";
-
-                default:
-                    break;
-            }
-
-            return "";
+            return weight.toString();
         }
 
         /**
@@ -124,8 +104,8 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * 
          * @return Weights {@link javax.swing.JComboBox}
          */
-        public JComboBox<String> getWeightBox() {
-            return weightComboBox;
+        public JTextField getWeightField() {
+            return weightField;
         }
 
         /**
@@ -148,7 +128,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             GridBagConstraints gradeLabelConstraints = new GridBagConstraints();
             GridBagConstraints gradeTextFieldConstraints = new GridBagConstraints();
             GridBagConstraints weightLabelConstraints = new GridBagConstraints();
-            GridBagConstraints weightBoxConstraints = new GridBagConstraints();
+            GridBagConstraints weightFieldConstraints = new GridBagConstraints();
             GridBagConstraints addButtonConstraints = new GridBagConstraints();
             GridBagConstraints removeButtonConstraints = new GridBagConstraints();
 
@@ -164,9 +144,9 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             weightLabelConstraints.gridy = y;
             weightLabelConstraints.insets = new Insets(10, 10, 10, 10);
 
-            weightBoxConstraints.gridx = 3;
-            weightBoxConstraints.gridy = y;
-            weightBoxConstraints.insets = new Insets(10, 10, 10, 10);
+            weightFieldConstraints.gridx = 3;
+            weightFieldConstraints.gridy = y;
+            weightFieldConstraints.insets = new Insets(10, 10, 10, 10);
 
             addButtonConstraints.gridx = 4;
             addButtonConstraints.gridy = y;
@@ -179,7 +159,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             AddComposedExamDialog.this.add(gradeLabel, gradeLabelConstraints);
             AddComposedExamDialog.this.add(gradeTextField, gradeTextFieldConstraints);
             AddComposedExamDialog.this.add(weightLabel, weightLabelConstraints);
-            AddComposedExamDialog.this.add(weightComboBox, weightBoxConstraints);
+            AddComposedExamDialog.this.add(weightField, weightFieldConstraints);
             AddComposedExamDialog.this.add(addPartialButton, addButtonConstraints);
             AddComposedExamDialog.this.add(removePartialButton, removeButtonConstraints);
 
@@ -193,7 +173,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             AddComposedExamDialog.this.remove(gradeLabel);
             AddComposedExamDialog.this.remove(gradeTextField);
             AddComposedExamDialog.this.remove(weightLabel);
-            AddComposedExamDialog.this.remove(weightComboBox);
+            AddComposedExamDialog.this.remove(weightField);
             AddComposedExamDialog.this.remove(addPartialButton);
             AddComposedExamDialog.this.remove(removePartialButton);
         }
@@ -322,13 +302,15 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * @return Data within text fields as an array of {@link java.lang.String}
      */
     public String[] getFieldsData() {
-        String[] generalFieldsData = new String[generalFields.length];
+        String[] fieldsData = new String[generalFields.length + 1];
 
         for (int i = 0; i < generalFields.length; i++) {
-            generalFieldsData[i] = generalFields[i].getText();
+            fieldsData[i] = generalFields[i].getText();
         }
 
-        return generalFieldsData;
+        fieldsData[fieldsData.length - 1] = getExamsData();
+
+        return fieldsData;
     }
 
     /**
@@ -362,15 +344,14 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * 
      * @return A matrix of {@link java.lang.String} with data
      */
-    public String[][] getExamsData() {
-        String[][] examsData = new String[partialExams.size()][2];
+    public String getExamsData() {
+        StringBuffer examsData = new StringBuffer();
 
         for (int i = 0; i < partialExams.size(); i++) {
-            examsData[i][0] = partialExams.get(i).getGrade();
-            examsData[i][1] = partialExams.get(i).getWeight();
+            examsData.append(String.format("%s %s,", partialExams.get(i).getGrade(), partialExams.get(i).getWeight()));
         }
 
-        return examsData;
+        return examsData.toString();
     }
 
 }

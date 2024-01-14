@@ -70,10 +70,12 @@ public class ModifyExamDialogListener extends ExamDialogListener implements Acti
         try {
             AbstractExam examEntry;
 
+            String[] examData = super.getDialog().getFieldsData();
+
             if (super.getDialog().getClass().getSimpleName().equals("ModifySimpleExamDialog")) {
-                examEntry = createSimpleExamEntry();
+                examEntry = createSimpleExamEntry(examData);
             } else {
-                examEntry = createComposedExamEntry();
+                examEntry = createComposedExamEntry(examData);
             }
 
             model.updateEntryAtRow(examEntry, row);

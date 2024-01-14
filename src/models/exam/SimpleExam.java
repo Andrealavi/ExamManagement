@@ -12,24 +12,7 @@ package models.exam;
  * @see models.exam.AbstractExam
  */
 public class SimpleExam extends AbstractExam<Integer> {
-    /**
-     * Calls super constructor
-     * 
-     * @param firstName student first name
-     * @param lastName  student last name
-     * @param className class name
-     * @param grade     student grade
-     * @param credits   exam credits number
-     * @param honor     student honors
-     * 
-     * @see models.exam.AbstractExam
-     */
-    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits,
-            boolean honor) {
-        super(firstName, lastName, className, credits);
-        this.grade = grade;
-        this.honor = honor;
-    }
+    private Boolean honor;
 
     /**
      * Calls super constructor
@@ -45,37 +28,16 @@ public class SimpleExam extends AbstractExam<Integer> {
      * 
      * @see models.exam.AbstractExam
      */
-    public SimpleExam(String firstName, String lastName, String className, String grade, String credits)
+    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits)
             throws ExamInfoException {
-        super(firstName, lastName, className, credits);
+        super(firstName, lastName, className, grade, credits);
 
-        if (Integer.parseInt(grade) < 18) {
-            throw new ExamInfoException("Invalid grade value." + " Please insert a value greater than 18.");
-        } else {
-
-            this.grade = Math.round(Float.parseFloat(grade));
-
-            if (this.grade > 30) {
-                this.grade = 30;
-                this.honor = true;
-            } else {
-                this.honor = false;
-            }
-        }
+        this.honor = grade > 30;
     }
 
     @Override
-    public Integer getGrade() {
-        return grade;
-    }
-
-    /**
-     * Sets the student grade using the value given
-     * 
-     * @param grade
-     */
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public Integer getExamGrade() {
+        return super.getGrade();
     }
 
     /**
@@ -89,7 +51,8 @@ public class SimpleExam extends AbstractExam<Integer> {
 
     @Override
     public String[] toStringArray() {
-        String[] stringArray = { super.getFirstName(), super.getLastName(), super.getClassName(), grade.toString(),
+        String[] stringArray = { super.getFirstName(), super.getLastName(), super.getClassName(),
+                super.getGrade().toString(),
                 super.getCredits().toString() };
 
         return stringArray;
@@ -98,7 +61,7 @@ public class SimpleExam extends AbstractExam<Integer> {
     @Override
     public String toOutputString() {
         String outputString = "simple" + "," + super.getFirstName() + "," + super.getLastName() + ","
-                + super.getClassName() + "," + grade.toString()
+                + super.getClassName() + "," + super.getGrade().toString()
                 + ","
                 + super.getCredits().toString();
 

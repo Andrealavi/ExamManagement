@@ -15,24 +15,8 @@ public abstract class AbstractExam<E> {
     private String firstName;
     private String lastName;
     private String className;
-    protected E grade;
+    private E grade;
     private Integer credits;
-    protected Boolean honor;
-
-    /**
-     * Inizialize exam attributes using data passed as arguments
-     * 
-     * @param firstName Student first name
-     * @param lastName  Student last name
-     * @param className Class name
-     * @param credits   Number of credits of the exam
-     */
-    public AbstractExam(String firstName, String lastName, String className, Integer credits) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.className = className;
-        this.credits = credits;
-    }
 
     /**
      * Inizialize exam attributes using data passed as arguments
@@ -44,15 +28,17 @@ public abstract class AbstractExam<E> {
      * @throws ExamInfoException Exception that is thrown when credits number is
      *                           wrong
      */
-    public AbstractExam(String firstName, String lastName, String className, String credits) throws ExamInfoException {
+    public AbstractExam(String firstName, String lastName, String className, E grade, Integer credits)
+            throws ExamInfoException {
         this.firstName = firstName;
         this.lastName = lastName;
         this.className = className;
+        this.grade = grade;
 
-        if (Integer.parseInt(credits) <= 0 || Integer.parseInt(credits) > 18) {
+        if (credits <= 0 || credits > 18) {
             throw new ExamInfoException("Invalid credits value. Please insert a value between 0 and 18.");
         } else {
-            this.credits = Integer.parseInt(credits);
+            this.credits = credits;
         }
     }
 
@@ -83,6 +69,10 @@ public abstract class AbstractExam<E> {
         return className;
     }
 
+    public E getGrade() {
+        return grade;
+    }
+
     /**
      * Gets exam credits
      * 
@@ -106,7 +96,7 @@ public abstract class AbstractExam<E> {
      * 
      * @return {@link java.lang.Integer} containing student grade
      */
-    public abstract Integer getGrade();
+    public abstract Integer getExamGrade();
 
     /**
      * Converts exam data into a {@link java.lang.String} array

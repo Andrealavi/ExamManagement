@@ -8,6 +8,10 @@ package models;
 import java.io.*;
 import java.util.Vector;
 
+import javax.swing.text.FlowView.FlowStrategy;
+
+import java.util.ArrayList;
+
 import models.exam.*;
 
 /**
@@ -41,20 +45,18 @@ public final class ExamIO {
             AbstractExam exam = null;
 
             if (data[0].equals("simple")) {
-                exam = new SimpleExam(data[1], data[2], data[3], data[4], data[5]);
+                exam = new SimpleExam(data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]));
 
             } else if (data[0].equals("composed")) {
-                exam = new ComposedExam(data[1], data[2], data[3], data[4]);
+                ArrayList<Integer> grades = new ArrayList<Integer>();
+                ArrayList<Float> weights = new ArrayList<Float>();
 
-                String[][] partialExamsInfo = new String[Integer.parseInt(data[5])][2];
-
-                for (int i = 6, j = 0; i < (6 + (Integer.parseInt(data[5]) * 2)); i += 2, j++) {
-                    partialExamsInfo[j][0] = data[i];
-                    partialExamsInfo[j][1] = data[i + 1];
+                for (int i = 6; i < (6 + (Integer.parseInt(data[5]) * 2)); i += 2) {
+                    grades.add(Integer.parseInt(data[i]));
+                    weights.add(Float.parseFloat(data[i + 1]));
                 }
 
-                ((ComposedExam) exam).setPartialExamsInfo(partialExamsInfo, Integer.parseInt(data[5]));
-
+                exam = new ComposedExam(data[1], data[2], data[3], grades, weights, Integer.parseInt(data[4]));
             }
 
             examEntries.add(exam);
