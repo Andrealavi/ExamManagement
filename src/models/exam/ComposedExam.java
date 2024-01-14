@@ -65,7 +65,7 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
         if (sum > 30) {
             finalGrade = 30;
         } else {
-            finalGrade = (int) sum;
+            finalGrade = Math.round(sum);
         }
 
         honor = sum > 30;
@@ -150,6 +150,16 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
         return weightsStringArray;
     }
 
+    public String getGradeWeightCouple() {
+        StringBuffer gradeWeightStringArray = new StringBuffer();
+
+        for (int i = 0; i < grade.size(); i++) {
+            gradeWeightStringArray.append(String.format("%s %s,", grade.get(i).toString(), weights.get(i).toString()));
+        }
+
+        return gradeWeightStringArray.toString();
+    }
+
     /**
      * Gets exam honor
      * 
@@ -161,8 +171,10 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
 
     @Override
     public String[] toStringArray() {
-        String[] stringArray = { firstName, lastName, className, grade.toString(), credits.toString(),
-                getHonor() };
+        String[] stringArray =
+
+                { super.getFirstName(), super.getLastName(), super.getClassName(),
+                        super.getCredits().toString(), getGradeWeightCouple() };
 
         return stringArray;
     }
@@ -170,8 +182,8 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
     @Override
     public String toOutputString() {
         StringBuffer outputStringBuffer = new StringBuffer(
-                "composed" + "," + firstName + "," + lastName + "," + className
-                        + "," + credits.toString() + "," + grade.size());
+                "composed" + "," + super.getFirstName() + "," + super.getLastName() + "," + super.getClassName()
+                        + "," + super.getCredits().toString() + "," + grade.size());
 
         for (int i = 0; i < grade.size(); i++) {
             outputStringBuffer.append("," +

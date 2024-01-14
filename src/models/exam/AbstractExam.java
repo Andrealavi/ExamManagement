@@ -12,11 +12,11 @@ package models.exam;
  * @see models.exam.ComposedExam
  */
 public abstract class AbstractExam<E> {
-    protected String firstName;
-    protected String lastName;
-    protected String className;
+    private String firstName;
+    private String lastName;
+    private String className;
     protected E grade;
-    protected Integer credits;
+    private Integer credits;
     protected Boolean honor;
 
     /**

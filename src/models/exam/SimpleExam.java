@@ -53,7 +53,7 @@ public class SimpleExam extends AbstractExam<Integer> {
             throw new ExamInfoException("Invalid grade value." + " Please insert a value greater than 18.");
         } else {
 
-            this.grade = Integer.parseInt(grade);
+            this.grade = Math.round(Float.parseFloat(grade));
 
             if (this.grade > 30) {
                 this.grade = 30;
@@ -89,16 +89,18 @@ public class SimpleExam extends AbstractExam<Integer> {
 
     @Override
     public String[] toStringArray() {
-        String[] stringArray = { firstName, lastName, className, grade.toString(), credits.toString(), getHonor() };
+        String[] stringArray = { super.getFirstName(), super.getLastName(), super.getClassName(), grade.toString(),
+                super.getCredits().toString() };
 
         return stringArray;
     }
 
     @Override
     public String toOutputString() {
-        String outputString = "simple" + "," + firstName + "," + lastName + "," + className + "," + grade.toString()
+        String outputString = "simple" + "," + super.getFirstName() + "," + super.getLastName() + ","
+                + super.getClassName() + "," + grade.toString()
                 + ","
-                + credits.toString();
+                + super.getCredits().toString();
 
         return outputString;
     }
