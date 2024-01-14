@@ -73,13 +73,13 @@ public class LoadFileListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int returnVal = fileChooser.showOpenDialog(frame);
-        ExamIO fileIO;
+        File file;
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            fileIO = new ExamIO(fileChooser.getSelectedFile());
+            file = fileChooser.getSelectedFile();
 
             try {
-                Vector<AbstractExam> examEntries = fileIO.load();
+                Vector<AbstractExam> examEntries = ExamIO.load(file);
 
                 model.setEntries(examEntries);
             } catch (FileNotFoundException notFound) {
@@ -101,6 +101,13 @@ public class LoadFileListener implements ActionListener {
 
         if (rs != null) {
             rs.removeRowFilter();
+
+            frame.getFilterPanel().getClearFilterButton()
+                    .removeActionListener(frame.getFilterPanel().getClearFilterButton().getActionListeners()[0]);
+
+            frame.getFilterPanel().getShowStatsButton()
+                    .removeActionListener(frame.getFilterPanel().getShowStatsButton().getActionListeners()[0]);
+
             frame.removeFilterPanel();
         }
 

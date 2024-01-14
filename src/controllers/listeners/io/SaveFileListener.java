@@ -96,19 +96,19 @@ public class SaveFileListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ExamIO fileIO = null;
+        File file = null;
 
         if (fileChooser.getSelectedFile() != null) {
-            fileIO = new ExamIO(fileChooser.getSelectedFile());
+            file = fileChooser.getSelectedFile();
 
         } else {
             int returnVal = fileChooser.showSaveDialog(frame);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 if (approveOverwrite(fileChooser.getSelectedFile())) {
-                    fileIO = new ExamIO(fileChooser.getSelectedFile());
+                    file = fileChooser.getSelectedFile();
                 } else {
-                    fileChooser.cancelSelection();
+                    fileChooser.setSelectedFile(null);
                 }
             }
         }
@@ -116,7 +116,7 @@ public class SaveFileListener implements ActionListener {
         Vector<AbstractExam> examEntries = model.getEntries();
 
         try {
-            fileIO.save(examEntries);
+            ExamIO.save(file, examEntries);
         } catch (NullPointerException nullPointerException) {
             // I don't want to manage this exception, but I don't want to have errors on
             // terminal
