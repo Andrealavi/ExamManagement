@@ -19,8 +19,9 @@ import java.awt.*;
  * @see java.awt.GridBagLayout
  * @see java.awt.GridBagConstraints
  */
-public class ModifyComposedExamDialog extends AddComposedExamDialog {
+public class ModifyComposedExamDialog extends AddComposedExamDialog implements ModifyExamDialogInterface {
     private JButton modifyButton;
+    private JButton removeButton;
 
     /**
      * Calls super constructor, disables all {@link javax.swing.JTextField} and
@@ -36,6 +37,7 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         }
 
         modifyButton = new JButton("Modify");
+        removeButton = new JButton("Remove");
         actionButton.setText("Close");
 
         removePartialExam(true);
@@ -49,25 +51,29 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
      * @param partialGrades    Grades of each partial exam
      * @param partialWeights   Weights of each partial exam
      */
-    public void setEntryFields(String[] generalDataArray, String[] partialGrades, String[] partialWeights) {
+    public void setEntryFields(String[] fieldsData) {
         for (int i = 0; i < generalFields.length - 1; i++) {
-            generalFields[i].setText(generalDataArray[i]);
+            generalFields[i].setText(fieldsData[i]);
         }
 
-        generalFields[3].setText(generalDataArray[4]);
+        generalFields[3].setText(fieldsData[3]);
 
-        for (int i = 0; i < partialGrades.length; i++) {
+        String[] partialExamsData = fieldsData[4].split(",");
+
+        for (int i = 0; i < partialExamsData.length; i++) {
             addPartialExam();
 
             PartialExamView partialExam = partialExams.getLast();
 
-            partialExam.getGradeField().setText(partialGrades[i]);
+            String[] examData = partialExamsData[i].split(" ");
+
+            partialExam.getGradeField().setText(examData[0]);
             partialExam.getGradeField().setEditable(false);
 
             JComboBox<String> partialExamComboBox = partialExam.getWeightBox();
             partialExamComboBox.setEnabled(false);
 
-            switch (partialWeights[i]) {
+            switch (examData[1]) {
                 case "0.25":
                     partialExamComboBox.setSelectedIndex(0);
                     break;
@@ -93,6 +99,7 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
             }
 
             refreshModifyButton();
+            refreshRemoveButton();
             refreshButton();
 
             pack();
@@ -117,6 +124,18 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
         add(modifyButton, buttonConstraints);
     }
 
+    public void refreshRemoveButton() {
+        remove(removeButton);
+
+        GridBagConstraints buttonConstraints = new GridBagConstraints();
+
+        buttonConstraints.gridx = 1;
+        buttonConstraints.gridy = partialExams.size() + 1;
+        buttonConstraints.insets = new Insets(10, 10, 10, 10);
+
+        add(removeButton, buttonConstraints);
+    }
+
     /**
      * Removes partial exams from dialog
      * 
@@ -138,6 +157,10 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog {
      */
     public JButton getModifyButton() {
         return modifyButton;
+    }
+
+    public JButton getRemoveButton() {
+        return removeButton;
     }
 
     /**

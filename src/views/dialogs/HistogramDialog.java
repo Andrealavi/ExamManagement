@@ -11,9 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import org.knowm.xchart.*;
-import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.Styler.ChartTheme;
-import org.knowm.xchart.style.Styler.LegendPosition;
 
 /**
  * Implements a dialog for displaying statistics about grade of exams present in

@@ -22,8 +22,9 @@ import java.awt.*;
  * @see java.awt.GridBagLayout
  * @see java.awt.GridBagConstraints
  */
-public class ModifySimpleExamDialog extends AddSimpleExamDialog {
+public class ModifySimpleExamDialog extends AddSimpleExamDialog implements ModifyExamDialogInterface {
     private JButton modifyButton;
+    private JButton removeButton;
 
     public ModifySimpleExamDialog(JFrame f, String[] columnNames) {
         super(f, columnNames);
@@ -33,6 +34,7 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
         }
 
         modifyButton = new JButton("Modify");
+        removeButton = new JButton("Remove");
         actionButton.setText("Close");
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
@@ -42,6 +44,12 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
         add(modifyButton, buttonConstraints);
+
+        buttonConstraints.gridx = 1;
+        buttonConstraints.gridy = 1;
+        buttonConstraints.insets = new Insets(10, 10, 10, 10);
+
+        add(removeButton, buttonConstraints);
     }
 
     /**
@@ -62,6 +70,10 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog {
      */
     public JButton getModifyButton() {
         return modifyButton;
+    }
+
+    public JButton getRemoveButton() {
+        return removeButton;
     }
 
     /**

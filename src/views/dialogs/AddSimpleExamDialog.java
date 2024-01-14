@@ -32,7 +32,7 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
     public AddSimpleExamDialog(JFrame frame, String[] columnNames) {
         super(frame, "Add Simple Exam");
 
-        final int N = columnNames.length - 1;
+        final int N = columnNames.length - 2;
 
         generalLabels = new JLabel[N];
         generalFields = new JTextField[N];
@@ -46,10 +46,10 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
         for (int i = 0, x = 0; i < N; i++, x += 2) {
-            generalLabels[i] = new JLabel(String.format("%s:", columnNames[i]));
+            generalLabels[i] = new JLabel(String.format("%s:", columnNames[i + 1]));
             generalLabelsConstraints[i] = new GridBagConstraints();
 
-            generalFields[i] = new JTextField(String.format("Insert %s", columnNames[i]), 10);
+            generalFields[i] = new JTextField(String.format("Insert %s", columnNames[i + 1]), 10);
             generalFieldsConstraints[i] = new GridBagConstraints();
 
             generalLabelsConstraints[i].gridx = x;
