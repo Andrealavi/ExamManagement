@@ -60,10 +60,9 @@ public class ClearFilterListener implements ActionListener {
 
         rs.removeRowFilter();
 
-        frame.getFilterPanel().getShowStatsButton()
-                .removeActionListener(frame.getFilterPanel().getShowStatsButton().getActionListeners()[0]);
-        frame.getFilterPanel().getClearFilterButton()
-                .removeActionListener(frame.getFilterPanel().getClearFilterButton().getActionListeners()[0]);
+        for (int i = 0; i < rs.getModelRowCount(); i++) {
+            rs.getModel().updateRowNumber(i, i);
+        }
 
         frame.removeFilterPanel();
 
