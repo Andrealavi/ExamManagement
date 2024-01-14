@@ -18,31 +18,7 @@ import models.exam.*;
  * @see java.io.BufferedWriter
  * @see java.io.File
  */
-public class ExamIO {
-    /**
-     * File from/to read/write exam entries
-     */
-    private File file;
-
-    /**
-     * Sets {@link models.ExamIO#file} as a new file with the name passed as
-     * argument
-     * 
-     * @param fileName {@link java.lang.String} containing file name
-     */
-    public ExamIO(String fileName) {
-        file = new File(fileName);
-    }
-
-    /**
-     * Sets {@link models.ExamIO#file} with the file passed as argument
-     * 
-     * @param file File object
-     */
-    public ExamIO(File file) {
-        this.file = file;
-    }
-
+public final class ExamIO {
     /**
      * Loads exam entries read from {@link models.ExamIO#file} to a
      * {@link java.util.Vector} containing exam entries
@@ -53,7 +29,7 @@ public class ExamIO {
      * @throws IOException           Exception thrown when a problem related I/O
      *                               goes wrong
      */
-    public Vector<AbstractExam> load() throws FileNotFoundException, ExamInfoException, IOException {
+    public static Vector<AbstractExam> load(File file) throws FileNotFoundException, ExamInfoException, IOException {
         Vector<AbstractExam> examEntries = new Vector<AbstractExam>();
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -62,13 +38,13 @@ public class ExamIO {
         while (line != null) {
 
             String[] data = line.split(",");
+            AbstractExam exam = null;
 
             if (data[0].equals("simple")) {
-                SimpleExam exam = new SimpleExam(data[1], data[2], data[3], data[4], data[5]);
+                exam = new SimpleExam(data[1], data[2], data[3], data[4], data[5]);
 
-                examEntries.add(exam);
             } else if (data[0].equals("composed")) {
-                ComposedExam exam = new ComposedExam(data[1], data[2], data[3], data[4]);
+                exam = new ComposedExam(data[1], data[2], data[3], data[4]);
 
                 String[][] partialExamsInfo = new String[Integer.parseInt(data[5])][2];
 
@@ -77,10 +53,11 @@ public class ExamIO {
                     partialExamsInfo[j][1] = data[i + 1];
                 }
 
-                exam.setPartialExamsInfo(partialExamsInfo, Integer.parseInt(data[5]));
+                ((ComposedExam) exam).setPartialExamsInfo(partialExamsInfo, Integer.parseInt(data[5]));
 
-                examEntries.add(exam);
             }
+
+            examEntries.add(exam);
 
             line = reader.readLine();
         }
@@ -99,7 +76,7 @@ public class ExamIO {
      *                           wrong
      * @throws ExamInfoException Exception thrown when exam data are wrong
      */
-    public void save(Vector<AbstractExam> examEntries) throws IOException, ExamInfoException {
+    public static void save(File file, Vector<AbstractExam> examEntries) throws IOException, ExamInfoException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
         for (int i = 0; i < examEntries.size(); i++) {
