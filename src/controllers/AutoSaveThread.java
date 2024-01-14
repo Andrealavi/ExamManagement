@@ -8,6 +8,8 @@ package controllers;
 import models.ExamIO;
 import models.ExamsTableModel;
 
+import java.io.File;
+
 /**
  * Extends {@link java.lang.Thread} to create a custom thread for autosaving
  * exams table content periodically
@@ -32,12 +34,12 @@ public class AutoSaveThread extends Thread {
      */
     @Override
     public void run() {
-        ExamIO file = new ExamIO("./documents/.datalog");
+        File file = new File("./documents/.datalog");
 
         while (true) {
             try {
                 sleep(120000);
-                file.save(model.getEntries());
+                ExamIO.save(file, model.getEntries());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
