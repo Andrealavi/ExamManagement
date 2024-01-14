@@ -22,7 +22,7 @@ import controllers.listeners.add.AddComposedExamListener;
 import controllers.listeners.add.AddSimpleExamListener;
 import controllers.listeners.filter.FilterExamsListener;
 import controllers.listeners.io.*;
-import controllers.listeners.remove.RemoveEntryListener;
+import controllers.listeners.remove.RemoveAction;
 
 /**
  * Enables interaction with {@link models} package
@@ -61,6 +61,9 @@ public class Controller {
         TablePanel tablePanel = (TablePanel) frame.getTablePanel();
         ExamsTableModel tableModel = (ExamsTableModel) tablePanel.getTable().getModel();
 
+        tablePanel.getTable().getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "pressed");
+        tablePanel.getTable().getActionMap().put("pressed", new RemoveAction(frame, tablePanel.getTable(), isFiltered));
+
         TopMenu menuBar = frame.getTopMenu();
 
         JMenuItem addSimpleExamItem = ((JMenu) menuBar.getExamMenuItems()[0]).getItem(0);
@@ -75,11 +78,7 @@ public class Controller {
                         new AddComposedExamListener(frame, tableModel, isSaved, isFiltered));
         addComposedExamItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
 
-        JMenuItem removeEntriesItem = menuBar.getExamMenuItems()[1];
-        removeEntriesItem.addActionListener(new RemoveEntryListener(frame, tablePanel.getTable(), isSaved, isFiltered));
-        removeEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
-
-        JMenuItem filterEntriesItem = menuBar.getExamMenuItems()[2];
+        JMenuItem filterEntriesItem = menuBar.getExamMenuItems()[1];
         filterEntriesItem.addActionListener(new FilterExamsListener(frame, tablePanel.getTable(), isFiltered));
         filterEntriesItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.ALT_MASK));
 
