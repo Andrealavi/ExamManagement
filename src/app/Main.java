@@ -12,6 +12,11 @@ import controllers.Controller;
  * Main class that start the application
  */
 public class Main {
+    /**
+     * Start the application
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         AppFrame f = new AppFrame("Exams Manager");
         Controller c = new Controller(f);

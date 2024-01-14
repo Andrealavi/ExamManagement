@@ -13,6 +13,9 @@ import java.io.File;
 /**
  * Extends {@link java.lang.Thread} to create a custom thread for autosaving
  * exams table content periodically
+ * 
+ * @see models.ExamIO
+ * @see models.ExamsTableModel
  */
 public class AutoSaveThread extends Thread {
     /**

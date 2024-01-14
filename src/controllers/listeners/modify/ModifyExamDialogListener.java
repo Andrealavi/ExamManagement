@@ -16,14 +16,15 @@ import models.exam.*;
 import models.ExamsTableModel;
 
 /**
- * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * Extends {@link controllers.listeners.ExamDialogListener} and implements
+ * {@link java.awt.event.ActionListener} interface to create an event
  * listener to modify an exam entry in the exam table.
  * 
  * @see views.dialogs.AddComposedExamDialog
  * @see views.AppFrame
  * @see models.ExamsTableModel
- * @see models.SimpleExam
- * @see models.ComposedExam
+ * @see models.exam.SimpleExam
+ * @see models.exam.ComposedExam
  * @see controllers.listeners.filter.ClearFilterListener
  * @see controllers.listeners.filter.ShowStatsButtonListener
  * @see java.awt.event.ActionListener
@@ -87,10 +88,10 @@ public class ModifyExamDialogListener extends ExamDialogListener implements Acti
             }
 
             super.getDialog().dispose();
-        } catch (ExamInfoException err) {
-            JOptionPane.showMessageDialog(super.getDialog(), err.getMessage(), "Error message",
+        } catch (ExamInfoException examException) {
+            JOptionPane.showMessageDialog(super.getDialog(), examException.getMessage(), "Error message",
                     JOptionPane.ERROR_MESSAGE);
-        } catch (NumberFormatException err) {
+        } catch (NumberFormatException formatException) {
             JOptionPane.showMessageDialog(super.getDialog(),
                     "Invalid value inserted.\nPlease make sure you have inserted valid number values for grade and credits fields.",
                     "Error message", JOptionPane.ERROR_MESSAGE);

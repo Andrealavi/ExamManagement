@@ -5,7 +5,8 @@
  */
 package controllers.listeners.io;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -94,6 +95,9 @@ public class SaveFileListener implements ActionListener {
         return false;
     }
 
+    /**
+     * Make the user select a file and save data
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         File file = null;

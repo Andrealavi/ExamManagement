@@ -5,7 +5,8 @@
  */
 package controllers.listeners.filter;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
@@ -52,7 +53,8 @@ public class ClearFilterListener implements ActionListener {
 
     /**
      * Removes filter from the table model and removes
-     * {@link views.panels.FilterPanel} from the application frame
+     * {@link views.panels.FilterPanel} from the application frame. It also manages
+     * to update row indices.
      */
     @Override
     public void actionPerformed(ActionEvent e) {

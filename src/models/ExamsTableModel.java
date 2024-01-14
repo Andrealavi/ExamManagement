@@ -31,6 +31,9 @@ public class ExamsTableModel extends AbstractTableModel {
      */
     private Vector<AbstractExam> examEntries;
 
+    /**
+     * ArrayList used to keep track of the row numbers
+     */
     private ArrayList<Integer> rowNumbers;
 
     /**
@@ -114,6 +117,11 @@ public class ExamsTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * Adds a new row number to the ArrayList
+     * 
+     * @param row row index to add
+     */
     public void addRowNumber(int row) {
         rowNumbers.add(row + 1);
 
@@ -141,11 +149,22 @@ public class ExamsTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * Updated the row number of an existing row
+     * 
+     * @param row       model row number
+     * @param rowNumber new row number
+     */
     public void updateRowNumber(int row, int rowNumber) {
         rowNumbers.set(row, rowNumber + 1);
         fireTableDataChanged();
     }
 
+    /**
+     * Removes an entry at the given row
+     * 
+     * @param row index of the entry to remove
+     */
     public void removeEntryAtRow(int row) {
         examEntries.remove(row);
     }
@@ -167,6 +186,11 @@ public class ExamsTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * Sets the {@link models.ExamsTableModel#rowNumbers}
+     * 
+     * @param rowNumbers ArrayList containing the new row numbers
+     */
     public void setRowNumbers(ArrayList<Integer> rowNumbers) {
         this.rowNumbers = rowNumbers;
 

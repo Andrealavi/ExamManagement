@@ -22,16 +22,17 @@ import models.exam.*;
  */
 public final class ExamIO {
     /**
-     * Loads exam entries read from {@link models.ExamIO#file} to a
+     * Loads exam entries read from {@link java.io.File} to a
      * {@link java.util.Vector} containing exam entries
+     * 
+     * @param file File from which data are load
      * 
      * @return {@link java.util.Vector} containing exam entries
      * @throws FileNotFoundException Exception thrown when the file doesn't exists
-     * @throws ExamInfoException     Exception thrown when exam data are wrong
      * @throws IOException           Exception thrown when a problem related I/O
      *                               goes wrong
      */
-    public static Vector<AbstractExam> load(File file) throws FileNotFoundException, ExamInfoException, IOException {
+    public static Vector<AbstractExam> load(File file) throws FileNotFoundException, IOException {
         Vector<AbstractExam> examEntries = new Vector<AbstractExam>();
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -43,7 +44,8 @@ public final class ExamIO {
             AbstractExam exam = null;
 
             if (data[0].equals("simple")) {
-                exam = new SimpleExam(data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]));
+                exam = new SimpleExam(data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]),
+                        Boolean.parseBoolean(data[6]));
 
             } else if (data[0].equals("composed")) {
                 ArrayList<Integer> grades = new ArrayList<Integer>();
@@ -55,6 +57,8 @@ public final class ExamIO {
                 }
 
                 exam = new ComposedExam(data[1], data[2], data[3], grades, weights, Integer.parseInt(data[4]));
+            } else {
+                throw new IOException("The selected file cannot be opened by the program.\nPlease choose another file");
             }
 
             examEntries.add(exam);
@@ -68,15 +72,15 @@ public final class ExamIO {
     }
 
     /**
-     * Saves exam entries from {@link java.util.Vector} to
-     * {@link models.ExamIO#file}
+     * Saves exam entries from {@link java.util.Vector} to {@link java.io.File}
+     * 
+     * @param file        File in which data are saved
      * 
      * @param examEntries Vector containing exam entries data
-     * @throws IOException       Exception thrown when a problem related I/O goes
-     *                           wrong
-     * @throws ExamInfoException Exception thrown when exam data are wrong
+     * @throws IOException Exception thrown when a problem related I/O goes
+     *                     wrong
      */
-    public static void save(File file, Vector<AbstractExam> examEntries) throws IOException, ExamInfoException {
+    public static void save(File file, Vector<AbstractExam> examEntries) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
         for (int i = 0; i < examEntries.size(); i++) {

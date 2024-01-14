@@ -26,6 +26,7 @@ import views.dialogs.ModifySimpleExamDialog;
  * 
  * @see views.dialogs.ModifyComposedExamDialog
  * @see views.dialogs.ModifySimpleExamDialog
+ * @see views.dialogs.ModifyExamDialogInterface
  * @see models.ExamsTableModel
  * @see models.exam.SimpleExam
  * @see models.exam.ComposedExam
@@ -94,8 +95,9 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
                     .addActionListener(
                             new RemoveExamListener((AbstractExamDialog) dialog, table, row, isSaved, isFiltered));
 
-            ((AbstractExamDialog) dialog).getButton()
+            dialog.getButton()
                     .addActionListener(new CloseButtonListener(((AbstractExamDialog) dialog)));
+
             ((AbstractExamDialog) dialog).getRootPane().setDefaultButton(((AbstractExamDialog) dialog).getButton());
         }
     }

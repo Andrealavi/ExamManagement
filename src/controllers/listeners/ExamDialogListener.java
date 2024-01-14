@@ -1,17 +1,23 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listener
+ */
 package controllers.listeners;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import controllers.listeners.filter.GeneralFilterListener;
 import views.dialogs.*;
 import models.exam.*;
 
 /**
- * Implements {@link java.awt.event.ActionListener} interface to create an event
- * listener to add a new exam to the exam table.
+ * Extends {@link controllers.listeners.filter.GeneralFilterListener} in order
+ * to implement the methods used for adding and modifying an exam
  * 
- * @see views.dialogs.AddComposedExamDialog
- * @see models.ExamsTableModel
+ * @see controllers.listeners.filter.GeneralFilterListener
+ * @see views.dialogs.AbstractExamDialog
  * @see java.awt.event.ActionListener
  */
 public class ExamDialogListener extends GeneralFilterListener {
@@ -24,8 +30,6 @@ public class ExamDialogListener extends GeneralFilterListener {
      * Instantiates class attributes using all the function arguments
      * 
      * @param dialog     Dialog with exam data
-     * @param model      Table model
-     * @param isSaved    Boolean containing save state of the exam table data
      * @param isFiltered Boolean containing filter state of the exam table data
      */
     public ExamDialogListener(AbstractExamDialog dialog, AtomicBoolean isFiltered) {
@@ -33,17 +37,19 @@ public class ExamDialogListener extends GeneralFilterListener {
         this.dialog = (AbstractExamDialog) super.getDialog();
     }
 
+    /**
+     * Returns the dialog with the data of the exam
+     * 
+     * @return dialog attribute
+     */
     protected AbstractExamDialog getDialog() {
         return dialog;
     }
 
-    protected AtomicBoolean getFilterBoolean() {
-        return super.getFilterBoolean();
-    }
-
     /**
-     * Creates a {@link models.exam.SimpleExam} entry using data taken from
-     * {@link controllers.listeners.add.AddExamDialogListener#dialog}
+     * Creates a {@link models.exam.SimpleExam} entry using data passed as argument
+     * 
+     * @param data exam data
      * 
      * @return Simple exam entry
      * @throws ExamInfoException Exception that is thrown if exam data are invalid
@@ -56,20 +62,23 @@ public class ExamDialogListener extends GeneralFilterListener {
         }
 
         Integer grade = Integer.parseInt(data[3]);
+        Boolean honor = grade > 30;
 
         if (grade > 30) {
             grade = 30;
         }
 
         SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], grade,
-                Integer.parseInt(data[4]));
+                Integer.parseInt(data[4]), honor);
 
         return examEntry;
     }
 
     /**
-     * Creates a {@link models.exam.ComposedExam} entry using data taken from
-     * {@link controllers.listeners.add.AddExamDialogListener#dialog}
+     * Creates a {@link models.exam.ComposedExam} entry using data passed as
+     * argument
+     * 
+     * @param data exam data
      * 
      * @return Composed exam entry
      * @throws ExamInfoException Exception that is thrown if exam data are invalid

@@ -22,17 +22,15 @@ public class SimpleExam extends AbstractExam<Integer> {
      * @param className class name
      * @param grade     student grade
      * @param credits   exam credits number
-     * @param honor     student honors
-     * 
-     * @throws ExamInfoException Exception that is thrown when exam data are invalid
+     * @param honor     student honor
      * 
      * @see models.exam.AbstractExam
      */
-    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits)
-            throws ExamInfoException {
+    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits,
+            Boolean honor) {
         super(firstName, lastName, className, grade, credits);
 
-        this.honor = grade > 30;
+        this.honor = honor;
     }
 
     @Override
@@ -63,7 +61,7 @@ public class SimpleExam extends AbstractExam<Integer> {
         String outputString = "simple" + "," + super.getFirstName() + "," + super.getLastName() + ","
                 + super.getClassName() + "," + super.getGrade().toString()
                 + ","
-                + super.getCredits().toString();
+                + super.getCredits().toString() + "," + this.honor;
 
         return outputString;
     }

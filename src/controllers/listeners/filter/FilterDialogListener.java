@@ -5,20 +5,23 @@
  */
 package controllers.listeners.filter;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTable;
 
-import controllers.listeners.GeneralFilterListener;
 import models.ExamsRowSorter;
 import models.ExamsTableModel;
 import views.dialogs.FilterDialog;
 
 /**
- * Implements {@link java.awt.event.ActionListener} interface to create an event
+ * Extends {@link controllers.listeners.filter.GeneralFilterListener} and
+ * implements
+ * {@link java.awt.event.ActionListener} interface to create an event
  * listener for apply filter button of the {@link views.dialogs.FilterDialog}.
  * 
+ * @see controllers.listeners.filter.GeneralFilterListener
  * @see views.AppFrame
  * @see models.ExamsTableModel
  * @see models.ExamsRowSorter
@@ -26,7 +29,7 @@ import views.dialogs.FilterDialog;
  */
 public class FilterDialogListener extends GeneralFilterListener implements ActionListener {
     /**
-     * Dialog with filter data
+     * Dialog with filter String
      */
     private FilterDialog dialog;
 
@@ -52,8 +55,7 @@ public class FilterDialogListener extends GeneralFilterListener implements Actio
      * Sets the table filter using the string taken from
      * {@link controllers.listeners.filter.FilterDialogListener#dialog}, adds
      * {@link views.panels.FilterPanel} to the application frame and action
-     * listeners
-     * to the panel buttons
+     * listeners to the panel buttons. It also updates the row column of the table
      * 
      */
     @Override

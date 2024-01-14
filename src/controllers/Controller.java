@@ -61,8 +61,12 @@ public class Controller {
         TablePanel tablePanel = (TablePanel) frame.getTablePanel();
         ExamsTableModel tableModel = (ExamsTableModel) tablePanel.getTable().getModel();
 
+        /**
+         * Set a keyBinding
+         */
         tablePanel.getTable().getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "pressed");
-        tablePanel.getTable().getActionMap().put("pressed", new RemoveAction(frame, tablePanel.getTable(), isFiltered));
+        tablePanel.getTable().getActionMap().put("pressed",
+                new RemoveAction(frame, tablePanel.getTable(), isSaved, isFiltered));
 
         TopMenu menuBar = frame.getTopMenu();
 

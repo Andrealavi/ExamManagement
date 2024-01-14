@@ -20,6 +20,7 @@ import models.ExamsTableModel;
  * Implements {@link java.awt.event.ActionListener} interface to create an event
  * listener to add a new exam to the exam table.
  * 
+ * @see controllers.listeners.ExamDialogListener
  * @see views.dialogs.AddComposedExamDialog
  * @see models.ExamsTableModel
  * @see java.awt.event.ActionListener
@@ -36,7 +37,8 @@ public class AddExamDialogListener extends ExamDialogListener implements ActionL
     private AtomicBoolean isSaved;
 
     /**
-     * Instantiates class attributes using all the function arguments
+     * Instantiates class attributes using all the function arguments. Calls super
+     * constructor
      * 
      * @param dialog     Dialog with exam data
      * @param model      Table model
@@ -55,7 +57,6 @@ public class AddExamDialogListener extends ExamDialogListener implements ActionL
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
         try {
             AbstractExam examEntry;
 

@@ -20,7 +20,14 @@ import java.awt.*;
  * @see java.awt.GridBagConstraints
  */
 public class ModifyComposedExamDialog extends AddComposedExamDialog implements ModifyExamDialogInterface {
+    /**
+     * Button that activates the modify mode
+     */
     private JButton modifyButton;
+
+    /**
+     * Button that activates the entry removal
+     */
     private JButton removeButton;
 
     /**
@@ -32,18 +39,24 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
     public ModifyComposedExamDialog(JFrame frame) {
         super(frame);
 
-        for (int i = 0; i < generalFields.length; i++) {
-            generalFields[i].setEditable(false);
+        for (int i = 0; i < super.getGeneralFields().length; i++) {
+            super.getGeneralFields()[i].setEditable(false);
         }
 
         modifyButton = new JButton("Modify");
         removeButton = new JButton("Remove");
-        actionButton.setText("Close");
+        super.getButton().setText("Close");
 
         removePartialExam(true);
         removePartialExam(true);
     }
 
+    /**
+     * Converts weight into a prettier format with %
+     * 
+     * @param decimalWeight Partial exam weight
+     * @return
+     */
     private String convertWeight(String decimalWeight) {
         Float weight = Float.parseFloat(decimalWeight);
         weight = weight * 100;
@@ -53,19 +66,13 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
         return convertedWeight.toString();
     }
 
-    /**
-     * Sets entry fields using data passed as arguments
-     * 
-     * @param generalDataArray Data of the general text fields
-     * @param partialGrades    Grades of each partial exam
-     * @param partialWeights   Weights of each partial exam
-     */
+    @Override
     public void setEntryFields(String[] fieldsData) {
-        for (int i = 0; i < generalFields.length - 1; i++) {
-            generalFields[i].setText(fieldsData[i]);
+        for (int i = 0; i < super.getGeneralFields().length - 1; i++) {
+            super.getGeneralFields()[i].setText(fieldsData[i]);
         }
 
-        generalFields[3].setText(fieldsData[3]);
+        super.getGeneralFields()[3].setText(fieldsData[3]);
 
         String[] partialExamsData = fieldsData[4].split(",");
 
@@ -94,7 +101,8 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
     }
 
     /**
-     * Refreshes modify button position in dialog view
+     * Refreshes {@link views.dialogs.ModifyComposedExamDialog#modifyButton}
+     * position in dialog view
      */
     public void refreshModifyButton() {
         remove(modifyButton);
@@ -108,6 +116,10 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
         add(modifyButton, buttonConstraints);
     }
 
+    /**
+     * Refreshes {@link views.dialogs.ModifyComposedExamDialog#removeButton}
+     * position in dialog view
+     */
     public void refreshRemoveButton() {
         remove(removeButton);
 
@@ -134,26 +146,14 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
         }
     }
 
-    /**
-     * Gets {@link views.dialogs.ModifyComposedExamDialog#modifyButton}
-     * 
-     * @return Button modify button
-     */
+    @Override
     public JButton getModifyButton() {
         return modifyButton;
     }
 
+    @Override
     public JButton getRemoveButton() {
         return removeButton;
-    }
-
-    /**
-     * Gets text field components via {@link javax.swing.JTextField} array
-     * 
-     * @return {@link javax.swing.JTextField} array of dialog general fields
-     */
-    public JTextField[] getGeneralFields() {
-        return generalFields;
     }
 
     /**

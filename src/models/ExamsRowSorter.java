@@ -19,6 +19,8 @@ import javax.swing.table.TableRowSorter;
 public class ExamsRowSorter extends TableRowSorter<ExamsTableModel> {
     /**
      * Calls super constructor with model passed as argument
+     * 
+     * @param model Table model
      */
     public ExamsRowSorter(ExamsTableModel model) {
         super(model);
@@ -28,7 +30,7 @@ public class ExamsRowSorter extends TableRowSorter<ExamsTableModel> {
      * Creates a regex filter using the {@link java.lang.String} filter passed as
      * argument and sets this {@link javax.swing.RowFilter}
      * 
-     * @param filterString
+     * @param filterString string used for filtering
      */
     public void createRowFilter(String filterString) {
         RowFilter<ExamsTableModel, Object> rf = null;

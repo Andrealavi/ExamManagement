@@ -87,8 +87,10 @@ public class ClosingWindowListener extends WindowAdapter {
 
     /**
      * Saves file content into the selected file
+     * 
+     * @return a boolean that indicates the result of the operation
      */
-    public void saveFile() {
+    public boolean saveFile() {
         File file = null;
 
         if (fileChooser.getSelectedFile() != null) {
@@ -101,17 +103,23 @@ public class ClosingWindowListener extends WindowAdapter {
                 if (approveOverwrite(fileChooser.getSelectedFile())) {
                     file = fileChooser.getSelectedFile();
                 } else {
-                    fileChooser.cancelSelection();
+                    fileChooser.setSelectedFile(null);
                 }
             }
+        }
+
+        if (file == null) {
+            return false;
         }
 
         Vector<AbstractExam> examEntries = model.getEntries();
 
         try {
             ExamIO.save(file, examEntries);
+            return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frame, e.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
@@ -126,8 +134,7 @@ public class ClosingWindowListener extends WindowAdapter {
                     "Your file is not saved. Do you want to save it?", "File not saved",
                     JOptionPane.YES_NO_CANCEL_OPTION);
 
-            if (result == JOptionPane.YES_OPTION) {
-                saveFile();
+            if (result == JOptionPane.YES_OPTION && saveFile()) {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             } else if (result == JOptionPane.NO_OPTION) {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -15,7 +15,6 @@ import controllers.listeners.remove.RemovePartialExamListener;
 import models.ExamsTableModel;
 import views.dialogs.AbstractExamDialog;
 import views.dialogs.ModifyComposedExamDialog;
-import views.dialogs.ModifySimpleExamDialog;
 import views.dialogs.AddComposedExamDialog.PartialExamView;
 
 /**
@@ -98,6 +97,7 @@ public class ModifyExamListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         dialog.getButton().setText("Update");
+
         dialog.getButton().removeActionListener(dialog.getButton().getActionListeners()[0]);
         dialog.getButton().addActionListener(new ModifyExamDialogListener(dialog, model, row, isSaved, isFiltered));
 
@@ -105,12 +105,9 @@ public class ModifyExamListener implements ActionListener {
 
         dialog.pack();
 
-        JTextField[] generalFields = null;
+        JTextField[] generalFields = dialog.getGeneralFields();
 
-        if (dialog.getClass().getSimpleName().equals("ModifySimpleExamDialog")) {
-            generalFields = ((ModifySimpleExamDialog) dialog).getGeneralFields();
-        } else {
-            generalFields = ((ModifyComposedExamDialog) dialog).getGeneralFields();
+        if (dialog.getClass().getSimpleName().equals("ModifyComposedExamDialog")) {
             enableComposedExamUpdate();
         }
 

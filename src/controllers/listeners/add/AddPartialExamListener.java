@@ -5,7 +5,8 @@
  */
 package controllers.listeners.add;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import controllers.listeners.remove.RemovePartialExamListener;
 import views.dialogs.AddComposedExamDialog;
@@ -21,6 +22,9 @@ import views.dialogs.ModifyComposedExamDialog;
  * @see java.awt.event.ActionListener
  */
 public class AddPartialExamListener implements ActionListener {
+    /**
+     * Dialog with composed exam data
+     */
     private AddComposedExamDialog dialog;
 
     /**

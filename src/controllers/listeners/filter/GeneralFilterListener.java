@@ -1,32 +1,75 @@
-package controllers.listeners;
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listeners.filter
+ */
+package controllers.listeners.filter;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JDialog;
 import javax.swing.JTable;
 
-import controllers.listeners.filter.ClearFilterListener;
-import controllers.listeners.filter.ShowStatsButtonListener;
 import models.ExamsTableModel;
 import views.AppFrame;
 
+/**
+ * Implements updateFilter method used across several listeners
+ * 
+ * @see models.ExamsTableModel
+ * @see views.AppFrame
+ */
 public class GeneralFilterListener {
+    /**
+     * Dialog used to get the parent frame
+     */
     private JDialog dialog;
+
+    /**
+     * Boolean used to check whether the exam entries are filtered or not
+     */
     private AtomicBoolean isFiltered;
 
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param dialog
+     */
     public GeneralFilterListener(JDialog dialog, AtomicBoolean isFiltered) {
         this.dialog = dialog;
         this.isFiltered = isFiltered;
     }
 
+    /**
+     * Returns the dialog from which the listener is called
+     * 
+     * @return dialog attribute
+     */
     protected JDialog getDialog() {
         return dialog;
     }
 
+    /**
+     * Returns
+     * {@link controllers.listeners.filter.GeneralFilterListener#isFiltered}, the
+     * boolean that checks whether the table is filtered or not
+     * 
+     * @return isFiltered
+     */
     protected AtomicBoolean getFilterBoolean() {
         return isFiltered;
     }
 
+    /**
+     * Update filter panel weighted average after that an exam is added/removed or
+     * the filter is applied
+     * 
+     * @see views.AppFrame
+     * @see views.panels.FilterPanel
+     * @see views.dialogs.HistogramDialog
+     * @see models.ExamsRowSorter
+     * 
+     */
     protected void updateFilter() {
         AppFrame frame = (AppFrame) dialog.getParent();
         JTable table = frame.getTablePanel().getTable();
@@ -46,6 +89,9 @@ public class GeneralFilterListener {
             gradesFrequencies[i] = 0;
         }
 
+        /**
+         * Computes the weighted average
+         */
         for (int i = 0; i < table.getRowSorter().getViewRowCount(); i++) {
             gradesFrequencies[Integer
                     .parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString()) - 18]++;
@@ -63,6 +109,9 @@ public class GeneralFilterListener {
 
         frame.getFilterPanel().getGradeField().setText(weightedAverage.toString());
 
+        /**
+         * Removes listeners from filterPanel buttons
+         */
         if (frame.getFilterPanel().getClearFilterButton().getActionListeners().length != 0) {
             int length = frame.getFilterPanel().getClearFilterButton().getActionListeners().length;
 
@@ -81,6 +130,9 @@ public class GeneralFilterListener {
             }
         }
 
+        /**
+         * Add listeners to filterPanel buttons
+         */
         frame.getFilterPanel().getClearFilterButton()
                 .addActionListener(new ClearFilterListener(frame, table, isFiltered));
         frame.getFilterPanel().getShowStatsButton()

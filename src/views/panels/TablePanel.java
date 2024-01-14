@@ -22,6 +22,9 @@ import javax.swing.*;
  * @see javax.swing.JFileChooser
  */
 public class TablePanel extends JPanel {
+    /**
+     * Exam table
+     */
     private JTable table;
 
     /**

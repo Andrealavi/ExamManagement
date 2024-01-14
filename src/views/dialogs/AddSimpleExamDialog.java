@@ -34,10 +34,10 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
 
         final int N = columnNames.length - 2;
 
-        generalLabels = new JLabel[N];
-        generalFields = new JTextField[N];
+        JLabel[] labels = new JLabel[N];
+        JTextField[] fields = new JTextField[N];
 
-        actionButton = new JButton("Add Exam");
+        super.setButton(new JButton("Add Exam"));
 
         setLayout(new GridBagLayout());
 
@@ -46,10 +46,10 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
         for (int i = 0, x = 0; i < N; i++, x += 2) {
-            generalLabels[i] = new JLabel(String.format("%s:", columnNames[i + 1]));
+            labels[i] = new JLabel(String.format("%s:", columnNames[i + 1]));
             generalLabelsConstraints[i] = new GridBagConstraints();
 
-            generalFields[i] = new JTextField(String.format("Insert %s", columnNames[i + 1]), 10);
+            fields[i] = new JTextField(String.format("Insert %s", columnNames[i + 1]), 10);
             generalFieldsConstraints[i] = new GridBagConstraints();
 
             generalLabelsConstraints[i].gridx = x;
@@ -60,15 +60,18 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
             generalFieldsConstraints[i].gridy = 0;
             generalFieldsConstraints[i].insets = new Insets(10, 5, 10, 5);
 
-            add(generalLabels[i], generalLabelsConstraints[i]);
-            add(generalFields[i], generalFieldsConstraints[i]);
+            add(labels[i], generalLabelsConstraints[i]);
+            add(fields[i], generalFieldsConstraints[i]);
         }
+
+        super.setLabels(labels);
+        super.setFields(fields);
 
         buttonConstraints.gridx = (N) * 2;
         buttonConstraints.gridy = 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
-        add(actionButton, buttonConstraints);
+        add(super.getButton(), buttonConstraints);
         pack();
         setVisible(true);
     }
@@ -83,10 +86,10 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
      * @see views.dialogs.AbstractExamDialog#getFieldsData method
      */
     public String[] getFieldsData() {
-        String[] fieldsData = new String[generalFields.length + 1];
+        String[] fieldsData = new String[super.getGeneralFields().length];
 
-        for (int i = 0; i < generalFields.length; i++) {
-            fieldsData[i] = generalFields[i].getText();
+        for (int i = 0; i < super.getGeneralFields().length; i++) {
+            fieldsData[i] = super.getGeneralFields()[i].getText();
         }
 
         return fieldsData;

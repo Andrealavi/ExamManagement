@@ -7,7 +7,6 @@ package views.dialogs;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextField;
 
 import java.awt.*;
 
@@ -23,19 +22,35 @@ import java.awt.*;
  * @see java.awt.GridBagConstraints
  */
 public class ModifySimpleExamDialog extends AddSimpleExamDialog implements ModifyExamDialogInterface {
+    /**
+     * Button that activates the modify mode
+     */
     private JButton modifyButton;
+
+    /**
+     * Button that activates the entry removal
+     */
     private JButton removeButton;
 
-    public ModifySimpleExamDialog(JFrame f, String[] columnNames) {
-        super(f, columnNames);
+    /**
+     * Instantiates class attributes using all the function arguments. Disables text
+     * fields, add {@link views.dialogs.ModifySimpleExamDialog#modifyButton} and
+     * {@link views.dialogs.ModifySimpleExamDialog#removeButton} and changes
+     * action button text to close
+     * 
+     * @param frame       Application frame
+     * @param columnNames Array containing the columns names
+     */
+    public ModifySimpleExamDialog(JFrame frame, String[] columnNames) {
+        super(frame, columnNames);
 
-        for (int i = 0; i < generalFields.length; i++) {
-            generalFields[i].setEditable(false);
+        for (int i = 0; i < super.getGeneralFields().length; i++) {
+            super.getGeneralFields()[i].setEditable(false);
         }
 
         modifyButton = new JButton("Modify");
         removeButton = new JButton("Remove");
-        actionButton.setText("Close");
+        super.getButton().setText("Close");
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
@@ -52,36 +67,20 @@ public class ModifySimpleExamDialog extends AddSimpleExamDialog implements Modif
         add(removeButton, buttonConstraints);
     }
 
-    /**
-     * Sets entry fields using data passed as argument
-     * 
-     * @param fieldsData fields data passed as a {@link java.lang.String} array
-     */
+    @Override
     public void setEntryFields(String[] fieldsData) {
-        for (int i = 0; i < generalFields.length; i++) {
-            generalFields[i].setText(fieldsData[i]);
+        for (int i = 0; i < super.getGeneralFields().length; i++) {
+            super.getGeneralFields()[i].setText(fieldsData[i]);
         }
     }
 
-    /**
-     * Gets {@link views.dialogs.ModifySimpleExamDialog#modifyButton}
-     * 
-     * @return Button modify button
-     */
+    @Override
     public JButton getModifyButton() {
         return modifyButton;
     }
 
+    @Override
     public JButton getRemoveButton() {
         return removeButton;
-    }
-
-    /**
-     * Gets text field components via {@link javax.swing.JTextField} array
-     * 
-     * @return {@link javax.swing.JTextField} array of dialog general fields
-     */
-    public JTextField[] getGeneralFields() {
-        return generalFields;
     }
 }

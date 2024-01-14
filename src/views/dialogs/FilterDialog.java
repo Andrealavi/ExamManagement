@@ -18,9 +18,24 @@ import java.awt.*;
  * @see java.awt.GridBagConstraints
  */
 public class FilterDialog extends JDialog {
+    /**
+     * Filter Label
+     */
     private JLabel filterLabel;
+
+    /**
+     * Text field containg the filter expression
+     */
     private JTextField filterField;
+
+    /**
+     * Button to get information about filter
+     */
     private JButton infoButton;
+
+    /**
+     * Button that activates the action
+     */
     private JButton actionButton;
 
     /**

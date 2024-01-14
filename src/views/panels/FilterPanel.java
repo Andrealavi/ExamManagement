@@ -22,9 +22,24 @@ import java.awt.*;
  * @see javax.swing.JFileChooser
  */
 public class FilterPanel extends JPanel {
+    /**
+     * Weighted average label
+     */
     private JLabel gradeLabel;
+
+    /**
+     * Weighted average field
+     */
     private JTextField gradeField;
+
+    /**
+     * Button that activate the filter removal
+     */
     private JButton clearFilterButton;
+
+    /**
+     * Button that activates the display of the histogram
+     */
     private JButton showStatsButton;
 
     /**

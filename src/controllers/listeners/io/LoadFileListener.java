@@ -5,7 +5,8 @@
  */
 package controllers.listeners.io;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Vector;
@@ -23,8 +24,8 @@ import views.*;
 
 /**
  * Implements {@link java.awt.event.ActionListener} interface to create an event
- * listener for Load File button of the application menu. It uses
- * {@link models.ExamIO} to load exam entries from a file
+ * listener for Load File button of the application menu. It uses the final
+ * class {@link models.ExamIO} to load exam entries from a file
  * 
  * @see models.ExamIO
  * @see models.ExamsRowSorter
@@ -70,6 +71,9 @@ public class LoadFileListener implements ActionListener {
         System.out.println();
     }
 
+    /**
+     * Make the user select the file and load data from it
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         int returnVal = fileChooser.showOpenDialog(frame);

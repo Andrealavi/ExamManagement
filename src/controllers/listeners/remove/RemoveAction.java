@@ -1,3 +1,8 @@
+/**
+ * @author Andrea Lavino (176195)
+ * 
+ * @package controllers.listener.remove
+ */
 package controllers.listeners.remove;
 
 import java.awt.event.ActionEvent;
@@ -11,17 +16,52 @@ import controllers.listeners.filter.ShowStatsButtonListener;
 import models.ExamsTableModel;
 import views.AppFrame;
 
+/**
+ * Extends {@link javax.swing.AbstractAction} in order to implement an action to
+ * remove exam entries
+ * 
+ * @see javax.swing.AbstractAction
+ */
 public class RemoveAction extends AbstractAction {
+    /**
+     * Application frame
+     */
     private AppFrame frame;
+
+    /**
+     * Exams table
+     */
     private JTable table;
+
+    /**
+     * Boolean that checks whether the table is filtered or not
+     */
     private AtomicBoolean isFiltered;
 
-    public RemoveAction(AppFrame frame, JTable table, AtomicBoolean isFiltered) {
+    /**
+     * Boolean that checks whether the data in the table are saved or not
+     */
+    private AtomicBoolean isSaved;
+
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param frame      application frame
+     * @param table      exam table
+     * @param isSaved    boolean to check if the data are saved
+     * @param isFiltered boolean to check if there is a filter
+     */
+    public RemoveAction(AppFrame frame, JTable table, AtomicBoolean isSaved, AtomicBoolean isFiltered) {
         this.frame = frame;
         this.table = table;
+        this.isSaved = isSaved;
         this.isFiltered = isFiltered;
     }
 
+    /**
+     * Remove entries at the selected rows
+     */
+    @Override
     public void actionPerformed(ActionEvent e) {
         ExamsTableModel model = (ExamsTableModel) table.getModel();
 
@@ -48,11 +88,16 @@ public class RemoveAction extends AbstractAction {
 
         model.fireTableDataChanged();
 
+        isSaved.set(false);
+
         if (isFiltered.get()) {
             updateFilter();
         }
     }
 
+    /**
+     * Update filterPanel weighted average
+     */
     private void updateFilter() {
         ExamsTableModel model = (ExamsTableModel) table.getModel();
 

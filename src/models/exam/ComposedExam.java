@@ -19,29 +19,29 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
     private Boolean honor;
 
     /**
-     * Calls super constructor, sets grade and weights and compute the final exam
+     * Calls super constructor, sets weights and compute the final exam
      * grade
      * 
      * @param firstName student first name
      * @param lastName  student last name
      * @param className class name
+     * @param grades    partial exams grades
+     * @param weights   partial exams weights
      * @param credits   number of credits
-     * @throws ExamInfoException Exception that is trown when exam data are invalid
      */
     public ComposedExam(String firstName, String lastName, String className, ArrayList<Integer> grades,
             ArrayList<Float> weights,
-            Integer credits)
-            throws ExamInfoException {
+            Integer credits) {
         super(firstName, lastName, className, grades, credits);
         this.weights = weights;
 
-        computeGrade();
+        computeFinalGrade();
     }
 
     /**
      * Computes exam final grade
      */
-    private void computeGrade() {
+    private void computeFinalGrade() {
         float sum = 0.0f;
         for (int i = 0; i < super.getGrade().size(); i++) {
             sum += super.getGrade().get(i) * weights.get(i);
@@ -56,32 +56,23 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
         honor = sum > 30;
     }
 
-    @Override
     /**
      * Gets exam grade
      * 
      * @return {@link java.lang.Integer} containing exam grade
      */
+    @Override
     public Integer getExamGrade() {
         return finalGrade;
     }
 
     /**
-     * Gets partial exams weights as a {@link java.lang.String} array
+     * Gets a string with all the partial exams weights and grades organized in
+     * couples
      * 
-     * @return {@link java.lang.String} array containing partial exams weights
+     * @return a string with all the couples divided by a comma
      */
-    public String[] getPartialExamsWeights() {
-        String[] weightsStringArray = new String[weights.size()];
-
-        for (int i = 0; i < weights.size(); i++) {
-            weightsStringArray[i] = weights.get(i).toString();
-        }
-
-        return weightsStringArray;
-    }
-
-    public String getGradeWeightCouple() {
+    private String getGradeWeightCouple() {
         StringBuffer gradeWeightStringArray = new StringBuffer();
 
         for (int i = 0; i < super.getGrade().size(); i++) {
@@ -93,7 +84,7 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
     }
 
     /**
-     * Gets exam honor
+     * Gets exam honor in a string format
      * 
      * @return {@link java.lang.String} containing honor value
      */

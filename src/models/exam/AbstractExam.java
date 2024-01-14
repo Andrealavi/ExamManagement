@@ -8,14 +8,35 @@ package models.exam;
 /**
  * Abstract class for exams. Created to take advantage of polymorphism
  * 
+ * @param <E> Grade attribute type. It can be an Integer or an ArrayList
+ * 
  * @see models.exam.SimpleExam
  * @see models.exam.ComposedExam
  */
 public abstract class AbstractExam<E> {
+    /**
+     * Student first name
+     */
     private String firstName;
+
+    /**
+     * Student last name
+     */
     private String lastName;
+
+    /**
+     * Class name
+     */
     private String className;
+
+    /**
+     * Exam grade
+     */
     private E grade;
+
+    /**
+     * Exam credits
+     */
     private Integer credits;
 
     /**
@@ -24,22 +45,15 @@ public abstract class AbstractExam<E> {
      * @param firstName Student first name
      * @param lastName  Student last name
      * @param className Class name
+     * @param grade     Exam grade
      * @param credits   Number of credits of the exam
-     * @throws ExamInfoException Exception that is thrown when credits number is
-     *                           wrong
      */
-    public AbstractExam(String firstName, String lastName, String className, E grade, Integer credits)
-            throws ExamInfoException {
+    public AbstractExam(String firstName, String lastName, String className, E grade, Integer credits) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.className = className;
         this.grade = grade;
-
-        if (credits <= 0 || credits > 18) {
-            throw new ExamInfoException("Invalid credits value. Please insert a value between 0 and 18.");
-        } else {
-            this.credits = credits;
-        }
+        this.credits = credits;
     }
 
     /**
@@ -69,6 +83,11 @@ public abstract class AbstractExam<E> {
         return className;
     }
 
+    /**
+     * Gets the grade object
+     * 
+     * @return grade object
+     */
     public E getGrade() {
         return grade;
     }

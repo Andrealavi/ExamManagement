@@ -21,17 +21,17 @@ public abstract class AbstractExamDialog extends JDialog {
     /**
      * Array of {@link javax.swing.JLabel} for exam general info labels
      */
-    protected JLabel[] generalLabels;
+    private JLabel[] generalLabels;
 
     /**
      * Array of {@link javax.swing.JTextField} for exam general info text fields
      */
-    protected JTextField[] generalFields;
+    private JTextField[] generalFields;
 
     /**
      * {@link javax.swing.JButton} for executing an action
      */
-    protected JButton actionButton;
+    private JButton actionButton;
 
     /**
      * Class constructor. Takes two arguments and calls the constructor of
@@ -51,6 +51,55 @@ public abstract class AbstractExamDialog extends JDialog {
      */
     public JButton getButton() {
         return actionButton;
+    }
+
+    /**
+     * Sets the {@link views.dialogs.AbstractExamDialog#actionButton} with the given
+     * button
+     * 
+     * @param button
+     */
+    protected void setButton(JButton button) {
+        this.actionButton = button;
+    }
+
+    /**
+     * Gets the {@link views.dialogs.AbstractExamDialog#generalLabels}
+     * 
+     * @return Dialog general labels
+     */
+    protected JLabel[] getGeneralLabels() {
+        return generalLabels;
+    }
+
+    /**
+     * Sets the {@link views.dialogs.AbstractExamDialog#generalFields}
+     * 
+     * @return Dialog general fields
+     */
+    public JTextField[] getGeneralFields() {
+        return generalFields;
+    }
+
+    /**
+     * Sets the {@link views.dialogs.AbstractExamDialog#generalLabels} with the
+     * given
+     * labels
+     * 
+     * @param labels
+     */
+    protected void setLabels(JLabel[] labels) {
+        generalLabels = labels;
+    }
+
+    /**
+     * Sets the {@link views.dialogs.AbstractExamDialog#generalLabels} with the
+     * given fields
+     * 
+     * @param fields
+     */
+    protected void setFields(JTextField[] fields) {
+        generalFields = fields;
     }
 
     /**

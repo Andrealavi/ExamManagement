@@ -25,13 +25,13 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * Used to display partial exam data
      */
     public class PartialExamView {
-        protected JLabel gradeLabel;
-        protected JTextField gradeTextField;
-        protected JLabel weightLabel;
-        protected JTextField weightField;
+        private JLabel gradeLabel;
+        private JTextField gradeTextField;
+        private JLabel weightLabel;
+        private JTextField weightField;
 
-        protected JButton addPartialButton;
-        protected JButton removePartialButton;
+        private JButton addPartialButton;
+        private JButton removePartialButton;
 
         /**
          * Instantiates class attributes
@@ -81,11 +81,9 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         }
 
         /**
-         * Gets the weight selected in the
-         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
-         * and coverts it into a {@link java.lang.String} which could be properly
-         * converted into a
-         * {@link java.lang.Float}
+         * Gets the weight written in
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightField}
+         * and coverts it into a {@link java.lang.String}
          * 
          * @return Weight string in a float parsable format
          */
@@ -99,10 +97,9 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         }
 
         /**
-         * Gets
-         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
+         * Gets {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightField}
          * 
-         * @return Weights {@link javax.swing.JComboBox}
+         * @return weight {@link javax.swing.JTextField}
          */
         public JTextField getWeightField() {
             return weightField;
@@ -195,44 +192,47 @@ public class AddComposedExamDialog extends AbstractExamDialog {
 
         final String[] COL_NAMES = { "First name", "Last name", "Class", "Credits" };
 
-        generalLabels = new JLabel[COL_NAMES.length];
-        generalFields = new JTextField[COL_NAMES.length];
+        JLabel[] labels = new JLabel[COL_NAMES.length];
+        JTextField[] fields = new JTextField[COL_NAMES.length];
         partialExams = new ArrayList<PartialExamView>();
-        actionButton = new JButton("Add");
+        super.setButton(new JButton("Add"));
 
         setLayout(new GridBagLayout());
 
-        GridBagConstraints[] infoLabelsConstraints = new GridBagConstraints[COL_NAMES.length];
-        GridBagConstraints[] infoFieldsConstraints = new GridBagConstraints[COL_NAMES.length];
+        GridBagConstraints[] labelsConstraints = new GridBagConstraints[COL_NAMES.length];
+        GridBagConstraints[] fieldsConstraints = new GridBagConstraints[COL_NAMES.length];
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
         for (int i = 0, x = 0; i < COL_NAMES.length; i++, x += 2) {
-            generalLabels[i] = new JLabel(String.format("%s:", COL_NAMES[i]));
-            infoLabelsConstraints[i] = new GridBagConstraints();
+            labels[i] = new JLabel(String.format("%s:", COL_NAMES[i]));
+            labelsConstraints[i] = new GridBagConstraints();
 
-            generalFields[i] = new JTextField(String.format("Insert %s", COL_NAMES[i]), 25);
-            infoFieldsConstraints[i] = new GridBagConstraints();
+            fields[i] = new JTextField(String.format("Insert %s", COL_NAMES[i]), 25);
+            fieldsConstraints[i] = new GridBagConstraints();
 
-            infoLabelsConstraints[i].gridx = x;
-            infoLabelsConstraints[i].gridy = 0;
-            infoLabelsConstraints[i].insets = new Insets(10, 10, 10, 10);
+            labelsConstraints[i].gridx = x;
+            labelsConstraints[i].gridy = 0;
+            labelsConstraints[i].insets = new Insets(10, 10, 10, 10);
 
-            infoFieldsConstraints[i].gridx = x + 1;
-            infoFieldsConstraints[i].gridy = 0;
-            infoFieldsConstraints[i].insets = new Insets(10, 10, 10, 10);
+            fieldsConstraints[i].gridx = x + 1;
+            fieldsConstraints[i].gridy = 0;
+            fieldsConstraints[i].insets = new Insets(10, 10, 10, 10);
 
-            add(generalLabels[i], infoLabelsConstraints[i]);
-            add(generalFields[i], infoFieldsConstraints[i]);
+            add(labels[i], labelsConstraints[i]);
+            add(fields[i], fieldsConstraints[i]);
         }
 
         addPartialExam();
         addPartialExam();
 
+        super.setLabels(labels);
+        super.setFields(fields);
+
         buttonConstraints.gridx = (COL_NAMES.length) * 2;
         buttonConstraints.gridy = partialExams.size() + 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
-        add(actionButton, buttonConstraints);
+        add(super.getButton(), buttonConstraints);
 
         pack();
         setVisible(true);
@@ -264,7 +264,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * view
      */
     public void removePartialExam() {
-        if (partialExams.size() > 1) {
+        if (partialExams.size() > 2) {
             PartialExamView lastExam = partialExams.getLast();
 
             partialExams.removeLast();
@@ -286,15 +286,6 @@ public class AddComposedExamDialog extends AbstractExamDialog {
     }
 
     /**
-     * Gets dialog action button
-     * 
-     * @return Button component
-     */
-    public JButton getButton() {
-        return actionButton;
-    }
-
-    /**
      * Gets the data contained in
      * {@link views.dialogs.AbstractExamDialog#generalFields} components as a
      * {@link java.lang.String} array
@@ -302,10 +293,10 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * @return Data within text fields as an array of {@link java.lang.String}
      */
     public String[] getFieldsData() {
-        String[] fieldsData = new String[generalFields.length + 1];
+        String[] fieldsData = new String[super.getGeneralFields().length + 1];
 
-        for (int i = 0; i < generalFields.length; i++) {
-            fieldsData[i] = generalFields[i].getText();
+        for (int i = 0; i < super.getGeneralFields().length; i++) {
+            fieldsData[i] = super.getGeneralFields()[i].getText();
         }
 
         fieldsData[fieldsData.length - 1] = getExamsData();
@@ -318,15 +309,15 @@ public class AddComposedExamDialog extends AbstractExamDialog {
      * view.
      */
     public void refreshButton() {
-        remove(actionButton);
+        remove(super.getButton());
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
 
-        buttonConstraints.gridx = (generalFields.length) * 2;
+        buttonConstraints.gridx = (super.getGeneralFields().length) * 2;
         buttonConstraints.gridy = partialExams.size() + 1;
         buttonConstraints.insets = new Insets(10, 10, 10, 10);
 
-        add(actionButton, buttonConstraints);
+        add(super.getButton(), buttonConstraints);
     }
 
     /**
