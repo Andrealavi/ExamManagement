@@ -24,12 +24,14 @@ public class ExamsTableModel extends AbstractTableModel {
     /**
      * Table columns
      */
-    private final String[] COLUMN_NAMES = { "First Name", "Last Name", "Class", "Grade", "Credits", "Honors" };
+    private final String[] COLUMN_NAMES = { "Row", "First Name", "Last Name", "Class", "Grade", "Credits", "Honors" };
 
     /**
      * Vector containing exam entries
      */
     private Vector<AbstractExam> examEntries;
+
+    private ArrayList<Integer> rowNumbers;
 
     /**
      * Sets {@link models.ExamsTableModel#examEntries} as an empty vector
@@ -37,6 +39,7 @@ public class ExamsTableModel extends AbstractTableModel {
      */
     public ExamsTableModel() {
         examEntries = new Vector<AbstractExam>();
+        rowNumbers = new ArrayList<Integer>();
     }
 
     @Override
@@ -73,21 +76,23 @@ public class ExamsTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         switch (col) {
             case 0:
+                return rowNumbers.get(row);
+            case 1:
                 return examEntries.get(row).getFirstName();
 
-            case 1:
+            case 2:
                 return examEntries.get(row).getLastName();
 
-            case 2:
+            case 3:
                 return examEntries.get(row).getClassName();
 
-            case 3:
+            case 4:
                 return examEntries.get(row).getGrade();
 
-            case 4:
+            case 5:
                 return examEntries.get(row).getCredits();
 
-            case 5:
+            case 6:
                 return examEntries.get(row).getHonor();
 
             default:
@@ -105,6 +110,13 @@ public class ExamsTableModel extends AbstractTableModel {
      */
     public void addEntry(AbstractExam entry) {
         examEntries.add(entry);
+
+        fireTableDataChanged();
+    }
+
+    public void addRowNumber(int row) {
+        rowNumbers.add(row + 1);
+
         fireTableDataChanged();
     }
 
@@ -129,33 +141,13 @@ public class ExamsTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    /**
-     * Removes entries, passed via {@link java.util.ArrayList} of
-     * {@link java.lang.Integer} from {@link models.ExamsTableModel#examEntries}
-     * 
-     * @param rowsIntervals List containing inteval of entries to remove
-     */
-    public void removeEntryAtRows(ArrayList<Integer> rowsIntervals) {
-        Integer[] previouslyRemoved = new Integer[examEntries.size()];
-
-        for (int i = 0; i < examEntries.size(); i++) {
-            previouslyRemoved[i] = 0;
-        }
-
-        for (int i = 0; i < rowsIntervals.size(); i += 2) {
-            int fromIndex = rowsIntervals.get(i) - previouslyRemoved[rowsIntervals.get(i)];
-            int toIndex = rowsIntervals.get(i + 1) - previouslyRemoved[rowsIntervals.get(i + 1)] + 1;
-
-            examEntries.subList(fromIndex, toIndex).clear();
-
-            int intervalLenght = rowsIntervals.get(i + 1) - rowsIntervals.get(i) + 1;
-
-            for (int j = rowsIntervals.get(i + 1); j < previouslyRemoved.length; j++) {
-                previouslyRemoved[j] += intervalLenght;
-            }
-        }
-
+    public void updateRowNumber(int row, int rowNumber) {
+        rowNumbers.set(row, rowNumber + 1);
         fireTableDataChanged();
+    }
+
+    public void removeEntryAtRow(int row) {
+        examEntries.remove(row);
     }
 
     /**
@@ -166,6 +158,18 @@ public class ExamsTableModel extends AbstractTableModel {
      */
     public void setEntries(Vector<AbstractExam> examEntries) {
         this.examEntries = examEntries;
+        rowNumbers = new ArrayList<Integer>();
+
+        for (int i = 0; i < examEntries.size(); i++) {
+            rowNumbers.add(i + 1);
+        }
+
+        fireTableDataChanged();
+    }
+
+    public void setRowNumbers(ArrayList<Integer> rowNumbers) {
+        this.rowNumbers = rowNumbers;
+
         fireTableDataChanged();
     }
 
