@@ -73,7 +73,10 @@ public class AppFrame extends JFrame {
 
         panelConstraints.gridx = 0;
         panelConstraints.gridy = 1;
-        panelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        panelConstraints.fill = GridBagConstraints.BOTH;
+
+        panelConstraints.weightx = 1.0;
+        panelConstraints.weighty = 1.0;
 
         add(menuBar, menuConstraints);
         add(tablePanel, panelConstraints);
