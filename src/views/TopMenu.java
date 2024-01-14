@@ -47,7 +47,6 @@ public class TopMenu extends JMenuBar {
         fileMenu.add(printFileItem);
 
         JMenu addExamMenu = new JMenu("Add Exam");
-        JMenuItem removeExamItem = new JMenuItem("Remove Exam/Exams");
         JMenuItem filterExamItem = new JMenuItem("Filter Exams");
 
         JMenuItem simpleExamItem = new JMenuItem("Add simple exam");
@@ -57,7 +56,6 @@ public class TopMenu extends JMenuBar {
         addExamMenu.add(composedExamItem);
 
         examMenu.add(addExamMenu);
-        examMenu.add(removeExamItem);
         examMenu.add(filterExamItem);
 
         add(fileMenu);
@@ -82,7 +80,7 @@ public class TopMenu extends JMenuBar {
      * @return Array of {@link javax.swing.JMenuItem} with the items of exam menu
      */
     public JMenuItem[] getExamMenuItems() {
-        JMenuItem[] examItems = { examMenu.getItem(0), examMenu.getItem(1), examMenu.getItem(2) };
+        JMenuItem[] examItems = { examMenu.getItem(0), examMenu.getItem(1) };
 
         return examItems;
     }
