@@ -86,8 +86,8 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
             partialExam.getGradeField().setText(examData[0]);
             partialExam.getGradeField().setEditable(false);
 
-            partialExam.getWeightField().setText(convertWeight(examData[1]));
-            partialExam.getWeightField().setEditable(false);
+            partialExam.getWeightField().setSelectedItem(convertWeight(examData[1]));
+            partialExam.getWeightField().setEnabled(false);
 
             refreshModifyButton();
             refreshRemoveButton();

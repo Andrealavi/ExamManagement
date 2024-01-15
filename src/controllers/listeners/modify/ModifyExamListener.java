@@ -79,7 +79,7 @@ public class ModifyExamListener implements ActionListener {
 
         for (int i = 0; i < partialExams.length; i++) {
             partialExams[i].getGradeField().setEditable(true);
-            partialExams[i].getWeightField().setEditable(true);
+            partialExams[i].getWeightField().setEnabled(true);
         }
 
         partialExams[partialExams.length - 1].getAddButton().setEnabled(true);

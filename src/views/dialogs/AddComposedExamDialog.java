@@ -28,7 +28,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         private JLabel gradeLabel;
         private JTextField gradeTextField;
         private JLabel weightLabel;
-        private JTextField weightField;
+        private JComboBox<String> weightComboBox;
 
         private JButton addPartialButton;
         private JButton removePartialButton;
@@ -37,11 +37,15 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * Instantiates class attributes
          */
         public PartialExamView() {
+            final String[] commonWeights = { "25.0%", "33.0%", "50.0%", "67.0%", "75.0%" };
+
             gradeLabel = new JLabel("Exam Grade: ");
             gradeTextField = new JTextField("Insert grade", 25);
 
             weightLabel = new JLabel("Exam Weight: ");
-            weightField = new JTextField("Insert weight", 10);
+            weightComboBox = new JComboBox<String>(commonWeights);
+            weightComboBox.setSelectedIndex(2);
+            weightComboBox.setEditable(true);
 
             addPartialButton = new JButton("+");
             addPartialButton.setVisible(false);
@@ -88,7 +92,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * @return Weight string in a float parsable format
          */
         public String getWeight() {
-            String percWeight = weightField.getText().replace("%", "");
+            String percWeight = weightComboBox.getSelectedItem().toString().replace("%", "");
 
             Float weight = Float.parseFloat(percWeight);
             weight = weight / 100;
@@ -101,8 +105,8 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * 
          * @return weight {@link javax.swing.JTextField}
          */
-        public JTextField getWeightField() {
-            return weightField;
+        public JComboBox<String> getWeightField() {
+            return weightComboBox;
         }
 
         /**
@@ -125,7 +129,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             GridBagConstraints gradeLabelConstraints = new GridBagConstraints();
             GridBagConstraints gradeTextFieldConstraints = new GridBagConstraints();
             GridBagConstraints weightLabelConstraints = new GridBagConstraints();
-            GridBagConstraints weightFieldConstraints = new GridBagConstraints();
+            GridBagConstraints weightComboBoxConstraints = new GridBagConstraints();
             GridBagConstraints addButtonConstraints = new GridBagConstraints();
             GridBagConstraints removeButtonConstraints = new GridBagConstraints();
 
@@ -141,9 +145,9 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             weightLabelConstraints.gridy = y;
             weightLabelConstraints.insets = new Insets(10, 10, 10, 10);
 
-            weightFieldConstraints.gridx = 3;
-            weightFieldConstraints.gridy = y;
-            weightFieldConstraints.insets = new Insets(10, 10, 10, 10);
+            weightComboBoxConstraints.gridx = 3;
+            weightComboBoxConstraints.gridy = y;
+            weightComboBoxConstraints.insets = new Insets(10, 10, 10, 10);
 
             addButtonConstraints.gridx = 4;
             addButtonConstraints.gridy = y;
@@ -156,7 +160,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             AddComposedExamDialog.this.add(gradeLabel, gradeLabelConstraints);
             AddComposedExamDialog.this.add(gradeTextField, gradeTextFieldConstraints);
             AddComposedExamDialog.this.add(weightLabel, weightLabelConstraints);
-            AddComposedExamDialog.this.add(weightField, weightFieldConstraints);
+            AddComposedExamDialog.this.add(weightComboBox, weightComboBoxConstraints);
             AddComposedExamDialog.this.add(addPartialButton, addButtonConstraints);
             AddComposedExamDialog.this.add(removePartialButton, removeButtonConstraints);
 
@@ -170,7 +174,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             AddComposedExamDialog.this.remove(gradeLabel);
             AddComposedExamDialog.this.remove(gradeTextField);
             AddComposedExamDialog.this.remove(weightLabel);
-            AddComposedExamDialog.this.remove(weightField);
+            AddComposedExamDialog.this.remove(weightComboBox);
             AddComposedExamDialog.this.remove(addPartialButton);
             AddComposedExamDialog.this.remove(removePartialButton);
         }
