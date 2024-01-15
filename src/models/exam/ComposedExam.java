@@ -23,7 +23,6 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
      * grade
      * 
      * @param studentName student's name
-     * @param lastName    student last name
      * @param className   class name
      * @param grades      partial exams grades
      * @param weights     partial exams weights
