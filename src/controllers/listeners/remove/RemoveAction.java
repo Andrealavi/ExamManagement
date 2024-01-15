@@ -44,6 +44,11 @@ public class RemoveAction extends AbstractAction {
     private AtomicBoolean isSaved;
 
     /**
+     * Integer that represent the single row to remove. By default it is set to null
+     */
+    private Integer row = null;
+
+    /**
      * Instantiates class attributes using all the function arguments
      * 
      * @param frame      application frame
@@ -59,31 +64,49 @@ public class RemoveAction extends AbstractAction {
     }
 
     /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param frame      application frame
+     * @param table      exam table
+     * @param row        index of the row to remove
+     * @param isSaved    boolean to check if the data are saved
+     * @param isFiltered boolean to check if there is a filter
+     */
+    public RemoveAction(AppFrame frame, JTable table, Integer row, AtomicBoolean isSaved, AtomicBoolean isFiltered) {
+        this(frame, table, isSaved, isFiltered);
+        this.row = row;
+    }
+
+    /**
      * Remove entries at the selected rows
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         ExamsTableModel model = (ExamsTableModel) table.getModel();
 
-        int[] selectedRows = table.getSelectedRows();
-        int[] previouslyRemoved = new int[model.getRowCount()];
+        if (row != null) {
+            model.removeEntryAtRow(table.convertColumnIndexToModel(row));
+        } else {
+            int[] selectedRows = table.getSelectedRows();
+            int[] previouslyRemoved = new int[model.getRowCount()];
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            previouslyRemoved[i] = 0;
-        }
-
-        for (int i = 0; i < selectedRows.length; i++) {
-            int convertedIndex = table.convertRowIndexToModel(selectedRows[i]);
-
-            model.removeEntryAtRow(convertedIndex - previouslyRemoved[convertedIndex]);
-
-            for (int j = convertedIndex + 1; j < previouslyRemoved.length; j++) {
-                previouslyRemoved[j] += 1;
+            for (int i = 0; i < model.getRowCount(); i++) {
+                previouslyRemoved[i] = 0;
             }
-        }
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            model.updateRowNumber(i, table.convertRowIndexToView(i));
+            for (int i = 0; i < selectedRows.length; i++) {
+                int convertedIndex = table.convertRowIndexToModel(selectedRows[i]);
+
+                model.removeEntryAtRow(convertedIndex - previouslyRemoved[convertedIndex]);
+
+                for (int j = convertedIndex + 1; j < previouslyRemoved.length; j++) {
+                    previouslyRemoved[j] += 1;
+                }
+            }
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                model.updateRowNumber(i, table.convertRowIndexToView(i));
+            }
         }
 
         model.fireTableDataChanged();
@@ -96,9 +119,11 @@ public class RemoveAction extends AbstractAction {
     }
 
     /**
-     * Update filterPanel weighted average
+     * Update filterPanel weighted average and histogram data after that an exam is
+     * added/removed or
+     * the filter is applied.
      */
-    private void updateFilter() {
+    private final void updateFilter() {
         ExamsTableModel model = (ExamsTableModel) table.getModel();
 
         for (int i = 0; i < table.getRowSorter().getModelRowCount(); i++) {

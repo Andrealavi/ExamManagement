@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import controllers.listeners.remove.RemovePartialExamListener;
+import controllers.listeners.partials.AddPartialExamListener;
+import controllers.listeners.partials.RemovePartialExamListener;
 import models.ExamsTableModel;
 import views.AppFrame;
 import views.dialogs.AddComposedExamDialog;

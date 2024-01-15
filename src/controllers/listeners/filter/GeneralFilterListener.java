@@ -34,6 +34,7 @@ public class GeneralFilterListener {
      * Instantiates class attributes using all the function arguments
      * 
      * @param dialog
+     * @param isFiltered
      */
     public GeneralFilterListener(JDialog dialog, AtomicBoolean isFiltered) {
         this.dialog = dialog;
@@ -54,15 +55,16 @@ public class GeneralFilterListener {
      * {@link controllers.listeners.filter.GeneralFilterListener#isFiltered}, the
      * boolean that checks whether the table is filtered or not
      * 
-     * @return isFiltered
+     * @return isFiltered attribute
      */
     protected AtomicBoolean getFilterBoolean() {
         return isFiltered;
     }
 
     /**
-     * Update filter panel weighted average after that an exam is added/removed or
-     * the filter is applied
+     * Update filter panel weighted average and histogram data after that an exam is
+     * added/removed or
+     * the filter is applied.
      * 
      * @see views.AppFrame
      * @see views.panels.FilterPanel
@@ -70,7 +72,7 @@ public class GeneralFilterListener {
      * @see models.ExamsRowSorter
      * 
      */
-    protected void updateFilter() {
+    protected final void updateFilter() {
         AppFrame frame = (AppFrame) dialog.getParent();
         JTable table = frame.getTablePanel().getTable();
 

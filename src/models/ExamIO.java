@@ -32,7 +32,7 @@ public final class ExamIO {
      * @throws IOException           Exception thrown when a problem related I/O
      *                               goes wrong
      */
-    public static Vector<AbstractExam> load(File file) throws FileNotFoundException, IOException {
+    public static final Vector<AbstractExam> load(File file) throws FileNotFoundException, IOException {
         Vector<AbstractExam> examEntries = new Vector<AbstractExam>();
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -80,7 +80,7 @@ public final class ExamIO {
      * @throws IOException Exception thrown when a problem related I/O goes
      *                     wrong
      */
-    public static void save(File file, Vector<AbstractExam> examEntries) throws IOException {
+    public static final void save(File file, Vector<AbstractExam> examEntries) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
         for (int i = 0; i < examEntries.size(); i++) {

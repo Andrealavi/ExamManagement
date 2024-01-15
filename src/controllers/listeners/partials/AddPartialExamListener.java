@@ -3,12 +3,11 @@
  * 
  * @package controllers.listeners.add 
  */
-package controllers.listeners.add;
+package controllers.listeners.partials;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import controllers.listeners.remove.RemovePartialExamListener;
 import views.dialogs.AddComposedExamDialog;
 import views.dialogs.ModifyComposedExamDialog;
 

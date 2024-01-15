@@ -21,7 +21,7 @@ import views.dialogs.ModifyExamDialogInterface;
 import views.dialogs.ModifySimpleExamDialog;
 
 /**
- * Extends {@link java.awt.event.WindowAdapter} to create a custom event
+ * Extends {@link java.awt.event.MouseAdapter} to create a custom event
  * listener for when the user is closing the application window
  * 
  * @see views.dialogs.ModifyComposedExamDialog

@@ -1,6 +1,5 @@
 Makefile
 bin/
-docs/
 documents/
 lib/
 *.jar

@@ -5,7 +5,6 @@
  */
 package controllers.listeners.remove;
 
-import java.awt.event.ActionListener;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JTable;
@@ -27,11 +26,6 @@ public class RemoveExamListener extends RemoveAction {
     private AbstractExamDialog dialog;
 
     /**
-     * Selected row. The entry to remove is at this row
-     */
-    private int row;
-
-    /**
      * Instantiates class attributes using all the function arguments
      * 
      * @param dialog     Modify Dialog Interface
@@ -42,9 +36,8 @@ public class RemoveExamListener extends RemoveAction {
      */
     public RemoveExamListener(ModifyExamDialogInterface dialog, JTable table, int row, AtomicBoolean isSaved,
             AtomicBoolean isFiltered) {
-        super((AppFrame) ((AbstractExamDialog) dialog).getParent(), table, isSaved, isFiltered);
+        super((AppFrame) ((AbstractExamDialog) dialog).getParent(), table, row, isSaved, isFiltered);
         this.dialog = (AbstractExamDialog) dialog;
-        this.row = row;
     }
 
     /**

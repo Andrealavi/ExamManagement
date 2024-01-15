@@ -40,10 +40,12 @@ public class TopMenu extends JMenuBar {
 
         JMenuItem loadFileItem = new JMenuItem("Load File");
         JMenuItem saveFileItem = new JMenuItem("Save File");
+        JMenuItem saveFileAsItem = new JMenuItem("Save File As");
         JMenuItem printFileItem = new JMenuItem("Print File");
 
         fileMenu.add(loadFileItem);
         fileMenu.add(saveFileItem);
+        fileMenu.add(saveFileAsItem);
         fileMenu.add(printFileItem);
 
         JMenu addExamMenu = new JMenu("Add Exam");
@@ -70,7 +72,7 @@ public class TopMenu extends JMenuBar {
      * @return Array of {@link javax.swing.JMenuItem} with the items of file menu
      */
     public JMenuItem[] getFileMenuItems() {
-        JMenuItem[] fileItems = { fileMenu.getItem(0), fileMenu.getItem(1), fileMenu.getItem(2) };
+        JMenuItem[] fileItems = { fileMenu.getItem(0), fileMenu.getItem(1), fileMenu.getItem(2), fileMenu.getItem(3) };
         return fileItems;
     }
 

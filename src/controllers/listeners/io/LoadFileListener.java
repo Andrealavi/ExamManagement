@@ -87,12 +87,16 @@ public class LoadFileListener implements ActionListener {
 
                 model.setEntries(examEntries);
             } catch (FileNotFoundException notFound) {
+                fileChooser.setSelectedFile(null);
+
                 JOptionPane.showMessageDialog(frame,
                         "The file you chose doesn't exist.\nPlease choose an existing file", "Error message",
                         JOptionPane.ERROR_MESSAGE);
 
                 fileChooser.cancelSelection();
             } catch (Exception generalException) {
+                fileChooser.setSelectedFile(null);
+
                 JOptionPane.showMessageDialog(frame, generalException.getMessage(), "Error message",
                         JOptionPane.ERROR_MESSAGE);
             }

@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 
-import controllers.listeners.add.AddPartialExamListener;
-import controllers.listeners.remove.RemovePartialExamListener;
+import controllers.listeners.partials.AddPartialExamListener;
+import controllers.listeners.partials.RemovePartialExamListener;
 import models.ExamsTableModel;
 import views.dialogs.AbstractExamDialog;
 import views.dialogs.ModifyComposedExamDialog;

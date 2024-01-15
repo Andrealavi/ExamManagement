@@ -97,8 +97,11 @@ public class Controller {
         fileMenu[1].addActionListener(new SaveFileListener(frame, frame.getFileChooser(), tableModel, isSaved));
         fileMenu[1].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 
-        fileMenu[2].addActionListener(new PrintTableListener(frame, tablePanel.getTable()));
-        fileMenu[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        fileMenu[2].addActionListener(new SaveFileListener(frame, frame.getFileChooser(), true, tableModel, isSaved));
+        fileMenu[2].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK + ActionEvent.ALT_MASK));
+
+        fileMenu[3].addActionListener(new PrintTableListener(frame, tablePanel.getTable()));
+        fileMenu[3].setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
 
         tablePanel.getTable().addMouseListener(new DoubleClickOnEntryListener(frame, isSaved, isFiltered));
 

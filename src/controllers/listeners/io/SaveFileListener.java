@@ -48,6 +48,12 @@ public class SaveFileListener implements ActionListener {
     private JFileChooser fileChooser;
 
     /**
+     * Boolean that checks whether the user wants to save data in another file or
+     * not
+     */
+    private boolean saveAs = false;
+
+    /**
      * Boolean used to check wether the exam entries are saved or not
      */
     private AtomicBoolean isSaved;
@@ -64,6 +70,27 @@ public class SaveFileListener implements ActionListener {
         this.frame = frame;
         this.model = model;
         this.fileChooser = fileChooser;
+        fileChooser.setCurrentDirectory(new File("./documents"));
+        this.isSaved = isSaved;
+    }
+
+    /**
+     * Instantiates class attributes using all the function arguments
+     * 
+     * @param frame       Application frame
+     * @param fileChooser File chooser
+     * @param saveAs      Boolean that checks whether the user wants to save data in
+     *                    another file or
+     *                    not
+     * @param model       Table model
+     * @param isSaved     Boolean containing save state of the exam table data
+     */
+    public SaveFileListener(AppFrame frame, JFileChooser fileChooser, boolean saveAs, ExamsTableModel model,
+            AtomicBoolean isSaved) {
+        this.frame = frame;
+        this.model = model;
+        this.fileChooser = fileChooser;
+        this.saveAs = saveAs;
         fileChooser.setCurrentDirectory(new File("./documents"));
         this.isSaved = isSaved;
     }
@@ -102,7 +129,7 @@ public class SaveFileListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         File file = null;
 
-        if (fileChooser.getSelectedFile() != null) {
+        if (fileChooser.getSelectedFile() != null && !saveAs) {
             file = fileChooser.getSelectedFile();
 
         } else {
@@ -122,8 +149,7 @@ public class SaveFileListener implements ActionListener {
         try {
             ExamIO.save(file, examEntries);
         } catch (NullPointerException nullPointerException) {
-            // I don't want to manage this exception, but I don't want to have errors on
-            // terminal
+            JOptionPane.showMessageDialog(frame, "No file was selected", "Error message", JOptionPane.ERROR_MESSAGE);
         } catch (Exception error) {
             JOptionPane.showMessageDialog(frame, error.getMessage(), "Error message", JOptionPane.ERROR_MESSAGE);
         }
