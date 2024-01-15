@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JTable;
 
 import views.dialogs.AbstractExamDialog;
+import views.dialogs.ModifyExamDialogInterface;
 import views.AppFrame;
 
 import java.awt.event.ActionEvent;
@@ -33,16 +34,16 @@ public class RemoveExamListener extends RemoveAction {
     /**
      * Instantiates class attributes using all the function arguments
      * 
-     * @param dialog     Dialog
+     * @param dialog     Modify Dialog Interface
      * @param table      Exam table
      * @param row        Index of the row to remove
      * @param isSaved    Boolean that checks whether the data are saved or not
      * @param isFiltered Boolean that checks whether the table is filtered or not
      */
-    public RemoveExamListener(AbstractExamDialog dialog, JTable table, int row, AtomicBoolean isSaved,
+    public RemoveExamListener(ModifyExamDialogInterface dialog, JTable table, int row, AtomicBoolean isSaved,
             AtomicBoolean isFiltered) {
-        super((AppFrame) dialog.getParent(), table, isSaved, isFiltered);
-        this.dialog = dialog;
+        super((AppFrame) ((AbstractExamDialog) dialog).getParent(), table, isSaved, isFiltered);
+        this.dialog = (AbstractExamDialog) dialog;
         this.row = row;
     }
 

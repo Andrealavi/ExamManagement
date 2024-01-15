@@ -89,16 +89,16 @@ public class DoubleClickOnEntryListener extends MouseAdapter {
 
             dialog.getModifyButton()
                     .addActionListener(
-                            new ModifyExamListener(((AbstractExamDialog) dialog), model, row, isSaved, isFiltered));
+                            new ModifyExamListener(dialog, model, row, isSaved, isFiltered));
 
             dialog.getRemoveButton()
                     .addActionListener(
-                            new RemoveExamListener((AbstractExamDialog) dialog, table, row, isSaved, isFiltered));
+                            new RemoveExamListener(dialog, table, row, isSaved, isFiltered));
 
             dialog.getButton()
-                    .addActionListener(new CloseButtonListener(((AbstractExamDialog) dialog)));
+                    .addActionListener(new CloseButtonListener(dialog));
 
-            ((AbstractExamDialog) dialog).getRootPane().setDefaultButton(((AbstractExamDialog) dialog).getButton());
+            ((AbstractExamDialog) dialog).getRootPane().setDefaultButton(dialog.getButton());
         }
     }
 }

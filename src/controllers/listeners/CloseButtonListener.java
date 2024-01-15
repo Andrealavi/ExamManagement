@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
+import views.dialogs.ModifyExamDialogInterface;
+
 /**
  * Implements {@link java.awt.event.ActionListener} interface to create an event
  * listener for close button of dialogs
@@ -23,10 +25,10 @@ public class CloseButtonListener implements ActionListener {
     /**
      * Instantiates class attribute with the value passed as argument
      * 
-     * @param dialog Dialog containing the button
+     * @param dialog Modify Dialog Interface
      */
-    public CloseButtonListener(JDialog dialog) {
-        this.dialog = dialog;
+    public CloseButtonListener(ModifyExamDialogInterface dialog) {
+        this.dialog = (JDialog) dialog;
     }
 
     /**

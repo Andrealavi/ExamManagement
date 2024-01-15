@@ -16,6 +16,7 @@ import models.ExamsTableModel;
 import views.dialogs.AbstractExamDialog;
 import views.dialogs.ModifyComposedExamDialog;
 import views.dialogs.AddComposedExamDialog.PartialExamView;
+import views.dialogs.ModifyExamDialogInterface;
 
 /**
  * Implements {@link java.awt.event.ActionListener} interface to create an event
@@ -56,15 +57,15 @@ public class ModifyExamListener implements ActionListener {
     /**
      * Instantiates class attributes using all the function arguments
      * 
-     * @param dialog     Dialog with exam data
+     * @param dialog     Modify Dialog Interface
      * @param model      Table model
      * @param row        Row index
      * @param isSaved    Boolean containing save state of the exam table data
      * @param isFiltered Boolean containing filter state of the exam table data
      */
-    public ModifyExamListener(AbstractExamDialog dialog, ExamsTableModel model, int row,
+    public ModifyExamListener(ModifyExamDialogInterface dialog, ExamsTableModel model, int row,
             AtomicBoolean isSaved, AtomicBoolean isFiltered) {
-        this.dialog = dialog;
+        this.dialog = (AbstractExamDialog) dialog;
         this.model = model;
         this.row = row;
         this.isSaved = isSaved;
