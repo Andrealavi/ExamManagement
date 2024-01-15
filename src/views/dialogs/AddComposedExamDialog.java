@@ -37,7 +37,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
          * Instantiates class attributes
          */
         public PartialExamView() {
-            final String[] commonWeights = { "25.0%", "33.0%", "50.0%", "67.0%", "75.0%" };
+            final String[] commonWeights = { "25.0%", "33.0%", "50.0%", "67.0%", "75%" };
 
             gradeLabel = new JLabel("Exam Grade: ");
             gradeTextField = new JTextField("Insert grade", 25);

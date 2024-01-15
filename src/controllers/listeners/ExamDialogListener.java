@@ -87,6 +87,10 @@ public class ExamDialogListener extends GeneralFilterListener {
         ArrayList<Integer> grades = new ArrayList<Integer>();
         ArrayList<Float> weights = new ArrayList<Float>();
 
+        if (Integer.parseInt(data[3]) < 0 || Integer.parseInt(data[3]) > 18) {
+            throw new ExamInfoException("Credits value must be between 1 and 18");
+        }
+
         String[] partialExamsData = data[4].split(",");
 
         for (int i = 0; i < partialExamsData.length; i++) {
