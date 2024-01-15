@@ -145,6 +145,8 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             gradeTextFieldConstraints.gridx = 1;
             gradeTextFieldConstraints.gridy = y;
             gradeTextFieldConstraints.insets = new Insets(10, 10, 10, 10);
+            gradeTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+            gradeTextFieldConstraints.weightx = 1.0;
 
             weightLabelConstraints.gridx = 2;
             weightLabelConstraints.gridy = y;
@@ -199,7 +201,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
     public AddComposedExamDialog(JFrame frame) {
         super(frame, "Add Composed Exam");
 
-        final String[] COL_NAMES = { "First name", "Last name", "Class", "Credits" };
+        final String[] COL_NAMES = { "Student Name", "Class", "Credits" };
 
         JLabel[] labels = new JLabel[COL_NAMES.length];
         JTextField[] fields = new JTextField[COL_NAMES.length];
@@ -226,6 +228,8 @@ public class AddComposedExamDialog extends AbstractExamDialog {
             fieldsConstraints[i].gridx = x + 1;
             fieldsConstraints[i].gridy = 0;
             fieldsConstraints[i].insets = new Insets(10, 10, 10, 10);
+            fieldsConstraints[i].fill = GridBagConstraints.HORIZONTAL;
+            fieldsConstraints[i].weightx = 1.0;
 
             add(labels[i], labelsConstraints[i]);
             add(fields[i], fieldsConstraints[i]);

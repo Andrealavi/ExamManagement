@@ -55,21 +55,21 @@ public class ExamDialogListener extends GeneralFilterListener {
      * @throws ExamInfoException Exception that is thrown if exam data are invalid
      */
     protected final SimpleExam createSimpleExamEntry(String[] data) throws ExamInfoException {
-        if (Integer.parseInt(data[3]) < 18) {
+        if (Integer.parseInt(data[2]) < 18) {
             throw new ExamInfoException("Grade value must be at least 18");
-        } else if (Integer.parseInt(data[4]) <= 0 || Integer.parseInt(data[4]) > 18) {
+        } else if (Integer.parseInt(data[3]) <= 0 || Integer.parseInt(data[3]) > 18) {
             throw new ExamInfoException("Credits value must be between 1 and 18");
         }
 
-        Integer grade = Integer.parseInt(data[3]);
+        Integer grade = Integer.parseInt(data[2]);
         Boolean honor = grade > 30;
 
         if (grade > 30) {
             grade = 30;
         }
 
-        SimpleExam examEntry = new SimpleExam(data[0], data[1], data[2], grade,
-                Integer.parseInt(data[4]), honor);
+        SimpleExam examEntry = new SimpleExam(data[0], data[1], grade,
+                Integer.parseInt(data[3]), honor);
 
         return examEntry;
     }
@@ -87,11 +87,11 @@ public class ExamDialogListener extends GeneralFilterListener {
         ArrayList<Integer> grades = new ArrayList<Integer>();
         ArrayList<Float> weights = new ArrayList<Float>();
 
-        if (Integer.parseInt(data[3]) < 0 || Integer.parseInt(data[3]) > 18) {
+        if (Integer.parseInt(data[2]) < 0 || Integer.parseInt(data[2]) > 18) {
             throw new ExamInfoException("Credits value must be between 1 and 18");
         }
 
-        String[] partialExamsData = data[4].split(",");
+        String[] partialExamsData = data[3].split(",");
 
         for (int i = 0; i < partialExamsData.length; i++) {
             String[] partialExamData = partialExamsData[i].split(" ");
@@ -120,8 +120,8 @@ public class ExamDialogListener extends GeneralFilterListener {
             }
         }
 
-        ComposedExam examEntry = new ComposedExam(data[0], data[1], data[2], grades, weights,
-                Integer.parseInt(data[3]));
+        ComposedExam examEntry = new ComposedExam(data[0], data[1], grades, weights,
+                Integer.parseInt(data[2]));
 
         return examEntry;
     }

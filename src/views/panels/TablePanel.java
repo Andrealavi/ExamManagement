@@ -42,6 +42,7 @@ public class TablePanel extends JPanel {
         tablePane = new JScrollPane(table);
 
         table.setFillsViewportHeight(true);
+        table.getTableHeader().setReorderingAllowed(false);
 
         setLayout(new GridBagLayout());
 

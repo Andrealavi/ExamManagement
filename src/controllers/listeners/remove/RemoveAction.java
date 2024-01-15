@@ -116,13 +116,13 @@ public class RemoveAction extends AbstractAction {
 
         for (int i = 0; i < table.getRowSorter().getViewRowCount(); i++) {
             gradesFrequencies[Integer
-                    .parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString()) - 18]++;
+                    .parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString()) - 18]++;
 
             gradeSum += Float
-                    .parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString())
-                    * Float.parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 5).toString());
+                    .parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 3).toString())
+                    * Float.parseFloat(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString());
 
-            creditSum += Integer.parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 5).toString());
+            creditSum += Integer.parseInt(table.getModel().getValueAt(table.convertRowIndexToModel(i), 4).toString());
         }
 
         Integer weightedAverage = Math.round(gradeSum / creditSum);

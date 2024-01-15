@@ -22,17 +22,17 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
      * Calls super constructor, sets weights and compute the final exam
      * grade
      * 
-     * @param firstName student first name
-     * @param lastName  student last name
-     * @param className class name
-     * @param grades    partial exams grades
-     * @param weights   partial exams weights
-     * @param credits   number of credits
+     * @param studentName student's name
+     * @param lastName    student last name
+     * @param className   class name
+     * @param grades      partial exams grades
+     * @param weights     partial exams weights
+     * @param credits     number of credits
      */
-    public ComposedExam(String firstName, String lastName, String className, ArrayList<Integer> grades,
+    public ComposedExam(String studentName, String className, ArrayList<Integer> grades,
             ArrayList<Float> weights,
             Integer credits) {
-        super(firstName, lastName, className, grades, credits);
+        super(studentName, className, grades, credits);
         this.weights = weights;
 
         computeFinalGrade();
@@ -94,7 +94,7 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
 
     @Override
     public String[] toStringArray() {
-        String[] stringArray = { super.getFirstName(), super.getLastName(), super.getClassName(),
+        String[] stringArray = { super.getStudentName(), super.getClassName(),
                 super.getCredits().toString(), getGradeWeightCouple() };
 
         return stringArray;
@@ -103,7 +103,7 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
     @Override
     public String toOutputString() {
         StringBuffer outputStringBuffer = new StringBuffer(
-                "composed" + "," + super.getFirstName() + "," + super.getLastName() + "," + super.getClassName()
+                "composed" + "," + super.getStudentName() + "," + super.getClassName()
                         + "," + super.getCredits().toString() + "," + super.getGrade().size());
 
         for (int i = 0; i < super.getGrade().size(); i++) {

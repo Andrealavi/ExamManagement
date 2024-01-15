@@ -72,9 +72,9 @@ public class ModifyComposedExamDialog extends AddComposedExamDialog implements M
             super.getGeneralFields()[i].setText(fieldsData[i]);
         }
 
-        super.getGeneralFields()[3].setText(fieldsData[3]);
+        super.getGeneralFields()[2].setText(fieldsData[2]);
 
-        String[] partialExamsData = fieldsData[4].split(",");
+        String[] partialExamsData = fieldsData[3].split(",");
 
         for (int i = 0; i < partialExamsData.length; i++) {
             addPartialExam();

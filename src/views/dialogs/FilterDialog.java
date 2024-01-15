@@ -68,6 +68,8 @@ public class FilterDialog extends JDialog {
         fieldConstraints.gridx = 1;
         fieldConstraints.gridy = 0;
         fieldConstraints.insets = new Insets(10, 10, 10, 10);
+        fieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        fieldConstraints.weightx = 1.0;
 
         add(filterField, fieldConstraints);
 

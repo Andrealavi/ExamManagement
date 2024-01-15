@@ -15,14 +15,9 @@ package models.exam;
  */
 public abstract class AbstractExam<E> {
     /**
-     * Student first name
+     * Student's name
      */
-    private String firstName;
-
-    /**
-     * Student last name
-     */
-    private String lastName;
+    private String studentName;
 
     /**
      * Class name
@@ -42,36 +37,25 @@ public abstract class AbstractExam<E> {
     /**
      * Inizialize exam attributes using data passed as arguments
      * 
-     * @param firstName Student first name
-     * @param lastName  Student last name
-     * @param className Class name
-     * @param grade     Exam grade
-     * @param credits   Number of credits of the exam
+     * @param studentName Student's name
+     * @param className   Class name
+     * @param grade       Exam grade
+     * @param credits     Number of credits of the exam
      */
-    public AbstractExam(String firstName, String lastName, String className, E grade, Integer credits) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public AbstractExam(String studentName, String className, E grade, Integer credits) {
+        this.studentName = studentName;
         this.className = className;
         this.grade = grade;
         this.credits = credits;
     }
 
     /**
-     * Gets student first name
+     * Gets student's name
      * 
-     * @return {@link java.lang.String} containing the student first name
+     * @return {@link java.lang.String} containing the student's name
      */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * Gets student last name
-     * 
-     * @return {@link java.lang.String} containing the student last name
-     */
-    public String getLastName() {
-        return lastName;
+    public String getStudentName() {
+        return studentName;
     }
 
     /**

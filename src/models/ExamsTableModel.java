@@ -24,7 +24,7 @@ public class ExamsTableModel extends AbstractTableModel {
     /**
      * Table columns
      */
-    private final String[] COLUMN_NAMES = { "Row", "First Name", "Last Name", "Class", "Grade", "Credits", "Honors" };
+    private final String[] COLUMN_NAMES = { "Row", "Student Name", "Class", "Grade", "Credits", "Honors" };
 
     /**
      * Vector containing exam entries
@@ -81,21 +81,18 @@ public class ExamsTableModel extends AbstractTableModel {
             case 0:
                 return rowNumbers.get(row);
             case 1:
-                return examEntries.get(row).getFirstName();
+                return examEntries.get(row).getStudentName();
 
             case 2:
-                return examEntries.get(row).getLastName();
-
-            case 3:
                 return examEntries.get(row).getClassName();
 
-            case 4:
+            case 3:
                 return examEntries.get(row).getExamGrade();
 
-            case 5:
+            case 4:
                 return examEntries.get(row).getCredits();
 
-            case 6:
+            case 5:
                 return examEntries.get(row).getHonor();
 
             default:

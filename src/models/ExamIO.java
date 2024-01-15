@@ -44,19 +44,19 @@ public final class ExamIO {
             AbstractExam exam = null;
 
             if (data[0].equals("simple")) {
-                exam = new SimpleExam(data[1], data[2], data[3], Integer.parseInt(data[4]), Integer.parseInt(data[5]),
-                        Boolean.parseBoolean(data[6]));
+                exam = new SimpleExam(data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]),
+                        Boolean.parseBoolean(data[5]));
 
             } else if (data[0].equals("composed")) {
                 ArrayList<Integer> grades = new ArrayList<Integer>();
                 ArrayList<Float> weights = new ArrayList<Float>();
 
-                for (int i = 6; i < (6 + (Integer.parseInt(data[5]) * 2)); i += 2) {
+                for (int i = 5; i < (5 + (Integer.parseInt(data[4]) * 2)); i += 2) {
                     grades.add(Integer.parseInt(data[i]));
                     weights.add(Float.parseFloat(data[i + 1]));
                 }
 
-                exam = new ComposedExam(data[1], data[2], data[3], grades, weights, Integer.parseInt(data[4]));
+                exam = new ComposedExam(data[1], data[2], grades, weights, Integer.parseInt(data[3]));
             } else {
                 throw new IOException("The selected file cannot be opened by the program.\nPlease choose another file");
             }

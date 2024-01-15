@@ -17,18 +17,17 @@ public class SimpleExam extends AbstractExam<Integer> {
     /**
      * Calls super constructor
      * 
-     * @param firstName student first name
-     * @param lastName  student last name
-     * @param className class name
-     * @param grade     student grade
-     * @param credits   exam credits number
-     * @param honor     student honor
+     * @param studentName student's name
+     * @param className   class name
+     * @param grade       student grade
+     * @param credits     exam credits number
+     * @param honor       student honor
      * 
      * @see models.exam.AbstractExam
      */
-    public SimpleExam(String firstName, String lastName, String className, Integer grade, Integer credits,
+    public SimpleExam(String studentName, String className, Integer grade, Integer credits,
             Boolean honor) {
-        super(firstName, lastName, className, grade, credits);
+        super(studentName, className, grade, credits);
 
         this.honor = honor;
     }
@@ -49,7 +48,7 @@ public class SimpleExam extends AbstractExam<Integer> {
 
     @Override
     public String[] toStringArray() {
-        String[] stringArray = { super.getFirstName(), super.getLastName(), super.getClassName(),
+        String[] stringArray = { super.getStudentName(), super.getClassName(),
                 super.getGrade().toString(),
                 super.getCredits().toString() };
 
@@ -58,7 +57,7 @@ public class SimpleExam extends AbstractExam<Integer> {
 
     @Override
     public String toOutputString() {
-        String outputString = "simple" + "," + super.getFirstName() + "," + super.getLastName() + ","
+        String outputString = "simple" + "," + super.getStudentName() + ","
                 + super.getClassName() + "," + super.getGrade().toString()
                 + ","
                 + super.getCredits().toString() + "," + this.honor;

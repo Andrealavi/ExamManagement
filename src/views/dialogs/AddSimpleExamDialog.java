@@ -49,7 +49,7 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
             labels[i] = new JLabel(String.format("%s:", columnNames[i + 1]));
             generalLabelsConstraints[i] = new GridBagConstraints();
 
-            fields[i] = new JTextField(String.format("Insert %s", columnNames[i + 1]), 10);
+            fields[i] = new JTextField(String.format("Insert %s", columnNames[i + 1]), 15);
             generalFieldsConstraints[i] = new GridBagConstraints();
 
             generalLabelsConstraints[i].gridx = x;
@@ -59,6 +59,8 @@ public class AddSimpleExamDialog extends AbstractExamDialog {
             generalFieldsConstraints[i].gridx = x + 1;
             generalFieldsConstraints[i].gridy = 0;
             generalFieldsConstraints[i].insets = new Insets(10, 5, 10, 5);
+            generalFieldsConstraints[i].fill = GridBagConstraints.HORIZONTAL;
+            generalFieldsConstraints[i].weightx = 1.0;
 
             add(labels[i], generalLabelsConstraints[i]);
             add(fields[i], generalFieldsConstraints[i]);
