@@ -38,7 +38,7 @@ public class FilterInfoButtonListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String message = "It is possible to filter by:\n" + "- First name\n- Last name\n- Class name";
+		String message = "It is possible to filter by:\n" + "- Student name\n- Class name";
 
 		JOptionPane.showMessageDialog(filterDialog, message, "Info", JOptionPane.INFORMATION_MESSAGE);
 	}
