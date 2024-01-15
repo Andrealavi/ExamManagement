@@ -33,7 +33,7 @@ public class SimpleExam extends AbstractExam<Integer> {
     }
 
     @Override
-    public Integer getExamGrade() {
+    public Integer getFinalGrade() {
         return super.getGrade();
     }
 

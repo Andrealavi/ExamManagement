@@ -6,6 +6,7 @@
 package controllers.listeners.remove;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
@@ -103,13 +104,17 @@ public class RemoveAction extends AbstractAction {
                     previouslyRemoved[j] += 1;
                 }
             }
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                model.updateRowNumber(i, table.convertRowIndexToView(i));
-            }
         }
 
         model.fireTableDataChanged();
+
+        ArrayList<Integer> rowNumbers = new ArrayList<Integer>();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            rowNumbers.add(i + 1);
+        }
+
+        model.setRowNumbers(rowNumbers);
 
         isSaved.set(false);
 

@@ -87,7 +87,7 @@ public class ExamsTableModel extends AbstractTableModel {
                 return examEntries.get(row).getClassName();
 
             case 3:
-                return examEntries.get(row).getExamGrade();
+                return examEntries.get(row).getFinalGrade();
 
             case 4:
                 return examEntries.get(row).getCredits();

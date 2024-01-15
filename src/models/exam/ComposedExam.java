@@ -61,7 +61,7 @@ public class ComposedExam extends AbstractExam<ArrayList<Integer>> {
      * @return {@link java.lang.Integer} containing exam grade
      */
     @Override
-    public Integer getExamGrade() {
+    public Integer getFinalGrade() {
         return finalGrade;
     }
 

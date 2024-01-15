@@ -68,7 +68,7 @@ public abstract class AbstractExam<E> {
     }
 
     /**
-     * Gets the grade object
+     * Gets the {@link models.exam.AbstractExam#grade} attribute object
      * 
      * @return grade object
      */
@@ -99,7 +99,7 @@ public abstract class AbstractExam<E> {
      * 
      * @return {@link java.lang.Integer} containing student grade
      */
-    public abstract Integer getExamGrade();
+    public abstract Integer getFinalGrade();
 
     /**
      * Converts exam data into a {@link java.lang.String} array
