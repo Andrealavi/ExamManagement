@@ -28,6 +28,10 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         private JLabel gradeLabel;
         private JTextField gradeTextField;
         private JLabel weightLabel;
+
+        /**
+         * Combobox containing the most common partial exam weights
+         */
         private JComboBox<String> weightComboBox;
 
         private JButton addPartialButton;
@@ -86,7 +90,7 @@ public class AddComposedExamDialog extends AbstractExamDialog {
 
         /**
          * Gets the weight written in
-         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightField}
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
          * and coverts it into a {@link java.lang.String}
          * 
          * @return Weight string in a float parsable format
@@ -101,9 +105,10 @@ public class AddComposedExamDialog extends AbstractExamDialog {
         }
 
         /**
-         * Gets {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightField}
+         * Gets
+         * {@link views.dialogs.AddComposedExamDialog.PartialExamView#weightComboBox}
          * 
-         * @return weight {@link javax.swing.JTextField}
+         * @return weight {@link javax.swing.JComboBox}
          */
         public JComboBox<String> getWeightField() {
             return weightComboBox;
