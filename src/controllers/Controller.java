@@ -49,8 +49,8 @@ public class Controller {
         TablePanel tablePanel = (TablePanel) frame.getTablePanel();
         tablePanel.getTable().setModel(new ExamsTableModel());
 
-        tablePanel.getTable().getColumnModel().getColumn(1).setPreferredWidth(150);
-        tablePanel.getTable().getColumnModel().getColumn(2).setPreferredWidth(150);
+        tablePanel.getTable().getColumnModel().getColumn(1).setMinWidth(125);
+        tablePanel.getTable().getColumnModel().getColumn(2).setMinWidth(125);
     }
 
     /**
