@@ -69,7 +69,7 @@ This application provides professors with an intuitive tool to manage and track 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/gestione-esami.git
+   git clone https://github.com/Andrealavi/ExamManagement
    ```
 
 2. Navigate to the project directory:
