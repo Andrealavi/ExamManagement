@@ -74,7 +74,7 @@ This application provides professors with an intuitive tool to manage and track 
 
 2. Navigate to the project directory:
    ```bash
-   cd gestione-esami
+   cd ExamManagement
    ```
 
 3. Compile the project:
